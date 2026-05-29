@@ -21,7 +21,8 @@ export function verdictForComponent(r: TaskReport): Verdict {
   const sa = r.meta?.standalonePassed;
   const ng = r.meta?.ngModulePassed;
   if (sa === undefined || ng === undefined) return 'NO-GO';
-  if (sa >= COMPONENT_TYPE_MIN && ng >= COMPONENT_TYPE_MIN) return 'GO';
+  // Spec §5: confident GO needs rate >=80% AND >=5 correct of EACH type.
+  if (r.rate >= 0.8 && sa >= COMPONENT_TYPE_MIN && ng >= COMPONENT_TYPE_MIN) return 'GO';
   return 'GO-with-caveats';
 }
 
