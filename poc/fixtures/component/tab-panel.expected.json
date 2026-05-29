@@ -1,0 +1,14 @@
+{
+  "className": "TabPanelComponent",
+  "selector": "app-tab-panel",
+  "standalone": false,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "activeTab", "alias": null, "kind": "decorator", "required": false },
+    { "name": "tabCount", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "outputs": [
+    { "name": "tabChange", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "module": "TabModule"
+}

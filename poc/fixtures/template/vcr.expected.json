@@ -1,0 +1,1 @@
+{ "parseErrors": 0, "deps": [ { "tag": "ViewContainerRef.createComponent", "component": null, "kind": "unresolved-static", "reason": "dynamic createComponent" } ] }

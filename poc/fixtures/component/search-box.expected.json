@@ -1,0 +1,13 @@
+{
+  "className": "SearchBoxComponent",
+  "selector": "app-search-box",
+  "standalone": true,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "query", "alias": "q", "kind": "signal", "required": false }
+  ],
+  "outputs": [
+    { "name": "search", "alias": null, "kind": "signal", "required": false }
+  ],
+  "module": null
+}

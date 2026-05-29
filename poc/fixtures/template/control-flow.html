@@ -1,0 +1,6 @@
+<app-child></app-child>
+<div *ngIf="show"><app-row></app-row></div>
+<ul><li *ngFor="let x of items"><app-badge></app-badge></li></ul>
+@if (ready) { <app-panel></app-panel> }
+@for (it of list; track it) { <app-child></app-child> }
+@switch (mode) { @case ('a') { <app-row></app-row> } }

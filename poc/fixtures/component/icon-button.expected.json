@@ -1,0 +1,14 @@
+{
+  "className": "IconButtonComponent",
+  "selector": "app-icon-button",
+  "standalone": true,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "icon", "alias": null, "kind": "signal", "required": true },
+    { "name": "disabled", "alias": null, "kind": "signal", "required": false }
+  ],
+  "outputs": [
+    { "name": "clicked", "alias": null, "kind": "signal", "required": false }
+  ],
+  "module": null
+}

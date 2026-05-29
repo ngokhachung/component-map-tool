@@ -1,0 +1,9 @@
+{
+  "parseErrors": 0,
+  "deps": [
+    { "tag": "ng-content", "component": null, "kind": "indirect", "reason": "ng-content" },
+    { "tag": "ngComponentOutlet", "component": null, "kind": "unresolved-static", "reason": "ngComponentOutlet" },
+    { "tag": "ngTemplateOutlet", "component": null, "kind": "indirect", "reason": "ngTemplateOutlet" },
+    { "tag": "app-child", "component": "ChildComponent", "kind": "resolved", "reason": null }
+  ]
+}

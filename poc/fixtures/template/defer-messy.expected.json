@@ -1,0 +1,9 @@
+{
+  "parseErrors": 0,
+  "deps": [
+    { "tag": "app-child", "component": "ChildComponent", "kind": "resolved", "reason": null },
+    { "tag": "app-badge", "component": "BadgeComponent", "kind": "resolved", "reason": null },
+    { "tag": "button", "component": "ConfirmButtonComponent", "kind": "resolved", "reason": null },
+    { "tag": "app-a", "component": "MultiSelectComponent", "kind": "resolved", "reason": null }
+  ]
+}
