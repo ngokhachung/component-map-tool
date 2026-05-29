@@ -2,31 +2,38 @@
 
 ## Current Position
 
-**Phase:** STEP 0 — Bootstrap
-**Status:** in_progress
+**Phase:** Step 3 — Mode Gate (complete)
+**Status:** complete
 **Last updated:** 2026-05-29
 
 ## Current Milestone
 
-**Milestone:** {milestone name, e.g., "M1 — Auth System"}
-**Started:** {YYYY-MM-DD}
-**Target:** {YYYY-MM-DD or "no deadline"}
+**Milestone:** M1 — Phase 0: POC Validation
+**Started:** 2026-05-29
+**Target:** no deadline
 
 ## Next Action
 
-Run /brainstorm to start your first feature
+Run STEP 4 — Research (Mode A: Stack + Pitfall agents) to verify ts-morph + @angular/compiler@19 parsing APIs, then STEP 6 writing-plans.
 
 ## Open Blockers
 
-- {Blocker 1: description + owner}
+- None
 
 ## Key Decisions Made
 
-- {YYYY-MM-DD}: {What was decided} — {Reason}
+- 2026-05-29: First milestone = Phase 0 (POC Validation) — de-risk parsing before Phase 1 build
+- 2026-05-29: POC is throwaway spikes + a FEASIBILITY-REPORT.md (not reusable modules) — matches go/no-go intent
+- 2026-05-29: Target Angular 19 (latest) — pulls @if/@for/@switch built-in control flow into scope
+- 2026-05-29: Full hard template set covered (static/structural/control-flow + ng-content + dynamic + ngTemplateOutlet/@ViewChild) for an honest go/no-go
+- 2026-05-29: Synthetic fixtures with hand-authored expected.json as ground truth (no real repo yet)
+- 2026-05-29: Approach A — independent spikes + shared assertion harness; tooling Node+TS, tsx runner, vitest
+- 2026-05-29: Gate thresholds — NO-GO if routing/template ≤50% pass; GO-with-caveats 50-80%; confident GO ≥80%
+- 2026-05-29: Mode A approved (0/5 Mode B signals) — source of truth for all downstream phases
 
 ## Approved Mode
 
-{Mode A / Mode B} — approved {YYYY-MM-DD}
+Mode A — approved 2026-05-29
 
 ## Config
 
@@ -34,6 +41,8 @@ See `.planning/config.json` for granularity, parallelization, git tracking setti
 
 ## Notes
 
-{Any other important context. If context is lost, this file must be enough to resume.}
-
+- Design spec: `docs/specs/2026-05-29-phase0-poc-validation-design.md`
+- Requirements: POC-01..05 in `.planning/REQUIREMENTS.md`
+- Full project plan reference: `specs/component-map-plan-v2.md`
 - 2026-05-29 00:00: Project initialized via /init-project (Mode: greenfield, Stack: angular)
+- 2026-05-29: STEP 1 Fast Lane = NOT eligible (`.planning/fast-lane-project-kickoff.json`); STEP 2 Brainstorm + STEP 3 Mode Gate complete
