@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (T3 complete, 3/6 done)
+**Phase:** Step 7 — Execute (T4 complete, 4/6 done)
 **Status:** in_progress
 **Last updated:** 2026-05-29
 
@@ -14,13 +14,14 @@
 
 ## Next Action
 
-Dispatch T4 (routing spike) → T5 (template spike, opus). Then T6 (report).
+Dispatch T5 (template spike, opus) → T6 (report).
 
 ## Execution Log
 
 - T1 DONE (commit a6c36be): ESM workspace + loader + smoke. GATE-ZERO PASSED — @angular/compiler@19.2.14 runs standalone in Node ESM; all export names verified; ts-morph OK. Smoke assertion filters to hyphenated tags (visitor descends Template children → confirms research P-DC1).
 - T2 DONE (commit 0b54790): shared harness — multiset diff + scoreCase/scoreTask. 9/9 vitest green; parse-error→FAIL gating locked in.
 - T3 DONE (commit 113793e): component spike + 11 fixtures. 11/11 passed, meta 6 standalone / 5 NgModule. POC-01 demonstrated.
+- T4 DONE (commit 6c141e1): routing spike + 5 fixtures. 5/5 passed. Lazy path+symbol recovered; unresolvable-lazy flagged; identifier-const + nested children work. POC-02 demonstrated.
 
 ## Open Blockers
 
