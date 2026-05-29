@@ -1,0 +1,4 @@
+[
+  { "path": "dashboard", "component": "DashboardComponent", "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false },
+  { "path": "settings", "component": "SettingsComponent", "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false }
+]

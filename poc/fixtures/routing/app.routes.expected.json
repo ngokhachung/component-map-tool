@@ -1,0 +1,6 @@
+[
+  { "path": "", "component": "HomeComponent", "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false },
+  { "path": "admin", "component": null, "redirectTo": null, "loadChildren": { "importPath": "./admin/admin.module", "symbol": "AdminModule" }, "loadComponent": null, "guards": ["authGuard"], "children": [], "unresolvedLazy": false },
+  { "path": "profile", "component": null, "redirectTo": null, "loadChildren": null, "loadComponent": { "importPath": "./profile/profile.component", "symbol": "ProfileComponent" }, "guards": [], "children": [], "unresolvedLazy": false },
+  { "path": "legacy", "component": null, "redirectTo": "", "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false }
+]

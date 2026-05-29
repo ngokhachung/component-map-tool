@@ -1,0 +1,15 @@
+[
+  {
+    "path": "products",
+    "component": "ProductsComponent",
+    "redirectTo": null,
+    "loadChildren": null,
+    "loadComponent": null,
+    "guards": [],
+    "children": [
+      { "path": "list", "component": "ProductsComponent", "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false },
+      { "path": "detail", "component": null, "redirectTo": null, "loadChildren": null, "loadComponent": { "importPath": "./product-detail.component", "symbol": "ProductDetailComponent" }, "guards": [], "children": [], "unresolvedLazy": false }
+    ],
+    "unresolvedLazy": false
+  }
+]

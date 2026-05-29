@@ -1,0 +1,3 @@
+[
+  { "path": "reports", "component": null, "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": true }
+]

@@ -1,0 +1,4 @@
+[
+  { "path": "users", "component": "UserListComponent", "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false },
+  { "path": "users/:id", "component": "UserDetailComponent", "redirectTo": null, "loadChildren": null, "loadComponent": null, "guards": [], "children": [], "unresolvedLazy": false }
+]
