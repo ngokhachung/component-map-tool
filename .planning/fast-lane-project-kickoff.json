@@ -1,0 +1,16 @@
+{
+  "template_id": "fast-lane-assessment-v1",
+  "eligible": false,
+  "task_class": "normal",
+  "analysis": {
+    "scope_is_explicit": false,
+    "small_change_surface": false,
+    "no_arch_or_api_change": false,
+    "no_security_or_migration_risk": true,
+    "low_regression_risk": true
+  },
+  "recommended_skips": [],
+  "required_minimum_gates": ["verification"],
+  "reason": "Project kickoff of a multi-phase tool (Phase -1 through Phase 4) spanning indexer, edge builder, route parser, graph store, MD schema, PR bot, and renderer — scope is not a single explicit behavior, surface is many files/modules, and it establishes net-new architecture and APIs; fails criteria 1, 2, and 3.",
+  "fallback_path": "normal_workflow"
+}
