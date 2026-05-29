@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Wave 1)
+**Phase:** Step 7 — Execute (T1 complete, 1/6 done)
 **Status:** in_progress
 **Last updated:** 2026-05-29
 
@@ -14,7 +14,11 @@
 
 ## Next Action
 
-Execute STEP 7 Wave 1 (Plan 1 Task 1: scaffold + loader + gate-zero smoke) via subagent-driven-development. Plans approved; execution mode = Subagent-Driven.
+Dispatch T2 (Plan 1: shared harness — multiset diff + report). Then Wave 3 (T3/T4/T5), then T6.
+
+## Execution Log
+
+- T1 DONE (commit a6c36be): ESM workspace + loader + smoke. GATE-ZERO PASSED — @angular/compiler@19.2.14 runs standalone in Node ESM; all export names verified; ts-morph OK. Smoke assertion filters to hyphenated tags (visitor descends Template children → confirms research P-DC1).
 
 ## Open Blockers
 
