@@ -1,0 +1,24 @@
+{
+  "name": "component-map-poc",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Throwaway Phase 0 POC — validates Angular 19 parsing feasibility. NOT production code.",
+  "scripts": {
+    "smoke": "tsx spikes/smoke.ts",
+    "test": "vitest run",
+    "spike:component": "tsx spikes/spike-component.ts",
+    "spike:routing": "tsx spikes/spike-routing.ts",
+    "spike:template": "tsx spikes/spike-template.ts",
+    "report": "tsx spikes/report-all.ts"
+  },
+  "dependencies": {
+    "@angular/compiler": "19.2.14",
+    "ts-morph": "24.0.0"
+  },
+  "devDependencies": {
+    "tsx": "4.19.2",
+    "typescript": "5.6.3",
+    "vitest": "2.1.8"
+  }
+}
