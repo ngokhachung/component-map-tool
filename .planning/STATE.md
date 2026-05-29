@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 3 — Mode Gate (complete)
+**Phase:** Step 4 — Research (complete)
 **Status:** complete
 **Last updated:** 2026-05-29
 
@@ -14,7 +14,7 @@
 
 ## Next Action
 
-Run STEP 4 — Research (Mode A: Stack + Pitfall agents) to verify ts-morph + @angular/compiler@19 parsing APIs, then STEP 6 writing-plans.
+Run STEP 6 — writing-plans to draft the Phase 0 implementation plan (XML tasks, wave-grouped) from the spec + research, then Plan Checker.
 
 ## Open Blockers
 
@@ -30,6 +30,8 @@ Run STEP 4 — Research (Mode A: Stack + Pitfall agents) to verify ts-morph + @a
 - 2026-05-29: Approach A — independent spikes + shared assertion harness; tooling Node+TS, tsx runner, vitest
 - 2026-05-29: Gate thresholds — NO-GO if routing/template ≤50% pass; GO-with-caveats 50-80%; confident GO ≥80%
 - 2026-05-29: Mode A approved (0/5 Mode B signals) — source of truth for all downstream phases
+- 2026-05-29: STEP 4 research — @angular/compiler ESM-only; pin exact v19.x.y; must check parseTemplate errors; use CssSelector/SelectorMatcher; visitor recurses block children
+- 2026-05-29: Scope additions — messy fixtures (1-2/task), one @defer fixture, literal-only lazy-route resolution
 
 ## Approved Mode
 
