@@ -1,0 +1,15 @@
+{
+  "className": "LegacyWidgetComponent",
+  "selector": "app-legacy-widget",
+  "standalone": false,
+  "templateKind": "templateUrl",
+  "inputs": [
+    { "name": "title", "alias": null, "kind": "decorator", "required": false },
+    { "name": "dataId", "alias": "data-id", "kind": "decorator", "required": false },
+    { "name": "count", "alias": null, "kind": "signal", "required": false }
+  ],
+  "outputs": [
+    { "name": "onSave", "alias": "save", "kind": "decorator", "required": false }
+  ],
+  "module": "LegacyModule"
+}

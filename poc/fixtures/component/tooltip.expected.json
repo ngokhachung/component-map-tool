@@ -1,0 +1,9 @@
+{
+  "className": "TooltipComponent",
+  "selector": "app-tooltip",
+  "standalone": false,
+  "templateKind": "inline",
+  "inputs": [],
+  "outputs": [],
+  "module": "TooltipModule"
+}

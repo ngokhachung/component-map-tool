@@ -1,0 +1,14 @@
+{
+  "className": "NavBarComponent",
+  "selector": "app-nav-bar",
+  "standalone": true,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "title", "alias": null, "kind": "decorator", "required": false },
+    { "name": "logoUrl", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "outputs": [
+    { "name": "menuToggle", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "module": null
+}

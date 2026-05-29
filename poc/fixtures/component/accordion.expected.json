@@ -1,0 +1,14 @@
+{
+  "className": "AccordionComponent",
+  "selector": "app-accordion",
+  "standalone": false,
+  "templateKind": "templateUrl",
+  "inputs": [
+    { "name": "items", "alias": null, "kind": "decorator", "required": false },
+    { "name": "expandedIndex", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "outputs": [
+    { "name": "expandedIndexChange", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "module": "AccordionModule"
+}

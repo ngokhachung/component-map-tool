@@ -1,0 +1,11 @@
+{
+  "className": "BreadcrumbComponent",
+  "selector": "app-breadcrumb",
+  "standalone": false,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "items", "alias": null, "kind": "decorator", "required": false }
+  ],
+  "outputs": [],
+  "module": "BreadcrumbModule"
+}

@@ -1,0 +1,16 @@
+{
+  "className": "UserCardComponent",
+  "selector": "app-user-card",
+  "standalone": true,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "name", "alias": null, "kind": "signal", "required": true },
+    { "name": "avatarUrl", "alias": null, "kind": "signal", "required": false },
+    { "name": "selected", "alias": null, "kind": "signal", "required": false }
+  ],
+  "outputs": [
+    { "name": "selected", "alias": null, "kind": "signal", "required": false },
+    { "name": "remove", "alias": null, "kind": "signal", "required": false }
+  ],
+  "module": null
+}

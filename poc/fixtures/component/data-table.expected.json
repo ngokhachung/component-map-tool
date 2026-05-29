@@ -1,0 +1,16 @@
+{
+  "className": "DataTableComponent",
+  "selector": "app-data-table",
+  "standalone": true,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "rows", "alias": null, "kind": "signal", "required": true },
+    { "name": "pageSize", "alias": null, "kind": "signal", "required": false },
+    { "name": "selectedRow", "alias": null, "kind": "signal", "required": false }
+  ],
+  "outputs": [
+    { "name": "selectedRow", "alias": null, "kind": "signal", "required": false },
+    { "name": "rowClick", "alias": null, "kind": "signal", "required": false }
+  ],
+  "module": null
+}

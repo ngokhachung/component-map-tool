@@ -1,0 +1,14 @@
+{
+  "className": "ChartComponent",
+  "selector": "app-chart",
+  "standalone": true,
+  "templateKind": "inline",
+  "inputs": [
+    { "name": "data", "alias": null, "kind": "signal", "required": true },
+    { "name": "activeIndex", "alias": null, "kind": "signal", "required": true }
+  ],
+  "outputs": [
+    { "name": "activeIndex", "alias": null, "kind": "signal", "required": true }
+  ],
+  "module": null
+}
