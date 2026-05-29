@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 6 — Plan (complete)
-**Status:** waiting_for_user
+**Phase:** Step 7 — Execute (Wave 1)
+**Status:** in_progress
 **Last updated:** 2026-05-29
 
 ## Current Milestone
@@ -14,7 +14,7 @@
 
 ## Next Action
 
-User approves the 3 Phase 0 plans + wave structure, then picks execution mode → run executing-plans (Inline) or subagent-driven-development (Subagent-Driven) for STEP 7.
+Execute STEP 7 Wave 1 (Plan 1 Task 1: scaffold + loader + gate-zero smoke) via subagent-driven-development. Plans approved; execution mode = Subagent-Driven.
 
 ## Open Blockers
 
@@ -33,6 +33,7 @@ User approves the 3 Phase 0 plans + wave structure, then picks execution mode �
 - 2026-05-29: STEP 4 research — @angular/compiler ESM-only; pin exact v19.x.y; must check parseTemplate errors; use CssSelector/SelectorMatcher; visitor recurses block children
 - 2026-05-29: Scope additions — messy fixtures (1-2/task), one @defer fixture, literal-only lazy-route resolution
 - 2026-05-29: STEP 6 plans written — 3 plan files (.planning/phase0-{1,2,3}-PLAN.md), 6 tasks, 4 waves; Plan Checker (11 dims) passed after 1 revision loop (fixed blocker: NgModule fixture count)
+- 2026-05-29: Plans approved; execution mode = Subagent-Driven (fresh subagent per task + review checkpoints)
 
 ## Approved Mode
 
