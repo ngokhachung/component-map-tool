@@ -41,7 +41,8 @@ function main(): TaskReport {
 
   const cases: CaseResult[] = [];
   for (const f of files) {
-    if (f === 'selectors.json' || f.endsWith('.expected.json')) continue;
+    // Only iterate source fixtures; skips selectors.json, *.expected.json, and generated *.actual.json
+    if (!f.endsWith('.html') && !f.endsWith('.ts')) continue;
     const base = f.replace(/\.(html|ts)$/, '');
     const expectedPath = join(FIXTURES, `${base}.expected.json`);
     const expected = JSON.parse(readFileSync(expectedPath, 'utf8')) as TemplateResult;
