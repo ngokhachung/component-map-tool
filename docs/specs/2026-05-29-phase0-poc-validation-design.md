@@ -150,3 +150,24 @@ Each fixture ships with a hand-authored `expected.json` (ground truth). Each spi
 - A synthetic Angular 19 fixture set can faithfully represent the parsing edge cases that matter for the go/no-go decision.
 - `ts-morph` and `@angular/compiler@19` can be installed and run in a standalone Node/TS package without a full Angular app build.
 - The tool author (not an end Angular dev) is the user of the POC; output is JSON + a Markdown report, not a UI.
+
+## 11. Research-Driven Refinements (added 2026-05-29 after STEP 4)
+
+Source: `.planning/phase0-RESEARCH.md` (findings verified against Angular 19.2.x source).
+
+**Confirmed API/runtime constraints (bind into the plan):**
+- `@angular/compiler` is **ESM-only** → POC is authored as ESM (`poc/package.json` `"type":"module"`, `tsx` runner). First task is a 5-line **smoke import** of `parseTemplate` + a `TmplAst*` node + `CssSelector`/`SelectorMatcher` to confirm no zone.js/compiler-cli peer deps before building fixtures.
+- Pin an **exact** `@angular/compiler@19.x.y` (not `^`); record resolved version + import paths in the feasibility report. GO is scoped to "Angular 19 only".
+- Verified entry points: `parseTemplate(template, url, opts) -> {nodes, errors}`; nodes `TmplAstElement.name`, `TmplAstTemplate.{tagName,templateAttrs,children}`, `TmplAstContent`, `TmplAstIfBlock/ForLoopBlock/SwitchBlock`, `TmplAstDeferredBlock`; walker `TmplAstRecursiveVisitor` + `tmplAstVisitAll`. Selector matching via `CssSelector.parse` + `SelectorMatcher`.
+
+**Correctness rules the harness MUST enforce (prevent false GO):**
+- Pass `enableBlockSyntax: true` explicitly and assert `@if`/`@for`/`@switch` fixtures yield the block node types.
+- **Fail any case where `parseTemplate(...).errors` is non-null** — never score a parse-errored fixture as a clean "didn't resolve".
+- Visitor recurses through `Template`/`IfBlock`/`ForLoopBlock`/`SwitchBlock`/`DeferredBlock` children (components under structural/control-flow are nested, not top-level).
+- Use Angular's `SelectorMatcher` (not hand-rolled tag equality).
+- Deep-diff is **multiset/count-aware**; report **raw counts** alongside percentages and list borderline cases explicitly.
+
+**Scope decisions (user-approved 2026-05-29):**
+- **Messy fixtures:** add 1-2 per task — attribute/multi-selector component, mixed signal+decorator I/O (incl. `model()` and aliased `output('x')`), and a deliberately-unresolvable lazy route — to combat ground-truth bias.
+- **`@defer`:** add one `@defer` block fixture to the template spike (extends the originally-approved hard set).
+- **Lazy routes:** capture literal `import('./x')` path + `.then(m => m.X)` member name only; no cross-file target resolution (deferred to Phase 1).
