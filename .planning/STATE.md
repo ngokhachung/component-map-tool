@@ -2,19 +2,20 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (COMPLETE, 6/6 done)
-**Status:** in_progress
+**Phase:** Step 11 — Ship (M1 complete)
+**Status:** complete
 **Last updated:** 2026-05-29
 
 ## Current Milestone
 
-**Milestone:** M1 — Phase 0: POC Validation
+**Milestone:** M1 — Phase 0: POC Validation (COMPLETE, GO)
 **Started:** 2026-05-29
-**Target:** no deadline
+**Completed:** 2026-05-29
+**Next milestone:** M2 — Phase 1: Static Analysis Core (not started)
 
 ## Next Action
 
-STEP 8 — UAT + Goal-backward verification. POC result: Overall verdict GO. Then STEP 9 QA Gate, STEP 10/11 finish (merge feature/phase0-poc-2026-05-29).
+Start M2 (Phase 1 — Static Analysis Core) when ready: run STEP 1 Fast Lane → STEP 2 Brainstorm for the first Phase 1 feature. Carry-forward notes in `.planning/phase0-SUMMARY.md`.
 
 ## Execution Log
 
@@ -25,6 +26,9 @@ STEP 8 — UAT + Goal-backward verification. POC result: Overall verdict GO. The
 - T5 DONE (commit 195697c): template spike (opus) + 5 fixtures. 5/5 passed, parseErrors 0. Canary confirms block-child recursion (@if/@for/@switch/@defer); outlets + attribute/multi selectors via SelectorMatcher. POC-03/04 demonstrated.
 - T6 DONE (commit c9bf12c): report-all + GO/NO-GO. 19/19 vitest green. FEASIBILITY-REPORT.md → Overall verdict GO (component 11/11 6+5, routing 5/5, template 5/5). POC-05 demonstrated. Fixed spike-template idempotency bug (skip generated *.actual.json on re-run); verified stable.
 - STEP 7 COMPLETE — all 6 tasks done, all reviews passed.
+- STEP 8 UAT accepted (GO) + goal-backward verification (.planning/phase0-VERIFICATION.md).
+- STEP 9 QA Gate: APPROVE WITH CONDITIONS → I1 fixed (component verdict enforces rate>=80%); 20/20 tests green.
+- STEP 10/11: SUMMARY written (.planning/phase0-SUMMARY.md), ROADMAP updated (M1 done, M2 active), feature branch merged to master. M1 COMPLETE.
 
 ## Open Blockers
 
