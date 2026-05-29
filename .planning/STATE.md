@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (T4 complete, 4/6 done)
+**Phase:** Step 7 — Execute (T5 complete, 5/6 done)
 **Status:** in_progress
 **Last updated:** 2026-05-29
 
@@ -14,7 +14,7 @@
 
 ## Next Action
 
-Dispatch T5 (template spike, opus) → T6 (report).
+Dispatch T6 (report-all.ts — aggregate 3 spikes, apply gate, write FEASIBILITY-REPORT.md). Then STEP 8 UAT.
 
 ## Execution Log
 
@@ -22,6 +22,7 @@ Dispatch T5 (template spike, opus) → T6 (report).
 - T2 DONE (commit 0b54790): shared harness — multiset diff + scoreCase/scoreTask. 9/9 vitest green; parse-error→FAIL gating locked in.
 - T3 DONE (commit 113793e): component spike + 11 fixtures. 11/11 passed, meta 6 standalone / 5 NgModule. POC-01 demonstrated.
 - T4 DONE (commit 6c141e1): routing spike + 5 fixtures. 5/5 passed. Lazy path+symbol recovered; unresolvable-lazy flagged; identifier-const + nested children work. POC-02 demonstrated.
+- T5 DONE (commit 195697c): template spike (opus) + 5 fixtures. 5/5 passed, parseErrors 0. Canary confirms block-child recursion (@if/@for/@switch/@defer); outlets + attribute/multi selectors via SelectorMatcher. POC-03/04 demonstrated.
 
 ## Open Blockers
 
