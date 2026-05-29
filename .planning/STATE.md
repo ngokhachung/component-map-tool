@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (T1 complete, 1/6 done)
+**Phase:** Step 7 — Execute (T2 complete, 2/6 done)
 **Status:** in_progress
 **Last updated:** 2026-05-29
 
@@ -14,11 +14,12 @@
 
 ## Next Action
 
-Dispatch T2 (Plan 1: shared harness — multiset diff + report). Then Wave 3 (T3/T4/T5), then T6.
+Dispatch Wave 3: T3 (component spike) → T4 (routing spike) → T5 (template spike, opus), sequentially. Then T6 (report).
 
 ## Execution Log
 
 - T1 DONE (commit a6c36be): ESM workspace + loader + smoke. GATE-ZERO PASSED — @angular/compiler@19.2.14 runs standalone in Node ESM; all export names verified; ts-morph OK. Smoke assertion filters to hyphenated tags (visitor descends Template children → confirms research P-DC1).
+- T2 DONE (commit 0b54790): shared harness — multiset diff + scoreCase/scoreTask. 9/9 vitest green; parse-error→FAIL gating locked in.
 
 ## Open Blockers
 
