@@ -1,0 +1,8 @@
+[
+  { "selector": "app-child", "className": "ChildComponent" },
+  { "selector": "app-row", "className": "RowComponent" },
+  { "selector": "app-badge", "className": "BadgeComponent" },
+  { "selector": "app-panel", "className": "PanelComponent" },
+  { "selector": "button[appConfirm]", "className": "ConfirmButtonComponent" },
+  { "selector": "app-a, app-b", "className": "MultiSelectComponent" }
+]

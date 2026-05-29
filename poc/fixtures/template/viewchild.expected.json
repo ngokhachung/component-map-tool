@@ -1,0 +1,1 @@
+{ "parseErrors": 0, "deps": [ { "tag": "ViewChild", "component": null, "kind": "unresolved-static", "reason": "@ViewChild query" } ] }
