@@ -144,7 +144,8 @@ still recorded with a `reason`.
 
 Detect Angular version from the target repo's `package.json`. Resolve `standalone`:
 explicit flag if present → else `false` when the component is in some NgModule's
-`declarations` → else the version default (`< 17` ⇒ false). Validated against
+`declarations` → else the Angular-version default (`>= 19` ⇒ true — the `standalone`
+default flipped to true in Angular 19; `≤ 18` / unknown ⇒ false). Validated against
 `poc/real-sample/` (Angular 15, all NgModule): every component must resolve to
 `standalone: false`.
 
@@ -156,17 +157,20 @@ from the team sample `docs/components/C000011_Common_Table_Cell.md` (Japanese, t
 - **componentId** — from the metadata table column `コンポーネントID` (e.g. `C000011`); the
   H1 `# [C000011] …` and filename are cross-checks.
 - **MD → component link** — the `## ソースパス` section's code-span path
-  (`features\…\common-table.component.ts`). Normalize `\`→`/` and resolve against the
-  configured **src root**, then match a node by `filePath` (reuse the SAC-08 resolver).
-  This is location-independent, so the docs folder can live anywhere in the real repo.
+  (`features\…\common-table.component.ts`), normalized `\`→`/`. Linked to a node by a
+  **full-segment suffix match** against the node's `filePath` — the MD's src-root convention
+  need not equal the analyzed root, so the docs folder is location-independent. If the suffix
+  matches **>1 node → ambiguous**: skipped with a warning (never silently mis-links).
 - **images** — the `## 画面レイアウト` section's `![caption](./page/x.png)` links, resolved
   relative to the `.md` file → `node.images[]`.
 
 `MdIndex(docsDir)` reads the configurable folder **recursively**; targeted Markdown
 extraction (no YAML / heavy parser — Phase 1 needs only these three fields). Tolerant:
-no MD ⇒ `componentId: null`, `images: []`; duplicate `componentId` across files → error
-(list both paths); a source path resolving to no node → warning (orphan), never fatal.
-`MdIndex` is the last, isolated task — the core never blocks on it.
+no MD ⇒ `componentId: null`, `images: []`; a source path resolving to no node → warning
+(orphan); an ambiguous suffix match → warning + skip. A **duplicate `componentId`** across
+docs is reported (warning) and **not assigned to any node** (the alias namespace stays
+unambiguous for the query locator) — never fatal. `MdIndex` is the last, isolated task — the
+core never blocks on it.
 
 **Image display (SAC-12):** `cmap query <locator> --html <out>` writes one self-contained
 HTML file — the component's image(s) embedded as base64 `data:` URIs (offline, satisfies

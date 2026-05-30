@@ -84,6 +84,7 @@ must_haves:
     "ts-morph": "24.0.0"
   },
   "devDependencies": {
+    "@types/node": "22.19.19",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
     "vitest": "2.1.8",
@@ -92,7 +93,7 @@ must_haves:
 }
 ```
 
-Note: exact pins (no `^`). If `@angular/compiler@19.2.14` is unavailable, use the nearest published `19.2.x` and record the resolved version in the commit message.
+Note: exact pins (no `^`). `@types/node` is REQUIRED because `tsconfig.json` sets `types: ["node"]` and the tool uses `node:path`/`node:fs`/`node:util` — without it `tsc --noEmit` fails TS2688. If `@angular/compiler@19.2.14` is unavailable, use the nearest published `19.2.x` and record the resolved version in the commit message.
 
 - [ ] **Step 2: Create `tool/tsconfig.json`**
 
@@ -201,6 +202,7 @@ describe('types contract', () => {
       filePath: 'src/app/foo.component.ts',
       standalone: false,
       module: 'AppModule',
+      templateKind: 'none',
       inputs: [{ name: 'x', alias: null, kind: 'decorator', required: false }],
       outputs: [],
       docPath: null,

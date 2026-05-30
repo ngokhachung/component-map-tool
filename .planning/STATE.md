@@ -2,21 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Wave 1; plans written wave-by-wave)
-**Status:** in_progress
-**Last updated:** 2026-05-30
+**Phase:** Step 11 — Ship (M2 COMPLETE; SUMMARY + ROADMAP done; awaiting merge decision)
+**Status:** waiting_for_user
+**Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M2 — Phase 1: Static Analysis Core (in progress)
+**Milestone:** M2 — Phase 1: Static Analysis Core (**COMPLETE** 2026-05-31)
 **Started:** 2026-05-30
-**Completed:** —
-**Next milestone:** M3 — Phase 2a + 2.5 (MD Schema + PR Bot)
+**Completed:** 2026-05-31
+**Next milestone:** M3 — Phase 2a + 2.5 (MD Schema + PR Bot) — not started
 **Prior:** M1 — Phase 0 POC (COMPLETE, GO, 2026-05-29)
 
 ## Next Action
 
-Execute Wave 1 (`.planning/phase1-1-PLAN.md`: T1 scaffold, T2 types, T3 shared Project+resolver) subagent-driven, commit per task. Then write + execute Plan 2 (Wave 2 Indexer) and onward wave-by-wave. Full wave map (10 plans / 7 waves) approved.
+Merge `feature/phase1-static-analysis-2026-05-30` → master (user decision: merge locally + push, or open PR), then push. SUMMARY + ROADMAP written. After merge → M3 (Phase 2a + 2.5) begins at STEP 1/2 when ready. Branch has QA-fix commits not yet pushed.
 
 ## Execution Log
 
@@ -30,6 +30,27 @@ Execute Wave 1 (`.planning/phase1-1-PLAN.md`: T1 scaffold, T2 types, T3 shared P
 - STEP 8 UAT accepted (GO) + goal-backward verification (.planning/phase0-VERIFICATION.md).
 - STEP 9 QA Gate: APPROVE WITH CONDITIONS → I1 fixed (component verdict enforces rate>=80%); 20/20 tests green.
 - STEP 10/11: SUMMARY written (.planning/phase0-SUMMARY.md), ROADMAP updated (M1 done, M2 active), feature branch merged to master. M1 COMPLETE.
+
+## Phase 1 Execution Log
+
+- W1/T1 DONE (2c62775): `tool/` scaffold (ESM, Node≥20, pinned @angular/compiler 19.2.14 + ts-morph 24.0.0). Note: npm audit flags transitive vulns in dev tooling → for QA (STEP 9).
+- W1 fix (8c32ed5): added `@types/node` (tsconfig `types:["node"]` needed it) + fixed `types.test.ts` sample missing `templateKind` — both caught by first `tsc --noEmit` (vitest/esbuild don't typecheck). Plan 1 updated.
+- W1/T2 DONE (98c81f3): `src/types.ts` — Graph/ComponentNode/Edge/RouteNode/IoPort/LazyTarget + SCHEMA_VERSION=1. 2 tests.
+- W1/T3 DONE (e0e1461): `src/shared/project.ts` — createProject (AST-only) + resolveImportFile + getExportedDeclaration (checker-free). 6 tests. Implemented by controller after T3 subagent hit a session limit (code verbatim from approved plan). Full suite 8/8 green, tsc clean.
+- W2/T4 DONE (3c692b4): `src/indexer/component.ts` — extractComponentMeta (selector/io decorator+signal/templateKind/standaloneExplicit). 4 tests.
+- W2/T5 DONE (a9601d8): `src/indexer/{version,module-map,index}.ts` — angularMajorFromPkg/standaloneDefault, buildModuleMap (incl. spread flatten), resolveStandalone + indexComponents (STND-01). 12 tests. Full suite **24/24 green, tsc clean**. v15 NgModule components correctly resolve standalone:false.
+- P3/T6 DONE (3899048): `src/routes/parse.ts` — parseRoute/parseRouteArray (path/redirect/outlet/pathMatch/guards/children/lazy + fullPath collapse) + restricted route-array detection (forRoot/forChild/provideRouter only, dropped over-broad fallback). 3 tests.
+- P3/T7 DONE (4fc07c0): `src/routes/index.ts` — parseRoutes with lazy forChild stitching via resolveImportFile (full URL e.g. finance/invoices). 2 tests. Full suite **29/29 green, tsc clean**.
+- P4/T8 DONE (2e9152b): `src/edges/template-visitor.ts` — buildMatcher/collectTemplateDeps/parseTemplateDeps. **Fixed *ngIf/*ngFor double-count** (match TmplAstElement only, skip desugared Template) + parse-error-loud. 3 tests. (Adapted the malformed-template test input — spec's `<div [.="x">` produced 0 errors in v19.2.14; used unterminated `<div`; impl verbatim. Plan updated.)
+- P4/T9 DONE (491c125): `src/edges/index.ts` — buildSelectorRegistry + buildEdges (template + @ViewChild/createComponent → deduped Edge[], per-component parseErrors). 2 tests. Full suite **34/34 green, tsc clean**. ParentComponent→ChildComponent = ONE edge despite *ngIf (double-count fix verified end-to-end).
+- P5/T10 DONE (ce06c71): `src/graph/assemble.ts` — assembleGraph (records→ComponentNode, id=className, null MD fields) + deterministic serializeGraph/loadGraph (schemaVersion guard). 4 tests.
+- P5/T11 DONE (4421351): `src/graph/index.ts` — buildGraph(project,{root}) (index+edges+routes+assemble) + buildGraphFromRoot + writeGraph(.cmap/graph.json). 2 tests. Full suite **40/40 green, tsc clean**. Full build pipeline works end-to-end.
+- P10/T18+T19 DONE (606206e, ec600d1): `src/real-sample.test.ts` — ground-truth accuracy gate (18 comp all NgModule, **19/19 resolved edges exact-match = 100%**, dynamic cases flagged, DataTable→finance/invoices) + vitest coverage thresholds ≥80% (actual **96%/88%/99%/96%**). **STEP 7 EXECUTE COMPLETE: 10 plans / 19 tasks, 76 tests, tsc clean.**
+- P9/T16+T17 DONE (a41a1c8, 73e96cc): `src/cli/html.ts` (renderHtml — self-contained, base64 images) + `src/cli/{index,run}.ts` (runCli: `cmap index`/`query <locator>` via node:util parseArgs, --html, enrichGraph each run) + `cmap` npm script. 6 tests. **+ fix (after 73e96cc): toRepoRelative for relative roots** — CLI smoke exposed garbled filePath with `--root ../poc/...`; fixed + regression test. Full suite **72/72 green, tsc clean**. Real CLI: `query app-data-table --root ../poc/real-sample/src` → DataTableComponent, filePath clean, accessPaths finance/invoices+reports.
+- P8/T15 DONE (e8c2649): `src/md/{parse,index}.ts` — parseMdDoc (componentId from コンポーネントID table col + title fallback; ソースパス source link; 画面レイアウト images w/ heading captions) + enrichGraph (source-path suffix match → node.componentId/docPath/images; dup/orphan warnings). 7 tests. Full suite **64/64 green, tsc clean**.
+- P7/T13+T14 DONE (4a600b9 + fix, c31bbdc): `src/query/locator.ts` (resolveLocator: componentId→className→file→selector + ambiguity) + `src/query/index.ts` (impact reverse-BFS cycle-safe + uncertain flag; uiAccessPaths route→chain). 11 tests. Full suite **57/57 green, tsc clean**. (Fixed a TS2783 in the locator test helper I'd authored — duplicate className via spread.)
+- P6/T12 DONE (ed6b972): `src/cache/{manifest,index}.ts` — hashSources/manifest io/diff + buildIncremental (cache-or-rebuild; any change → full sound rebuild). 5 tests. Full suite **46/46 green, tsc clean**. (Fine-grained per-file re-parse deferred.)
+- **End-to-end validation on real-sample** (buildGraphFromRoot ../poc/real-sample/src): 18 comp (0 standalone ✓), 28 deduped edges (19 resolved/4 indirect/5 unresolved-static ✓), 0 parse errors. Caught + FIXED a real bug — lazy stitching missed forChild in a SEPARATE `*-routing.module.ts` imported by the feature module. Fix (commit after 4421351): `stitch` now follows the lazy module's imports. Re-validated: `finance/invoices`, `finance/payments/:id`, `finance/reports` stitch correctly. +1 test (routes suite now 3); full suite **41/41 green**.
 
 ## Open Blockers
 
@@ -62,6 +83,8 @@ Execute Wave 1 (`.planning/phase1-1-PLAN.md`: T1 scaffold, T2 types, T3 shared P
 - 2026-05-30: STEP 4 Research done (`.planning/phase1-RESEARCH.md`). Key decisions: AST-only ts-morph (own export index, no type-checker, `forgetNodesCreatedInBlock`); pinned `@angular/compiler@19.2.x` + read `preserveWhitespaces`/`interpolation` from decorator; edge visitor matches `TmplAstElement` only + dedup → fixes `*ngIf/*ngFor` double-count; parse error = loud (not empty deps); route parser drops over-broad fallback + handles outlets/pathMatch/redirect/empty-segment + lazy `forChild` stitching; incremental rebuilds full selector+membership registry before resolve; query traversals use visited-set + cycle flag + resolved-only-with-uncertain; artifacts to `.cmap/`; CLI via `node:util parseArgs` (Node ≥20); MD via `js-yaml` + fence split (owner sign-off pending).
 
 - 2026-05-30: STEP 6 plans — wave map approved (10 plans / 7 waves, ~19 tasks, model per task). Cadence = **wave-by-wave** (write plan → execute → next). Plan 1 (Wave 1) written + approved. Execution mode = **Subagent-Driven**; `commit_atomic: true` (commit per task).
+
+- 2026-05-31: STEP 8 UAT PASS + goal-backward verification PASS (13/13 REQ). STEP 9 QA = **APPROVE WITH CONDITIONS** (code-reviewer): 0 Critical; 3 Important fixed — (#3) image path-traversal blocked in HTML preview, (#2) duplicate componentId not assigned, (#1) SAC-09 suffix-match link reconciled in spec. (#4) standalone default `>=19` reconciled in spec. Suggestions to Phase 2 backlog: multi-match edge collection (visitor keeps last match only); uiAccessPaths one-chain-per-route limitation; route lazy-symbol recovery brittleness. 78 tests, coverage 97.6%.
 
 ## Approved Mode
 
