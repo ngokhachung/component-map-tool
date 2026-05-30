@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 9 — QA Gate (STEP 8 UAT + verification PASS)
+**Phase:** Step 9 — QA Gate PASS (APPROVE WITH CONDITIONS → all conditions satisfied)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-STEP 9 QA Gate (Mode A: requesting-code-review) on the Phase 1 diff → then STEP 10/11 ship (merge feature branch → master + phase1-SUMMARY + ROADMAP M2→done/M3→active). STEP 8 UAT PASS (user "step 8 pass" 2026-05-31). Branch pushed to origin (44 commits).
+STEP 10/11 — Ship: merge feature branch → master + write phase1-SUMMARY + ROADMAP (M2→done, M3→active). QA conditions all satisfied. Branch on origin (needs final push of QA-fix commits before/at merge).
 
 ## Execution Log
 
@@ -83,6 +83,8 @@ STEP 9 QA Gate (Mode A: requesting-code-review) on the Phase 1 diff → then STE
 - 2026-05-30: STEP 4 Research done (`.planning/phase1-RESEARCH.md`). Key decisions: AST-only ts-morph (own export index, no type-checker, `forgetNodesCreatedInBlock`); pinned `@angular/compiler@19.2.x` + read `preserveWhitespaces`/`interpolation` from decorator; edge visitor matches `TmplAstElement` only + dedup → fixes `*ngIf/*ngFor` double-count; parse error = loud (not empty deps); route parser drops over-broad fallback + handles outlets/pathMatch/redirect/empty-segment + lazy `forChild` stitching; incremental rebuilds full selector+membership registry before resolve; query traversals use visited-set + cycle flag + resolved-only-with-uncertain; artifacts to `.cmap/`; CLI via `node:util parseArgs` (Node ≥20); MD via `js-yaml` + fence split (owner sign-off pending).
 
 - 2026-05-30: STEP 6 plans — wave map approved (10 plans / 7 waves, ~19 tasks, model per task). Cadence = **wave-by-wave** (write plan → execute → next). Plan 1 (Wave 1) written + approved. Execution mode = **Subagent-Driven**; `commit_atomic: true` (commit per task).
+
+- 2026-05-31: STEP 8 UAT PASS + goal-backward verification PASS (13/13 REQ). STEP 9 QA = **APPROVE WITH CONDITIONS** (code-reviewer): 0 Critical; 3 Important fixed — (#3) image path-traversal blocked in HTML preview, (#2) duplicate componentId not assigned, (#1) SAC-09 suffix-match link reconciled in spec. (#4) standalone default `>=19` reconciled in spec. Suggestions to Phase 2 backlog: multi-match edge collection (visitor keeps last match only); uiAccessPaths one-chain-per-route limitation; route lazy-symbol recovery brittleness. 78 tests, coverage 97.6%.
 
 ## Approved Mode
 
