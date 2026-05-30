@@ -16,7 +16,7 @@ Each requirement must be:
 
 Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% coverage required.
 
-> **Scope note:** This file covers **M1 — Phase 0 (POC Validation)** and **M2 — Phase 1 (Static Analysis Core)**. Later milestones (Phase 2.x MD + PR bot, Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
+> **Scope note:** This file covers **M1 — Phase 0**, **M2 — Phase 1**, and **M3 — Phase 2a + 2.5 (MD Overrides + PR Bot)**. Later milestones (Phase 2b enforcement, Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
 
 ## v1 Requirements (Ship in initial release)
 
@@ -48,13 +48,26 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 | SAC-11 | Extract representative component images from MD (`## 画面レイアウト` `![](path)`) into `node.images[]`, resolved relative to the `.md` | Phase 1 |
 | SAC-12 | `cmap query <locator> --html <out>`: single self-contained HTML preview (images base64-embedded, offline) + impact + UI-access-path; full interactive renderer stays Phase 3 | Phase 1 |
 
+## M3 — Phase 2a + 2.5 Requirements (MD Overrides + PR Bot)
+
+**Design spec:** `docs/specs/2026-05-31-phase2-md-overrides-pr-bot-design.md` — brainstorm output 2026-05-31. All map to phase **Phase 2a/2.5** (M3) in ROADMAP.
+
+| REQ-ID | Requirement | Phase |
+|---|---|---|
+| OVR-01 | Parse a tool-owned `docs/component-map/<componentId>.cmap.yaml` (configurable dir) — versioned schema `{ schemaVersion, componentId, dynamicDeps:[{target,reason?}], notes? }`; tolerant (missing → none, malformed → warning+skip) | Phase 2a |
+| OVR-02 | Merge overrides into the graph: each `dynamicDeps.target` resolved via the locator → `resolved` edge `via:'override'`; closes the matching `unresolved-static` flag; unresolvable target → warning | Phase 2a |
+| OVR-03 | `cmap gaps` reports components with `unresolved-static`/`indirect` edges not covered by an override (+ construct kinds); a component with none (or all covered) is "complete" | Phase 2a |
+| OVR-04 | `cmap gaps --write` scaffolds/updates `.cmap.yaml` for gap components (one entry per detected construct, `reason` auto, `target:""`); **merge-safe** — preserves filled targets, adds new gaps, marks vanished constructs `stale:true`; never overwrites user input | Phase 2a |
+| OVR-05 | Surface read-only project-MD description (`機能概要`) on the node / in query + PR output (no MD edit) | Phase 2a |
+| BOT-01 | `cmap pr --changed <files>` renders a Markdown comment: per changed component, impact (ancestors + routes), UI access paths, uncertainty/gap warnings + description (pure/testable) | Phase 2.5 |
+| BOT-02 | GitHub Action `.github/workflows/component-map-pr.yml`: on PR, diff changed `*.component.ts`, build graph in CI, run `cmap pr`, post/update a sticky PR comment | Phase 2.5 |
+
 ## v2 Requirements (Deferred — later milestones)
 
 | REQ-ID | Requirement | Reason deferred |
 |---|---|---|
-| (TBD) | PR bot comments parents/routes affected on component-file changes | Phase 2.5 — early value |
-| (TBD) | Markdown UI Access Path schema + tolerant parser + merge | Phase 2a |
-| (TBD) | Mermaid / standalone HTML renderer | Phase 3 |
+| (TBD) | MD migration tool + MANDATORY CI linter / enforcement | Phase 2b (M4) |
+| (TBD) | Mermaid / standalone HTML interactive renderer | Phase 3 |
 
 ## Out of Scope (Explicit exclusions — Phase 0)
 
@@ -75,4 +88,4 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 
 ## Last updated
 
-2026-05-30
+2026-05-31

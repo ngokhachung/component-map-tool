@@ -2,21 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship COMPLETE (M2 merged to master)
-**Status:** complete
+**Phase:** Step 3 — Mode Gate complete (M3 brainstorm done, Mode A approved)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M2 — Phase 1: Static Analysis Core (**COMPLETE** 2026-05-31)
-**Started:** 2026-05-30
-**Completed:** 2026-05-31
-**Next milestone:** M3 — Phase 2a + 2.5 (MD Schema + PR Bot) — not started
-**Prior:** M1 — Phase 0 POC (COMPLETE, GO, 2026-05-29)
+**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (in progress, started 2026-05-31)
+**Started:** 2026-05-31
+**Completed:** —
+**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement)
+**Prior:** M2 — Phase 1 Static Analysis Core (COMPLETE, merged, 2026-05-31)
 
 ## Next Action
 
-Start **M3 — Phase 2a + 2.5 (MD Schema + PR Bot)** when ready: STEP 1 Fast Lane → STEP 2 Brainstorm for the first M3 feature. Phase 1 merged to master (`f9a4461`, `--no-ff`) + pushed; 78 tests green on master. Carry-forward backlog in `.planning/phase1-SUMMARY.md`.
+STEP 4 Research decision for M3 (focused: js-yaml, GitHub Actions sticky PR-comment pattern, git diff in CI) vs skip, then writing-plans (STEP 6). M3 design approved: `docs/specs/2026-05-31-phase2-md-overrides-pr-bot-design.md`. Working on master (no feature branch yet — create at execute).
 
 ## Execution Log
 
@@ -86,9 +86,14 @@ Start **M3 — Phase 2a + 2.5 (MD Schema + PR Bot)** when ready: STEP 1 Fast Lan
 
 - 2026-05-31: STEP 8 UAT PASS + goal-backward verification PASS (13/13 REQ). STEP 9 QA = **APPROVE WITH CONDITIONS** (code-reviewer): 0 Critical; 3 Important fixed — (#3) image path-traversal blocked in HTML preview, (#2) duplicate componentId not assigned, (#1) SAC-09 suffix-match link reconciled in spec. (#4) standalone default `>=19` reconciled in spec. Suggestions to Phase 2 backlog: multi-match edge collection (visitor keeps last match only); uiAccessPaths one-chain-per-route limitation; route lazy-symbol recovery brittleness. 78 tests, coverage 97.6%.
 
+- 2026-05-31: **M3 kicked off.** STEP 1 Fast Lane = NOT eligible (milestone-scale). STEP 2 Brainstorm + STEP 3 Mode Gate done. Decisions: M3 = Phase 2a (MD overrides) + Phase 2.5 (PR bot) bundled in one cycle.
+- 2026-05-31: Project MD is **read-only** project doc (tool must not edit). Dynamic-dep gaps patched via a **separate tool-owned `.cmap.yaml`** (per component, key=componentId, in `docs/component-map/`). **Tool scaffolds the skeleton** (`cmap gaps --write`, pre-filled detected constructs + empty `target`), user fills only `target`; merge-safe. Static-complete components need no override.
+- 2026-05-31: Merge override `target`s → `resolved` edges `via:'override'`; `cmap gaps` lists components needing supplement. PR bot = GitHub Action that rebuilds graph in CI + posts sticky comment via `cmap pr`. js-yaml allowed (tool-owned data). Data model: `Edge.via`+`'override'`, `ComponentNode.description`, bump schemaVersion.
+- 2026-05-31: M3 REQ-IDs = OVR-01..05 + BOT-01/02 (REQUIREMENTS.md). Mode A approved for M3 (1/5 Mode B signals — light CI).
+
 ## Approved Mode
 
-Mode A — approved 2026-05-30 (M2/Phase 1); prior M1 also Mode A (2026-05-29)
+Mode A — approved 2026-05-31 (M3); prior M2/M1 also Mode A
 
 ## Config
 
