@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
+import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { runCli } from './index.js';
+import { runCli, imageDataUris } from './index.js';
 
 function repo(): string {
   const d = mkdtempSync(join(tmpdir(), 'cmap-cli-'));
@@ -54,5 +54,36 @@ describe('runCli query', () => {
       expect(runCli(['query', 'Nope', '--root', d, '--out', join(d, '.cmap')]).code).toBe(1);
       expect(runCli(['query', '--root', d]).code).toBe(1);
     } finally { rmSync(d, { recursive: true, force: true }); }
+  });
+});
+
+describe('imageDataUris (security)', () => {
+  it('embeds in-docs images but refuses path traversal and non-image files', () => {
+    const docs = mkdtempSync(join(tmpdir(), 'cmap-docs-'));
+    const outside = mkdtempSync(join(tmpdir(), 'cmap-secret-'));
+    try {
+      mkdirSync(join(docs, 'page'), { recursive: true });
+      writeFileSync(join(docs, 'page', 'shot.png'), 'PNGDATA');
+      writeFileSync(join(docs, 'page', 'notes.txt'), 'text');
+      writeFileSync(join(outside, 'secret.png'), 'TOPSECRET');
+
+      const result = imageDataUris(
+        [
+          { caption: 'ok', path: 'page/shot.png' },
+          { caption: 'bad', path: '../../secret.png' },          // traversal
+          { caption: 'bad2', path: join(outside, 'secret.png') }, // absolute escape
+          { caption: 'txt', path: 'page/notes.txt' },            // non-image
+        ],
+        docs,
+      );
+      expect(result).toHaveLength(1);
+      expect(result[0].caption).toBe('ok');
+      expect(result[0].dataUri.startsWith('data:image/png;base64,')).toBe(true);
+      // the secret file must never be embedded
+      expect(result.some((r) => r.dataUri.includes(Buffer.from('TOPSECRET').toString('base64')))).toBe(false);
+    } finally {
+      rmSync(docs, { recursive: true, force: true });
+      rmSync(outside, { recursive: true, force: true });
+    }
   });
 });

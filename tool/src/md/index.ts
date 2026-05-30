@@ -36,7 +36,11 @@ export function enrichGraph(graph: Graph, docsDir: string): { warnings: string[]
     const arr = byId.get(d.componentId);
     if (arr) arr.push(d.mdPath); else byId.set(d.componentId, [d.mdPath]);
   }
-  for (const [id, paths] of byId) if (paths.length > 1) warnings.push(`duplicate componentId ${id} in: ${paths.join(', ')}`);
+  const duplicateIds = new Set<string>();
+  for (const [id, paths] of byId) if (paths.length > 1) {
+    duplicateIds.add(id);
+    warnings.push(`duplicate componentId ${id} in: ${paths.join(', ')}`);
+  }
 
   for (const d of docs) {
     if (!d.sourcePath) { warnings.push(`MD ${d.mdPath} has no ソースパス source path`); continue; }
@@ -44,7 +48,9 @@ export function enrichGraph(graph: Graph, docsDir: string): { warnings: string[]
     if (matches.length === 0) { warnings.push(`MD ${d.mdPath} source path ${d.sourcePath} matched no component (orphan)`); continue; }
     if (matches.length > 1) { warnings.push(`MD ${d.mdPath} source path ${d.sourcePath} matched ${matches.length} components (ambiguous)`); continue; }
     const node = matches[0];
-    node.componentId = d.componentId;
+    // Don't assign a DUPLICATED componentId — it would make the alias ambiguous at query time
+    // (resolveLocator). Still link docPath/images. (SAC-09: duplicate id is an error.)
+    node.componentId = d.componentId && duplicateIds.has(d.componentId) ? null : d.componentId;
     node.docPath = d.mdPath;
     node.images = d.images;
   }

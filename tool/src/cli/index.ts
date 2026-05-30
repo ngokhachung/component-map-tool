@@ -1,6 +1,6 @@
 import { parseArgs } from 'node:util';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { extname, resolve, relative, isAbsolute } from 'node:path';
 import { buildIncremental } from '../cache/index.js';
 import { enrichGraph } from '../md/index.js';
 import { writeGraph } from '../graph/index.js';
@@ -18,13 +18,24 @@ function buildEnriched(root: string, out: string, docs: string | undefined): { g
   return { graph, parseErrors, warnings, fromCache };
 }
 
-function imageDataUris(images: { caption: string | null; path: string }[], docs: string | undefined): { caption: string | null; dataUri: string }[] {
+const SAFE_IMG_EXT = new Set(['png', 'jpg', 'jpeg', 'gif', 'svg', 'webp']);
+
+// Read MD-referenced images as base64 data URIs for the self-contained HTML.
+// SECURITY: the HTML is a shareable artifact, so refuse any image path that escapes the
+// docs folder (path traversal) or has a non-image extension — never embed arbitrary files.
+export function imageDataUris(
+  images: { caption: string | null; path: string }[],
+  docs: string | undefined,
+): { caption: string | null; dataUri: string }[] {
   if (!docs) return [];
   const out: { caption: string | null; dataUri: string }[] = [];
   for (const img of images) {
-    const p = join(docs, img.path);
+    const p = resolve(docs, img.path);
+    const rel = relative(resolve(docs), p);
+    if (rel.startsWith('..') || isAbsolute(rel)) continue; // escapes docs/ -> skip
+    const ext = extname(p).slice(1).toLowerCase();
+    if (!SAFE_IMG_EXT.has(ext)) continue; // non-image -> skip
     if (existsSync(p)) {
-      const ext = extname(p).slice(1).toLowerCase() || 'png';
       out.push({ caption: img.caption, dataUri: `data:image/${ext};base64,${readFileSync(p).toString('base64')}` });
     }
   }

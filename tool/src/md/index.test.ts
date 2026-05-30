@@ -52,4 +52,18 @@ describe('enrichGraph', () => {
       expect(warnings.some((w) => w.includes('orphan') || w.includes('matched no component'))).toBe(true);
     } finally { rmSync(dir, { recursive: true, force: true }); }
   });
+
+  it('does NOT assign a duplicated componentId to matched nodes (alias stays unambiguous)', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'cmap-md-'));
+    try {
+      writeFileSync(join(dir, 'a.md'), '# [DUP] A\n\n## ソースパス\n`a/foo.component.ts`\n');
+      writeFileSync(join(dir, 'b.md'), '# [DUP] B\n\n## ソースパス\n`b/bar.component.ts`\n');
+      const graph: Graph = { schemaVersion: 1, components: [node('FooComponent', 'src/a/foo.component.ts'), node('BarComponent', 'src/b/bar.component.ts')], edges: [], routes: [] };
+      enrichGraph(graph, dir);
+      // both docs link (docPath set) but neither node carries the duplicated id
+      expect(graph.components.find((c) => c.className === 'FooComponent')!.componentId).toBeNull();
+      expect(graph.components.find((c) => c.className === 'BarComponent')!.componentId).toBeNull();
+      expect(graph.components.find((c) => c.className === 'FooComponent')!.docPath).toBe('a.md');
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
 });
