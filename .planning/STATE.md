@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Plans 1-5 done: +Graph; full build pipeline works; 40 tests green; branch feature/phase1-static-analysis-2026-05-30)
+**Phase:** Step 7 — Execute (Plans 1-6 done: +Cache; 46 tests green; branch feature/phase1-static-analysis-2026-05-30)
 **Status:** in_progress
 **Last updated:** 2026-05-30
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 6 (`.planning/phase1-6-PLAN.md`, Cache: T12 content-hash manifest + incremental build — rebuild full registry before resolve), then execute. Plans 1-5 done (40 tests green). Branch: feature/phase1-static-analysis-2026-05-30.
+Write Plan 7 (`.planning/phase1-7-PLAN.md`, Query: T13 locator resolver, T14 impact + UI-access-path with visited-set/cycle/uncertain), then execute. Plans 1-6 done (46 tests green). Branch: feature/phase1-static-analysis-2026-05-30.
 
 ## Execution Log
 
@@ -45,6 +45,7 @@ Write Plan 6 (`.planning/phase1-6-PLAN.md`, Cache: T12 content-hash manifest + i
 - P4/T9 DONE (491c125): `src/edges/index.ts` — buildSelectorRegistry + buildEdges (template + @ViewChild/createComponent → deduped Edge[], per-component parseErrors). 2 tests. Full suite **34/34 green, tsc clean**. ParentComponent→ChildComponent = ONE edge despite *ngIf (double-count fix verified end-to-end).
 - P5/T10 DONE (ce06c71): `src/graph/assemble.ts` — assembleGraph (records→ComponentNode, id=className, null MD fields) + deterministic serializeGraph/loadGraph (schemaVersion guard). 4 tests.
 - P5/T11 DONE (4421351): `src/graph/index.ts` — buildGraph(project,{root}) (index+edges+routes+assemble) + buildGraphFromRoot + writeGraph(.cmap/graph.json). 2 tests. Full suite **40/40 green, tsc clean**. Full build pipeline works end-to-end.
+- P6/T12 DONE (ed6b972): `src/cache/{manifest,index}.ts` — hashSources/manifest io/diff + buildIncremental (cache-or-rebuild; any change → full sound rebuild). 5 tests. Full suite **46/46 green, tsc clean**. (Fine-grained per-file re-parse deferred.)
 - **End-to-end validation on real-sample** (buildGraphFromRoot ../poc/real-sample/src): 18 comp (0 standalone ✓), 28 deduped edges (19 resolved/4 indirect/5 unresolved-static ✓), 0 parse errors. Caught + FIXED a real bug — lazy stitching missed forChild in a SEPARATE `*-routing.module.ts` imported by the feature module. Fix (commit after 4421351): `stitch` now follows the lazy module's imports. Re-validated: `finance/invoices`, `finance/payments/:id`, `finance/reports` stitch correctly. +1 test (routes suite now 3); full suite **41/41 green**.
 
 ## Open Blockers
