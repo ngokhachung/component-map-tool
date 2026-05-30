@@ -43,8 +43,10 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 | SAC-06 | Impact query: locator → ancestors, marking paths through `indirect`/`unresolved-static` edges as uncertain | Phase 1 |
 | SAC-07 | UI-access-path query: locator → list of `{ routeUrl, componentChain }`, flagging lazy / indirect / unresolved segments | Phase 1 |
 | SAC-08 | Component locator resolves by `componentId` (MD alias) → `className` → file (path or basename) → `selector`; matching > 1 node → error listing candidates | Phase 1 |
-| SAC-09 | `MdIndex`: read `componentId` from a centralized docs folder, map to nodes; tolerant (missing/no MD ⇒ `componentId: null`); concrete MD format pinned from a user-provided sample | Phase 1 |
+| SAC-09 | `MdIndex`: from a configurable docs folder (recursive), parse each `.md` for `componentId` (table col `コンポーネントID`) and link to a node via `## ソースパス` source path (normalized, resolved vs src root); tolerant (no MD ⇒ `componentId: null`), duplicate id → error, orphan → warning; targeted Markdown extraction | Phase 1 |
 | SAC-10 | Deliverable: TS library API + CLI (`cmap index`, `cmap query <locator>`), JSON output | Phase 1 |
+| SAC-11 | Extract representative component images from MD (`## 画面レイアウト` `![](path)`) into `node.images[]`, resolved relative to the `.md` | Phase 1 |
+| SAC-12 | `cmap query <locator> --html <out>`: single self-contained HTML preview (images base64-embedded, offline) + impact + UI-access-path; full interactive renderer stays Phase 3 | Phase 1 |
 
 ## v2 Requirements (Deferred — later milestones)
 

@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 4 — Research (complete)
+**Phase:** Step 4 — Research (complete) → ready for STEP 6 (Plan)
 **Status:** in_progress
 **Last updated:** 2026-05-30
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Run writing-plans (STEP 6) to draft Phase 1 implementation plans, consuming `.planning/phase1-RESEARCH.md`. Open item: owner sign-off on `js-yaml` dependency (fallback: single-scalar hand-parser).
+Run writing-plans (STEP 6) for all Phase 1 plans (SAC-01..12 + STND-01), consuming `.planning/phase1-RESEARCH.md`. Sample MD received + format pinned — MdIndex no longer blocked.
 
 ## Execution Log
 
@@ -58,6 +58,7 @@ Run writing-plans (STEP 6) to draft Phase 1 implementation plans, consuming `.pl
 - 2026-05-30: Phase 1 REQ-IDs = SAC-01..10 + STND-01 (see REQUIREMENTS.md).
 - 2026-05-30: Mode A approved for M2 (0/5 Mode B signals) — source of truth for all Phase 1 downstream steps.
 - 2026-05-30: Demo branches pushed for team progress walkthrough: `demo/1-poc-fixtures` (61127c7), `demo/2-real-sample` (04da98d), `demo/3-phase1-design` (40079e3).
+- 2026-05-30: MD format pinned from sample `docs/components/C000011_Common_Table_Cell.md` (Japanese, table-based): `componentId` from table col `コンポーネントID`; MD→component link via `## ソースパス` source path (location-independent → docs folder configurable); images from `## 画面レイアウト` `![](path)`. Parser = targeted Markdown extraction (NOT YAML → js-yaml question moot). Added SAC-11 (images in node) + SAC-12 (minimal self-contained HTML preview, base64 images — the image-display ask). Full interactive renderer stays Phase 3.
 - 2026-05-30: STEP 4 Research done (`.planning/phase1-RESEARCH.md`). Key decisions: AST-only ts-morph (own export index, no type-checker, `forgetNodesCreatedInBlock`); pinned `@angular/compiler@19.2.x` + read `preserveWhitespaces`/`interpolation` from decorator; edge visitor matches `TmplAstElement` only + dedup → fixes `*ngIf/*ngFor` double-count; parse error = loud (not empty deps); route parser drops over-broad fallback + handles outlets/pathMatch/redirect/empty-segment + lazy `forChild` stitching; incremental rebuilds full selector+membership registry before resolve; query traversals use visited-set + cycle flag + resolved-only-with-uncertain; artifacts to `.cmap/`; CLI via `node:util parseArgs` (Node ≥20); MD via `js-yaml` + fence split (owner sign-off pending).
 
 ## Approved Mode
