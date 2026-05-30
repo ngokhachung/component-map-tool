@@ -1,5 +1,5 @@
 import { Project } from 'ts-morph';
-import { posix } from 'node:path';
+import { posix, resolve } from 'node:path';
 import type { ComponentRecord } from '../types.js';
 import { extractComponentMeta } from './component.js';
 import { buildModuleMap } from './module-map.js';
@@ -11,8 +11,17 @@ export function resolveStandalone(explicit: boolean | null, module: string | nul
   return versionDefault;
 }
 
-function toRepoRelative(filePath: string, root: string): string {
-  return posix.relative(root.replace(/\\/g, '/'), filePath.replace(/\\/g, '/'));
+// Make a ts-morph (absolute, forward-slash) file path repo-relative to `root`.
+// Handles both in-memory roots ('/src') and real relative roots ('../x') — ts-morph stores
+// absolute paths, so a bare posix.relative against a relative root yields garbage. Strip the
+// root prefix as-given OR resolved-to-absolute, whichever the file path actually starts with.
+export function toRepoRelative(filePath: string, root: string): string {
+  const f = filePath.replace(/\\/g, '/');
+  for (const r of [root.replace(/\\/g, '/'), resolve(root).replace(/\\/g, '/')]) {
+    if (f === r) return '';
+    if (f.startsWith(`${r}/`)) return f.slice(r.length + 1);
+  }
+  return posix.relative(root.replace(/\\/g, '/'), f);
 }
 
 export function indexComponents(project: Project, opts: { root: string }): ComponentRecord[] {

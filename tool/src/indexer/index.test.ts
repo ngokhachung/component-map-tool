@@ -1,6 +1,17 @@
 import { describe, it, expect } from 'vitest';
 import { Project } from 'ts-morph';
-import { resolveStandalone, indexComponents } from './index.js';
+import { resolve } from 'node:path';
+import { resolveStandalone, indexComponents, toRepoRelative } from './index.js';
+
+describe('toRepoRelative', () => {
+  it('strips an in-memory root prefix', () => {
+    expect(toRepoRelative('/src/app/x.component.ts', '/src')).toBe('app/x.component.ts');
+  });
+  it('handles a RELATIVE root vs a ts-morph absolute file path (the CLI bug)', () => {
+    const abs = `${resolve('../poc/real-sample/src').replace(/\\/g, '/')}/app/x.component.ts`;
+    expect(toRepoRelative(abs, '../poc/real-sample/src')).toBe('app/x.component.ts');
+  });
+});
 
 describe('resolveStandalone', () => {
   it('honors an explicit flag over everything', () => {
