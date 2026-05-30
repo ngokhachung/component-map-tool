@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 8 — UAT + Goal-Backward Verification (verification PASS; awaiting user UAT)
-**Status:** waiting_for_user
+**Phase:** Step 9 — QA Gate (STEP 8 UAT + verification PASS)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-User runs `cmap` per `.planning/phase1-UAT.md` and confirms (or reports diffs). Goal-backward verification = PASS (`.planning/phase1-VERIFICATION.md`, all 13 REQ-IDs). On confirm → STEP 9 QA Gate (requesting-code-review) → STEP 10/11 ship (merge feature branch → master + phase1-SUMMARY + ROADMAP). Branch not pushed (44 commits).
+STEP 9 QA Gate (Mode A: requesting-code-review) on the Phase 1 diff → then STEP 10/11 ship (merge feature branch → master + phase1-SUMMARY + ROADMAP M2→done/M3→active). STEP 8 UAT PASS (user "step 8 pass" 2026-05-31). Branch pushed to origin (44 commits).
 
 ## Execution Log
 

@@ -51,6 +51,10 @@ npm run cmap -- query app-data-table --root ../poc/real-sample/src --html previe
 
 ---
 
+## Result
+
+**2026-05-31 — UAT PASS** (user: "step 8 pass"). Controller also ran `cmap query app-data-table` (impact ancestors + `finance/invoices`/`finance/reports` access paths, `uncertain:true`) and `--html` (self-contained preview) on the real sample — output matched Expected. → proceed to STEP 9 QA Gate.
+
 ## Confirm
 Please reply with one of:
 - **"confirmed"** — behavior matches; proceed to QA Gate (STEP 9) + ship.
