@@ -2,21 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 9 — QA Gate PASS (APPROVE WITH CONDITIONS → all conditions satisfied)
-**Status:** in_progress
+**Phase:** Step 11 — Ship (M2 COMPLETE; SUMMARY + ROADMAP done; awaiting merge decision)
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M2 — Phase 1: Static Analysis Core (in progress)
+**Milestone:** M2 — Phase 1: Static Analysis Core (**COMPLETE** 2026-05-31)
 **Started:** 2026-05-30
-**Completed:** —
-**Next milestone:** M3 — Phase 2a + 2.5 (MD Schema + PR Bot)
+**Completed:** 2026-05-31
+**Next milestone:** M3 — Phase 2a + 2.5 (MD Schema + PR Bot) — not started
 **Prior:** M1 — Phase 0 POC (COMPLETE, GO, 2026-05-29)
 
 ## Next Action
 
-STEP 10/11 — Ship: merge feature branch → master + write phase1-SUMMARY + ROADMAP (M2→done, M3→active). QA conditions all satisfied. Branch on origin (needs final push of QA-fix commits before/at merge).
+Merge `feature/phase1-static-analysis-2026-05-30` → master (user decision: merge locally + push, or open PR), then push. SUMMARY + ROADMAP written. After merge → M3 (Phase 2a + 2.5) begins at STEP 1/2 when ready. Branch has QA-fix commits not yet pushed.
 
 ## Execution Log
 
