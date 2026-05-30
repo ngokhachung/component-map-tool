@@ -66,7 +66,7 @@ import type { Graph, ComponentNode } from '../types.js';
 
 function node(p: Partial<ComponentNode> & { className: string }): ComponentNode {
   return {
-    id: p.className, componentId: null, className: p.className, selector: null,
+    id: p.className, componentId: null, selector: null,
     filePath: `src/${p.className}.ts`, standalone: false, module: null,
     templateKind: 'none', inputs: [], outputs: [], docPath: null, images: [],
     ...p,
