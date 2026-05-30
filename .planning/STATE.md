@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Wave 1; plans written wave-by-wave)
+**Phase:** Step 7 — Execute (Wave 1 COMPLETE, 3/3; on branch feature/phase1-static-analysis-2026-05-30)
 **Status:** in_progress
 **Last updated:** 2026-05-30
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Execute Wave 1 (`.planning/phase1-1-PLAN.md`: T1 scaffold, T2 types, T3 shared Project+resolver) subagent-driven, commit per task. Then write + execute Plan 2 (Wave 2 Indexer) and onward wave-by-wave. Full wave map (10 plans / 7 waves) approved.
+Write Plan 2 (`.planning/phase1-2-PLAN.md`, Wave 2 — Indexer: T4 component extractor, T5 standalone-resolver + version-detect), then execute. Wave 1 done. Branch: feature/phase1-static-analysis-2026-05-30.
 
 ## Execution Log
 
@@ -30,6 +30,13 @@ Execute Wave 1 (`.planning/phase1-1-PLAN.md`: T1 scaffold, T2 types, T3 shared P
 - STEP 8 UAT accepted (GO) + goal-backward verification (.planning/phase0-VERIFICATION.md).
 - STEP 9 QA Gate: APPROVE WITH CONDITIONS → I1 fixed (component verdict enforces rate>=80%); 20/20 tests green.
 - STEP 10/11: SUMMARY written (.planning/phase0-SUMMARY.md), ROADMAP updated (M1 done, M2 active), feature branch merged to master. M1 COMPLETE.
+
+## Phase 1 Execution Log
+
+- W1/T1 DONE (2c62775): `tool/` scaffold (ESM, Node≥20, pinned @angular/compiler 19.2.14 + ts-morph 24.0.0). Note: npm audit flags transitive vulns in dev tooling → for QA (STEP 9).
+- W1 fix (8c32ed5): added `@types/node` (tsconfig `types:["node"]` needed it) + fixed `types.test.ts` sample missing `templateKind` — both caught by first `tsc --noEmit` (vitest/esbuild don't typecheck). Plan 1 updated.
+- W1/T2 DONE (98c81f3): `src/types.ts` — Graph/ComponentNode/Edge/RouteNode/IoPort/LazyTarget + SCHEMA_VERSION=1. 2 tests.
+- W1/T3 DONE (e0e1461): `src/shared/project.ts` — createProject (AST-only) + resolveImportFile + getExportedDeclaration (checker-free). 6 tests. Implemented by controller after T3 subagent hit a session limit (code verbatim from approved plan). Full suite 8/8 green, tsc clean.
 
 ## Open Blockers
 
