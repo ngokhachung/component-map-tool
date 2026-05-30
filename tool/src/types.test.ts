@@ -17,6 +17,7 @@ describe('types contract', () => {
       filePath: 'src/app/foo.component.ts',
       standalone: false,
       module: 'AppModule',
+      templateKind: 'none',
       inputs: [{ name: 'x', alias: null, kind: 'decorator', required: false }],
       outputs: [],
       docPath: null,
