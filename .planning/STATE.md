@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Wave 1 COMPLETE, 3/3; on branch feature/phase1-static-analysis-2026-05-30)
+**Phase:** Step 7 — Execute (Wave 2 COMPLETE; Indexer done; branch feature/phase1-static-analysis-2026-05-30)
 **Status:** in_progress
 **Last updated:** 2026-05-30
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 2 (`.planning/phase1-2-PLAN.md`, Wave 2 — Indexer: T4 component extractor, T5 standalone-resolver + version-detect), then execute. Wave 1 done. Branch: feature/phase1-static-analysis-2026-05-30.
+Write Plan 3 (`.planning/phase1-3-PLAN.md`, Wave 2/Routes: T6 route parser, T7 lazy forChild stitching), then execute. Waves 1-2 done (24 tests green). Branch: feature/phase1-static-analysis-2026-05-30.
 
 ## Execution Log
 
@@ -37,6 +37,8 @@ Write Plan 2 (`.planning/phase1-2-PLAN.md`, Wave 2 — Indexer: T4 component ext
 - W1 fix (8c32ed5): added `@types/node` (tsconfig `types:["node"]` needed it) + fixed `types.test.ts` sample missing `templateKind` — both caught by first `tsc --noEmit` (vitest/esbuild don't typecheck). Plan 1 updated.
 - W1/T2 DONE (98c81f3): `src/types.ts` — Graph/ComponentNode/Edge/RouteNode/IoPort/LazyTarget + SCHEMA_VERSION=1. 2 tests.
 - W1/T3 DONE (e0e1461): `src/shared/project.ts` — createProject (AST-only) + resolveImportFile + getExportedDeclaration (checker-free). 6 tests. Implemented by controller after T3 subagent hit a session limit (code verbatim from approved plan). Full suite 8/8 green, tsc clean.
+- W2/T4 DONE (3c692b4): `src/indexer/component.ts` — extractComponentMeta (selector/io decorator+signal/templateKind/standaloneExplicit). 4 tests.
+- W2/T5 DONE (a9601d8): `src/indexer/{version,module-map,index}.ts` — angularMajorFromPkg/standaloneDefault, buildModuleMap (incl. spread flatten), resolveStandalone + indexComponents (STND-01). 12 tests. Full suite **24/24 green, tsc clean**. v15 NgModule components correctly resolve standalone:false.
 
 ## Open Blockers
 
