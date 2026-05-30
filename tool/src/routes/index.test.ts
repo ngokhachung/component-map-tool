@@ -35,6 +35,27 @@ describe('parseRoutes', () => {
     expect(finance.children.find((c) => c.redirectTo === 'invoices')?.fullPath).toBe('finance');
   });
 
+  it('stitches forChild from a SEPARATE routing module imported by the lazy feature module', () => {
+    // Real Angular pattern: feature.module imports a *-routing.module that holds forChild.
+    const p = new Project({ useInMemoryFileSystem: true });
+    p.createSourceFile('/src/app-routing.module.ts', `
+      import { RouterModule } from '@angular/router';
+      const routes = [{ path: 'finance', loadChildren: () => import('./feature/finance.module').then(m => m.FinanceModule) }];
+      RouterModule.forRoot(routes);`);
+    p.createSourceFile('/src/feature/finance.module.ts', `
+      import { NgModule } from '@angular/core';
+      import { FinanceRoutingModule } from './finance-routing.module';
+      @NgModule({ imports: [FinanceRoutingModule] }) export class FinanceModule {}`);
+    p.createSourceFile('/src/feature/finance-routing.module.ts', `
+      import { RouterModule } from '@angular/router';
+      const routes = [{ path: 'invoices', component: InvoiceListPage }];
+      RouterModule.forChild(routes);`);
+
+    const finance = parseRoutes(p, { root: '/src' })[0];
+    expect(finance.fullPath).toBe('finance');
+    expect(finance.children.find((c) => c.component === 'InvoiceListPage')?.fullPath).toBe('finance/invoices');
+  });
+
   it('returns [] when there are no root route arrays', () => {
     const p = new Project({ useInMemoryFileSystem: true });
     p.createSourceFile('/src/x.ts', `const a = [{ path: 'nope' }];`);
