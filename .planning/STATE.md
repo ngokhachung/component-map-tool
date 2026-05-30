@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Plans 1-9 done: +CLI/HTML; cmap runs on real v15; 72 tests green; branch feature/phase1-static-analysis-2026-05-30)
-**Status:** in_progress
+**Phase:** Step 7 — Execute COMPLETE (all 10 plans / 19 tasks done; 76 tests, coverage 96%, tsc clean)
+**Status:** waiting_for_user
 **Last updated:** 2026-05-30
 
 ## Current Milestone
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 10 (`.planning/phase1-10-PLAN.md`, Verify: T18 ground-truth graph.expected.json for real-sample + accuracy checker ≥95% edges, T19 coverage ≥80% + scripts), then execute. Plans 1-9 done (72 tests green). After Plan 10 → STEP 8 UAT. Branch: feature/phase1-static-analysis-2026-05-30.
+STEP 8 — UAT + Goal-Backward Verification (Mode A). All 10 Phase-1 plans executed on branch feature/phase1-static-analysis-2026-05-30 (42 commits, not yet pushed). Then STEP 9 QA, STEP 10/11 ship (merge + SUMMARY). Verify gate: `cd tool && npm run test:cov` (76 tests, 96% cov) + accuracy gate `src/real-sample.test.ts` (19/19 edges on real v15).
 
 ## Execution Log
 
@@ -45,6 +45,7 @@ Write Plan 10 (`.planning/phase1-10-PLAN.md`, Verify: T18 ground-truth graph.exp
 - P4/T9 DONE (491c125): `src/edges/index.ts` — buildSelectorRegistry + buildEdges (template + @ViewChild/createComponent → deduped Edge[], per-component parseErrors). 2 tests. Full suite **34/34 green, tsc clean**. ParentComponent→ChildComponent = ONE edge despite *ngIf (double-count fix verified end-to-end).
 - P5/T10 DONE (ce06c71): `src/graph/assemble.ts` — assembleGraph (records→ComponentNode, id=className, null MD fields) + deterministic serializeGraph/loadGraph (schemaVersion guard). 4 tests.
 - P5/T11 DONE (4421351): `src/graph/index.ts` — buildGraph(project,{root}) (index+edges+routes+assemble) + buildGraphFromRoot + writeGraph(.cmap/graph.json). 2 tests. Full suite **40/40 green, tsc clean**. Full build pipeline works end-to-end.
+- P10/T18+T19 DONE (606206e, ec600d1): `src/real-sample.test.ts` — ground-truth accuracy gate (18 comp all NgModule, **19/19 resolved edges exact-match = 100%**, dynamic cases flagged, DataTable→finance/invoices) + vitest coverage thresholds ≥80% (actual **96%/88%/99%/96%**). **STEP 7 EXECUTE COMPLETE: 10 plans / 19 tasks, 76 tests, tsc clean.**
 - P9/T16+T17 DONE (a41a1c8, 73e96cc): `src/cli/html.ts` (renderHtml — self-contained, base64 images) + `src/cli/{index,run}.ts` (runCli: `cmap index`/`query <locator>` via node:util parseArgs, --html, enrichGraph each run) + `cmap` npm script. 6 tests. **+ fix (after 73e96cc): toRepoRelative for relative roots** — CLI smoke exposed garbled filePath with `--root ../poc/...`; fixed + regression test. Full suite **72/72 green, tsc clean**. Real CLI: `query app-data-table --root ../poc/real-sample/src` → DataTableComponent, filePath clean, accessPaths finance/invoices+reports.
 - P8/T15 DONE (e8c2649): `src/md/{parse,index}.ts` — parseMdDoc (componentId from コンポーネントID table col + title fallback; ソースパス source link; 画面レイアウト images w/ heading captions) + enrichGraph (source-path suffix match → node.componentId/docPath/images; dup/orphan warnings). 7 tests. Full suite **64/64 green, tsc clean**.
 - P7/T13+T14 DONE (4a600b9 + fix, c31bbdc): `src/query/locator.ts` (resolveLocator: componentId→className→file→selector + ambiguity) + `src/query/index.ts` (impact reverse-BFS cycle-safe + uncertain flag; uiAccessPaths route→chain). 11 tests. Full suite **57/57 green, tsc clean**. (Fixed a TS2783 in the locator test helper I'd authored — duplicate className via spread.)
