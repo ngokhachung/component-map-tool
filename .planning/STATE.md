@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 3 — Mode Gate (complete)
+**Phase:** Step 4 — Research (complete)
 **Status:** in_progress
 **Last updated:** 2026-05-30
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-STEP 4 Research decision (run a focused Phase 1 research pass vs skip — core stack already verified in Phase 0), then writing-plans (STEP 6). Design spec approved: `docs/specs/2026-05-30-phase1-static-analysis-core-design.md`.
+Run writing-plans (STEP 6) to draft Phase 1 implementation plans, consuming `.planning/phase1-RESEARCH.md`. Open item: owner sign-off on `js-yaml` dependency (fallback: single-scalar hand-parser).
 
 ## Execution Log
 
@@ -58,6 +58,7 @@ STEP 4 Research decision (run a focused Phase 1 research pass vs skip — core s
 - 2026-05-30: Phase 1 REQ-IDs = SAC-01..10 + STND-01 (see REQUIREMENTS.md).
 - 2026-05-30: Mode A approved for M2 (0/5 Mode B signals) — source of truth for all Phase 1 downstream steps.
 - 2026-05-30: Demo branches pushed for team progress walkthrough: `demo/1-poc-fixtures` (61127c7), `demo/2-real-sample` (04da98d), `demo/3-phase1-design` (40079e3).
+- 2026-05-30: STEP 4 Research done (`.planning/phase1-RESEARCH.md`). Key decisions: AST-only ts-morph (own export index, no type-checker, `forgetNodesCreatedInBlock`); pinned `@angular/compiler@19.2.x` + read `preserveWhitespaces`/`interpolation` from decorator; edge visitor matches `TmplAstElement` only + dedup → fixes `*ngIf/*ngFor` double-count; parse error = loud (not empty deps); route parser drops over-broad fallback + handles outlets/pathMatch/redirect/empty-segment + lazy `forChild` stitching; incremental rebuilds full selector+membership registry before resolve; query traversals use visited-set + cycle flag + resolved-only-with-uncertain; artifacts to `.cmap/`; CLI via `node:util parseArgs` (Node ≥20); MD via `js-yaml` + fence split (owner sign-off pending).
 
 ## Approved Mode
 
