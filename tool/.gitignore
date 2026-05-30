@@ -2,3 +2,4 @@ node_modules/
 .cmap/
 *.actual.*
 dist/
+coverage/
