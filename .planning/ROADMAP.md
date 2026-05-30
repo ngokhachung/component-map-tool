@@ -3,7 +3,7 @@
 ## Active Milestone
 
 **M2: Phase 1 — Static Analysis Core**
-Status: not_started
+Status: in_progress (started 2026-05-30; Wave 1 of 7 executing)
 Goal: Indexer + dependency edge builder + route parser + graph store + caching; component-id → parents + UI access path query. Builds on the proven Phase 0 entry points. Carry-forward notes in `.planning/phase0-SUMMARY.md`.
 
 ## Completed Milestones
@@ -23,4 +23,4 @@ Goal: Indexer + dependency edge builder + route parser + graph store + caching; 
 
 ## Last updated
 
-2026-05-29
+2026-05-30
