@@ -10,7 +10,8 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:cov": "vitest run --coverage"
+    "test:cov": "vitest run --coverage",
+    "cmap": "tsx src/cli/run.ts"
   },
   "dependencies": {
     "@angular/compiler": "19.2.14",
