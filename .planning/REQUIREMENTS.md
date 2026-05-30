@@ -16,7 +16,7 @@ Each requirement must be:
 
 Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% coverage required.
 
-> **Scope note:** This file currently covers **Milestone M1 — Phase 0 (POC Validation)** only. Later milestones (Phase 1 Static Analysis Core, Phase 2.x MD + PR bot, Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
+> **Scope note:** This file covers **M1 — Phase 0 (POC Validation)** and **M2 — Phase 1 (Static Analysis Core)**. Later milestones (Phase 2.x MD + PR bot, Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
 
 ## v1 Requirements (Ship in initial release)
 
@@ -28,12 +28,28 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 | POC-04 | Tool author sees `ng-content`, `ngTemplateOutlet`, `*ngComponentOutlet`, `ViewContainerRef`, and `@ViewChild` cases correctly detected and flagged (indirect / unresolved-static) rather than silently missed | Phase 0 |
 | POC-05 | Tool author gets a `FEASIBILITY-REPORT.md` with per-task pass-rates and a GO/NO-GO verdict computed against the gate thresholds | Phase 0 |
 
+## M2 — Phase 1 Requirements (Static Analysis Core)
+
+**Design spec:** `docs/specs/2026-05-30-phase1-static-analysis-core-design.md` — brainstorm output 2026-05-30. All map to phase **Phase 1** in ROADMAP.
+
+| REQ-ID | Requirement | Phase |
+|---|---|---|
+| SAC-01 | Indexer extracts, for every component (NgModule + standalone), a record: `className`, `selector`, `filePath`, `inputs`/`outputs`, NgModule membership | Phase 1 |
+| STND-01 | Version-aware `standalone` resolution: explicit flag → NgModule-`declarations` membership (⇒ non-standalone) → detected Angular-version default (from `package.json`) | Phase 1 |
+| SAC-02 | Edge builder resolves template child-component deps (static, `*ngIf`/`*ngFor`/`*ngSwitch`) and flags indirect (`ng-content`, `ngTemplateOutlet`) / unresolved-static (`ngComponentOutlet`, `@ViewChild`, `ViewContainerRef.createComponent`) — never silently dropped | Phase 1 |
+| SAC-03 | Route parser builds an order-preserving route tree with resolved full paths, lazy `loadChildren`/`loadComponent` recovery, and guard names | Phase 1 |
+| SAC-04 | Graph store assembles nodes + edges into a `graph.json` carrying `schemaVersion`; can serialize and load it | Phase 1 |
+| SAC-05 | Caching + incremental build via a content-hash manifest (re-parse only changed files); targets full < 60s / incremental < 5s (measured on real repo when available) | Phase 1 |
+| SAC-06 | Impact query: locator → ancestors, marking paths through `indirect`/`unresolved-static` edges as uncertain | Phase 1 |
+| SAC-07 | UI-access-path query: locator → list of `{ routeUrl, componentChain }`, flagging lazy / indirect / unresolved segments | Phase 1 |
+| SAC-08 | Component locator resolves by `componentId` (MD alias) → `className` → file (path or basename) → `selector`; matching > 1 node → error listing candidates | Phase 1 |
+| SAC-09 | `MdIndex`: read `componentId` from a centralized docs folder, map to nodes; tolerant (missing/no MD ⇒ `componentId: null`); concrete MD format pinned from a user-provided sample | Phase 1 |
+| SAC-10 | Deliverable: TS library API + CLI (`cmap index`, `cmap query <locator>`), JSON output | Phase 1 |
+
 ## v2 Requirements (Deferred — later milestones)
 
 | REQ-ID | Requirement | Reason deferred |
 |---|---|---|
-| STND-01 | Version-aware component classification: resolve `standalone` via explicit flag → NgModule-`declarations` membership (⇒ non-standalone) → detected Angular-version default, so Angular ≤18 components are not mis-labelled standalone | Phase 1 — **confirmed needed** by real Angular 15 sample (`poc/real-sample/`, 18/18 mis-classified by the v19-default heuristic) |
-| (TBD) | Combined dependency graph + `component-id → parents + UI access path` query | Phase 1 — Static Analysis Core |
 | (TBD) | PR bot comments parents/routes affected on component-file changes | Phase 2.5 — early value |
 | (TBD) | Markdown UI Access Path schema + tolerant parser + merge | Phase 2a |
 | (TBD) | Mermaid / standalone HTML renderer | Phase 3 |
@@ -57,4 +73,4 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 
 ## Last updated
 
-2026-05-29
+2026-05-30

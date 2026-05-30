@@ -2,20 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship (M1 complete)
-**Status:** complete
-**Last updated:** 2026-05-29
+**Phase:** Step 3 — Mode Gate (complete)
+**Status:** in_progress
+**Last updated:** 2026-05-30
 
 ## Current Milestone
 
-**Milestone:** M1 — Phase 0: POC Validation (COMPLETE, GO)
-**Started:** 2026-05-29
-**Completed:** 2026-05-29
-**Next milestone:** M2 — Phase 1: Static Analysis Core (not started)
+**Milestone:** M2 — Phase 1: Static Analysis Core (in progress)
+**Started:** 2026-05-30
+**Completed:** —
+**Next milestone:** M3 — Phase 2a + 2.5 (MD Schema + PR Bot)
+**Prior:** M1 — Phase 0 POC (COMPLETE, GO, 2026-05-29)
 
 ## Next Action
 
-Start M2 (Phase 1 — Static Analysis Core) when ready: run STEP 1 Fast Lane → STEP 2 Brainstorm for the first Phase 1 feature. Carry-forward notes in `.planning/phase0-SUMMARY.md`.
+STEP 4 Research decision (run a focused Phase 1 research pass vs skip — core stack already verified in Phase 0), then writing-plans (STEP 6). Design spec approved: `docs/specs/2026-05-30-phase1-static-analysis-core-design.md`.
 
 ## Execution Log
 
@@ -48,10 +49,19 @@ Start M2 (Phase 1 — Static Analysis Core) when ready: run STEP 1 Fast Lane →
 - 2026-05-29: Scope additions — messy fixtures (1-2/task), one @defer fixture, literal-only lazy-route resolution
 - 2026-05-29: STEP 6 plans written — 3 plan files (.planning/phase0-{1,2,3}-PLAN.md), 6 tasks, 4 waves; Plan Checker (11 dims) passed after 1 revision loop (fixed blocker: NgModule fixture count)
 - 2026-05-29: Plans approved; execution mode = Subagent-Driven (fresh subagent per task + review checkpoints)
+- 2026-05-30: **M2/Phase 1 kicked off.** STEP 1 Fast Lane = NOT eligible (milestone-scale). STEP 2 Brainstorm + STEP 3 Mode Gate complete.
+- 2026-05-30: Phase 1 design = **Approach A** (pipeline → versioned `graph.json` + query layer; incremental via content-hash). New package `tool/` (clean rewrite from POC recipes; `poc/` kept as reference).
+- 2026-05-30: Verify on `poc/real-sample/` (18 comp) with hand-authored ground truth; real-repo 500-comp benchmark **deferred** until repo available.
+- 2026-05-30: Query scope = impact + UI access path. Deliverable = library API + thin CLI (`cmap`), JSON output.
+- 2026-05-30: Locator resolves `componentId` (MD alias) → `className` → file → selector; >1 match → error+candidates. Internal node id = `className` (qualified `relPath#ClassName` on collision).
+- 2026-05-30: `componentId` comes from per-component MD in a **centralized docs folder** (`docs/components/`); MD format pinned from a user-provided **sample** (pending). `MdIndex` is isolated + sequenced last — does not block core. Full MD schema = Phase 2a.
+- 2026-05-30: Phase 1 REQ-IDs = SAC-01..10 + STND-01 (see REQUIREMENTS.md).
+- 2026-05-30: Mode A approved for M2 (0/5 Mode B signals) — source of truth for all Phase 1 downstream steps.
+- 2026-05-30: Demo branches pushed for team progress walkthrough: `demo/1-poc-fixtures` (61127c7), `demo/2-real-sample` (04da98d), `demo/3-phase1-design` (40079e3).
 
 ## Approved Mode
 
-Mode A — approved 2026-05-29
+Mode A — approved 2026-05-30 (M2/Phase 1); prior M1 also Mode A (2026-05-29)
 
 ## Config
 
