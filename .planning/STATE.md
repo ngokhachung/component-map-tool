@@ -2,9 +2,9 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute COMPLETE (all 10 plans / 19 tasks done; 76 tests, coverage 96%, tsc clean)
+**Phase:** Step 8 — UAT + Goal-Backward Verification (verification PASS; awaiting user UAT)
 **Status:** waiting_for_user
-**Last updated:** 2026-05-30
+**Last updated:** 2026-05-31
 
 ## Current Milestone
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-STEP 8 — UAT + Goal-Backward Verification (Mode A). All 10 Phase-1 plans executed on branch feature/phase1-static-analysis-2026-05-30 (42 commits, not yet pushed). Then STEP 9 QA, STEP 10/11 ship (merge + SUMMARY). Verify gate: `cd tool && npm run test:cov` (76 tests, 96% cov) + accuracy gate `src/real-sample.test.ts` (19/19 edges on real v15).
+User runs `cmap` per `.planning/phase1-UAT.md` and confirms (or reports diffs). Goal-backward verification = PASS (`.planning/phase1-VERIFICATION.md`, all 13 REQ-IDs). On confirm → STEP 9 QA Gate (requesting-code-review) → STEP 10/11 ship (merge feature branch → master + phase1-SUMMARY + ROADMAP). Branch not pushed (44 commits).
 
 ## Execution Log
 
