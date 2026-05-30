@@ -127,4 +127,4 @@ function main(): TaskReport {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('spike-component.ts')) main();
-export { main as runComponentSpike };
+export { main as runComponentSpike, buildModuleMap };

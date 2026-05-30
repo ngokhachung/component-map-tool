@@ -1,0 +1,9 @@
+<div class="modal-container" role="dialog">
+  <header>{{ title }}</header>
+  <div class="body">
+    <!-- static projected content -->
+    <ng-content></ng-content>
+    <!-- dynamic insertion point -->
+    <ng-template #host></ng-template>
+  </div>
+</div>

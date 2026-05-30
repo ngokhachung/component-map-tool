@@ -1,0 +1,14 @@
+<div class="invoice-management">
+  <app-form-control-wrapper [label]="'Filter'">
+    <input [value]="filter" />
+  </app-form-control-wrapper>
+
+  <app-data-table *ngIf="invoices.length" [rows]="invoices"></app-data-table>
+
+  <!-- feature -> feature dependency -->
+  <app-payment-summary *ngFor="let inv of invoices" [paymentId]="inv.id"></app-payment-summary>
+
+  <app-modal-container *ngIf="showModal">
+    <p>Edit invoice</p>
+  </app-modal-container>
+</div>

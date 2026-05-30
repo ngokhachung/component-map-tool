@@ -1,0 +1,6 @@
+<input
+  class="search-box"
+  type="search"
+  [placeholder]="placeholder"
+  (input)="search.emit($any($event.target).value)"
+/>

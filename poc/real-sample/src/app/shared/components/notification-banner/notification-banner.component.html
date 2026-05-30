@@ -1,0 +1,8 @@
+<div class="banner" [class]="level">
+  <ng-container [ngSwitch]="level">
+    <strong *ngSwitchCase="'error'">Error:</strong>
+    <strong *ngSwitchCase="'warn'">Warning:</strong>
+    <strong *ngSwitchDefault>Info:</strong>
+  </ng-container>
+  <span>{{ message }}</span>
+</div>

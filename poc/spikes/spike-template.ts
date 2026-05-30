@@ -59,4 +59,4 @@ function main(): TaskReport {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('spike-template.ts')) main();
-export { main as runTemplateSpike };
+export { main as runTemplateSpike, parseHtmlFixture, parseTsFixture };

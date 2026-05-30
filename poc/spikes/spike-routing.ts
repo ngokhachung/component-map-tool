@@ -107,4 +107,4 @@ function main(): TaskReport {
 }
 
 if (process.argv[1] && process.argv[1].endsWith('spike-routing.ts')) main();
-export { main as runRoutingSpike };
+export { main as runRoutingSpike, parseRoute, findRoutesArray };

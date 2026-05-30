@@ -1,0 +1,5 @@
+dependency graph:
+- features page gọi features component
+- features page gọi shared component
+- features component gọi features component
+- features component gọi shared component

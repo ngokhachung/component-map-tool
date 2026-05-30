@@ -1,0 +1,10 @@
+<section class="payment-detail">
+  <app-notification-banner [level]="status" [message]="'Payment status'"></app-notification-banner>
+
+  <ng-container [ngSwitch]="status">
+    <app-tooltip *ngSwitchCase="'error'" [text]="'Payment failed'">
+      <app-payment-summary [paymentId]="id"></app-payment-summary>
+    </app-tooltip>
+    <app-payment-summary *ngSwitchDefault [paymentId]="id"></app-payment-summary>
+  </ng-container>
+</section>

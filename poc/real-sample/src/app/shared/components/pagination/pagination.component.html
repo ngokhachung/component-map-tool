@@ -1,0 +1,5 @@
+<nav class="pagination">
+  <button *ngFor="let p of pages" [class.active]="p === page" (click)="pageChange.emit(p)">
+    {{ p }}
+  </button>
+</nav>

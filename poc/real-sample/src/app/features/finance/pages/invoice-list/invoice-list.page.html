@@ -1,0 +1,8 @@
+<section class="invoice-list">
+  <app-search-box [placeholder]="'Search invoices'" (search)="onSearch($event)"></app-search-box>
+
+  <app-invoice-management [filter]="query"></app-invoice-management>
+  <app-data-table *ngIf="!query" [rows]="[]"></app-data-table>
+
+  <app-pagination [total]="total" [page]="page" (pageChange)="page = $event"></app-pagination>
+</section>

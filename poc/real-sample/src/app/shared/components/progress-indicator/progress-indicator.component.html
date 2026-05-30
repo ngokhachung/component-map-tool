@@ -1,0 +1,4 @@
+<div class="progress">
+  <span class="spinner" *ngIf="indeterminate"></span>
+  <progress *ngIf="!indeterminate" [value]="value" max="100"></progress>
+</div>

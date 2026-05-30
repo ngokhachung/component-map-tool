@@ -1,0 +1,5 @@
+<div class="file-uploader">
+  <button type="button" (click)="open()">Choose file</button>
+  <input #fileInput type="file" [accept]="accept" hidden />
+  <span *ngIf="busy">Uploading…</span>
+</div>

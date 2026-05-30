@@ -1,0 +1,3 @@
+<select class="dropdown" [value]="value" (change)="valueChange.emit($any($event.target).value)">
+  <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
+</select>

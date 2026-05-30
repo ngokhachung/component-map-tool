@@ -1,0 +1,7 @@
+<div class="payment-summary">
+  <app-progress-indicator *ngIf="loading" [value]="50"></app-progress-indicator>
+
+  <app-error-message *ngIf="error" [text]="error"></app-error-message>
+
+  <span>Payment {{ paymentId }}</span>
+</div>

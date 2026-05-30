@@ -1,0 +1,5 @@
+<form class="report-filter" (submit)="emit()">
+  <app-dropdown-selector [options]="['all', 'paid', 'due']" [(value)]="type"></app-dropdown-selector>
+  <app-search-box [placeholder]="'Filter reports'"></app-search-box>
+  <app-file-uploader [accept]="'.csv'"></app-file-uploader>
+</form>

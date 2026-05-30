@@ -1,0 +1,9 @@
+<section class="report-dashboard">
+  <app-report-filter (apply)="onApply($event)"></app-report-filter>
+
+  <app-data-table *ngIf="rows.length; else noData" [rows]="rows"></app-data-table>
+  <ng-template #noData><p>No data</p></ng-template>
+
+  <!-- dynamic host: POC must flag this as unresolved-static -->
+  <ng-container *ngComponentOutlet="widget"></ng-container>
+</section>

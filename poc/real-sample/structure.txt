@@ -1,0 +1,108 @@
+src
+`-- app
+    |-- app-routing.module.ts
+    |-- app.component.html
+    |-- app.component.scss
+    |-- app.component.spec.ts
+    |-- app.component.ts
+    |-- app.module.ts
+    |-- configs
+    |   |-- README.md
+    |   |-- system-config.json
+    |   `-- system-config.spec.ts
+    |-- constants
+    |   |-- api-endpoints.ts
+    |   |-- app-status.ts
+    |   `-- validation-rules.ts
+    |-- features
+    |   `-- finance
+    |       |-- components
+    |       |   |-- invoice-management
+    |       |   |   |-- invoice-management.component.html
+    |       |   |   |-- invoice-management.component.scss
+    |       |   |   |-- invoice-management.component.spec.ts
+    |       |   |   `-- invoice-management.component.ts
+    |       |   |-- payment-summary
+    |       |   |   |-- payment-summary.component.html
+    |       |   |   |-- payment-summary.component.scss
+    |       |   |   |-- payment-summary.component.spec.ts
+    |       |   |   `-- payment-summary.component.ts
+    |       |   `-- report-filter
+    |       |       |-- report-filter.component.html
+    |       |       |-- report-filter.component.scss
+    |       |       |-- report-filter.component.spec.ts
+    |       |       `-- report-filter.component.ts
+    |       |-- finance-routing.module.ts
+    |       |-- finance.module.ts
+    |       |-- models
+    |       |   |-- invoice.model.ts
+    |       |   |-- payment.model.ts
+    |       |   `-- report.model.ts
+    |       |-- pages
+    |       |   |-- invoice-list.page.ts
+    |       |   |-- payment-detail.page.ts
+    |       |   `-- report-dashboard.page.ts
+    |       `-- services
+    |           |-- invoice.service.ts
+    |           |-- payment.service.ts
+    |           `-- report.service.ts
+    |-- helpers
+    |   |-- date.helper.ts
+    |   |-- format.helper.ts
+    |   `-- validation.helper.ts
+    |-- interfaces
+    |   |-- authorization
+    |   |   |-- access-control.ts
+    |   |   `-- role-definition.ts
+    |   `-- organization
+    |       |-- department-info.ts
+    |       |-- employee-summary.ts
+    |       `-- team-structure.ts
+    |-- mocks
+    |   |-- invoice.mock.ts
+    |   |-- payment.mock.ts
+    |   `-- user.mock.ts
+    |-- plugins
+    |   |-- logger-plugin.ts
+    |   `-- storage-plugin.ts
+    `-- shared
+        `-- components
+            |-- data-table
+            |   |-- data-table.component.html
+            |   |-- data-table.component.scss
+            |   |-- data-table.component.spec.ts
+            |   `-- data-table.component.ts
+            |-- dropdown-selector
+            |   |-- dropdown-selector.component.html
+            |   |-- dropdown-selector.component.scss
+            |   |-- dropdown-selector.component.spec.ts
+            |   `-- dropdown-selector.component.ts
+            |-- error-message
+            |   |-- error-message.component.html
+            |   |-- error-message.component.scss
+            |   |-- error-message.component.spec.ts
+            |   `-- error-message.component.ts
+            |-- file-uploader
+            |   |-- file-uploader.component.html
+            |   |-- file-uploader.component.scss
+            |   |-- file-uploader.component.spec.ts
+            |   `-- file-uploader.component.ts
+            |-- form-control-wrapper
+            |   |-- form-control-wrapper.component.html
+            |   |-- form-control-wrapper.component.scss
+            |   |-- form-control-wrapper.component.spec.ts
+            |   `-- form-control-wrapper.component.ts
+            |-- modal-container
+            |   |-- modal-container.component.html
+            |   |-- modal-container.component.scss
+            |   |-- modal-container.component.spec.ts
+            |   `-- modal-container.component.ts
+            |-- notification-banner
+            |   |-- notification-banner.component.html
+            |   |-- notification-banner.component.scss
+            |   |-- notification-banner.component.spec.ts
+            |   `-- notification-banner.component.ts
+            |-- pagination
+            |   |-- pagination.component.html
+            |   |-- pagination.component.scss
+            |   |-- paginatio

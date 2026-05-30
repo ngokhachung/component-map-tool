@@ -1,0 +1,7 @@
+<table class="data-table">
+  <tr *ngFor="let row of rows; let i = index">
+    <!-- indirect dependency: rendered via template outlet -->
+    <ng-container *ngTemplateOutlet="rowTpl; context: { $implicit: row }"></ng-container>
+  </tr>
+  <tr *ngIf="!rows.length"><td>No rows</td></tr>
+</table>
