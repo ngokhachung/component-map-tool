@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (Plans 1-3 done: Foundation/Indexer/Routes; 29 tests green; branch feature/phase1-static-analysis-2026-05-30)
+**Phase:** Step 7 — Execute (Plans 1-4 done: Foundation/Indexer/Routes/Edges; 34 tests green; branch feature/phase1-static-analysis-2026-05-30)
 **Status:** in_progress
 **Last updated:** 2026-05-30
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 4 (`.planning/phase1-4-PLAN.md`, Edges: T8 template-visitor with double-count fix + parse-error-loud, T9 edge-builder), then execute. Plans 1-3 done (29 tests green). Branch: feature/phase1-static-analysis-2026-05-30. (Note: plan files numbered sequentially; Indexer+Routes were the parallel-eligible "Wave 2" group.)
+Write Plan 5 (`.planning/phase1-5-PLAN.md`, Graph: T10 assembler + serialize/load schemaVersion, T11 full-build orchestrator → `.cmap/graph.json`+`manifest.json`), then execute. Plans 1-4 done (34 tests green). Branch: feature/phase1-static-analysis-2026-05-30.
 
 ## Execution Log
 
@@ -41,6 +41,8 @@ Write Plan 4 (`.planning/phase1-4-PLAN.md`, Edges: T8 template-visitor with doub
 - W2/T5 DONE (a9601d8): `src/indexer/{version,module-map,index}.ts` — angularMajorFromPkg/standaloneDefault, buildModuleMap (incl. spread flatten), resolveStandalone + indexComponents (STND-01). 12 tests. Full suite **24/24 green, tsc clean**. v15 NgModule components correctly resolve standalone:false.
 - P3/T6 DONE (3899048): `src/routes/parse.ts` — parseRoute/parseRouteArray (path/redirect/outlet/pathMatch/guards/children/lazy + fullPath collapse) + restricted route-array detection (forRoot/forChild/provideRouter only, dropped over-broad fallback). 3 tests.
 - P3/T7 DONE (4fc07c0): `src/routes/index.ts` — parseRoutes with lazy forChild stitching via resolveImportFile (full URL e.g. finance/invoices). 2 tests. Full suite **29/29 green, tsc clean**.
+- P4/T8 DONE (2e9152b): `src/edges/template-visitor.ts` — buildMatcher/collectTemplateDeps/parseTemplateDeps. **Fixed *ngIf/*ngFor double-count** (match TmplAstElement only, skip desugared Template) + parse-error-loud. 3 tests. (Adapted the malformed-template test input — spec's `<div [.="x">` produced 0 errors in v19.2.14; used unterminated `<div`; impl verbatim. Plan updated.)
+- P4/T9 DONE (491c125): `src/edges/index.ts` — buildSelectorRegistry + buildEdges (template + @ViewChild/createComponent → deduped Edge[], per-component parseErrors). 2 tests. Full suite **34/34 green, tsc clean**. ParentComponent→ChildComponent = ONE edge despite *ngIf (double-count fix verified end-to-end).
 
 ## Open Blockers
 

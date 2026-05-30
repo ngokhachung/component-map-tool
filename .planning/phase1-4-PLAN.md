@@ -98,7 +98,7 @@ describe('parseTemplateDeps', () => {
   });
 
   it('reports parse errors loudly instead of silently returning empty deps', () => {
-    const r = parseTemplateDeps(`<div [.="x"></div>`, 't.html', matcher);
+    const r = parseTemplateDeps(`<div`, 't.html', matcher); // unterminated tag => parse error
     expect(r.parseErrors).toBeGreaterThan(0);
     expect(r.errorMessages.length).toBeGreaterThan(0);
   });
