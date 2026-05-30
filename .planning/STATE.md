@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship (M2 COMPLETE; SUMMARY + ROADMAP done; awaiting merge decision)
-**Status:** waiting_for_user
+**Phase:** Step 11 — Ship COMPLETE (M2 merged to master)
+**Status:** complete
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Merge `feature/phase1-static-analysis-2026-05-30` → master (user decision: merge locally + push, or open PR), then push. SUMMARY + ROADMAP written. After merge → M3 (Phase 2a + 2.5) begins at STEP 1/2 when ready. Branch has QA-fix commits not yet pushed.
+Start **M3 — Phase 2a + 2.5 (MD Schema + PR Bot)** when ready: STEP 1 Fast Lane → STEP 2 Brainstorm for the first M3 feature. Phase 1 merged to master (`f9a4461`, `--no-ff`) + pushed; 78 tests green on master. Carry-forward backlog in `.planning/phase1-SUMMARY.md`.
 
 ## Execution Log
 
