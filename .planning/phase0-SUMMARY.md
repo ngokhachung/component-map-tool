@@ -40,6 +40,7 @@ STEP 0 init → 1 Fast Lane (NO) → 2 Brainstorm → 3 Mode A → 4 Research (v
 ## Carry to Phase 1 (Static Analysis Core)
 
 Risks/notes surfaced by research + QA, to address in M2:
+- **Version-aware `standalone` detection [CONFIRMED on real Angular 15 sample]:** the component spike defaults `standalone=true` when the flag is omitted (Angular 19 semantics). Validated against a real **Angular 15.2.9** codebase structure (`poc/real-sample/`, whose components omit the flag entirely — the team confirmed they never write it): the spike mis-classified **18/18 components** as standalone. Fix order: (1) explicit flag → (2) NgModule `declarations` membership ⇒ non-standalone → (3) detected Angular-version default. The membership cross-check alone corrects 100% of cases on a pure-NgModule repo — demonstrated by `npm run verify:real` (`standaloneResolved` field, `standaloneMisclassified: 18`). Template + routing parsing were unaffected (`parseErrors: 0`), so only the classification heuristic is version-sensitive.
 - **Multi-version compiler strategy:** `@angular/compiler` template API is experimental/private and breaks across majors. POC is pinned to 19.2.14. Evaluate the `@angular-eslint/bundled-angular-compiler` vendoring pattern (research P-AC2).
 - **Route order matters** but the POC diff is order-insensitive (QA I2) — Phase 1 diff must enforce order for route arrays / guard arrays.
 - **`filePath`** field (spec §4) omitted from POC `ComponentRecord` — add in Phase 1 (QA S1).

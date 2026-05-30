@@ -32,6 +32,7 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 
 | REQ-ID | Requirement | Reason deferred |
 |---|---|---|
+| STND-01 | Version-aware component classification: resolve `standalone` via explicit flag → NgModule-`declarations` membership (⇒ non-standalone) → detected Angular-version default, so Angular ≤18 components are not mis-labelled standalone | Phase 1 — **confirmed needed** by real Angular 15 sample (`poc/real-sample/`, 18/18 mis-classified by the v19-default heuristic) |
 | (TBD) | Combined dependency graph + `component-id → parents + UI access path` query | Phase 1 — Static Analysis Core |
 | (TBD) | PR bot comments parents/routes affected on component-file changes | Phase 2.5 — early value |
 | (TBD) | Markdown UI Access Path schema + tolerant parser + merge | Phase 2a |
