@@ -20,7 +20,8 @@ import { parseRoute, findRoutesArray } from './spike-routing.js';
 import { parseHtmlFixture, parseTsFixture } from './spike-template.js';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REAL = join(HERE, '..', 'real-sample');
+export const REAL = join(HERE, '..', 'real-sample');
+export const ACTUAL_PATH = join(REAL, 'verify-real.actual.json');
 
 // Read an inline `template` / `templateUrl` string off a @Component decorator.
 function readTemplate(cls: ClassDeclaration): { kind: 'inline' | 'url' | 'none'; value: string | null } {
@@ -54,13 +55,22 @@ interface RealReport {
   templates: Array<{ component: string; file: string; source: 'inline' | 'templateUrl' | 'ts'; result: TemplateResult }>;
 }
 
-function main(): void {
+// Stable ordering so the baseline diff is machine-independent (ts-morph file
+// order can vary across OS / filesystems).
+function sortReport(report: RealReport): RealReport {
+  report.components.sort((a, b) => a.file.localeCompare(b.file) || a.className.localeCompare(b.className));
+  report.selectorRegistry.sort((a, b) => a.selector.localeCompare(b.selector));
+  report.routes.sort((a, b) => a.file.localeCompare(b.file));
+  report.templates.sort((a, b) => a.component.localeCompare(b.component) || a.source.localeCompare(b.source));
+  return report;
+}
+
+export function buildReport(): RealReport {
   if (!existsSync(REAL) || readdirSync(REAL).filter((f) => !f.startsWith('.') && f !== 'README.md').length === 0) {
-    console.error(
-      `\n[verify:real] No source found in ${REAL}\n` +
-      `Drop real Angular files there (*.component.ts, route files, *.html) then re-run.\n`,
+    throw new Error(
+      `No source found in ${REAL}\n` +
+      `Drop real Angular files there (*.component.ts, route files, *.html) then re-run.`,
     );
-    process.exit(1);
   }
 
   const project = new Project({
@@ -147,11 +157,28 @@ function main(): void {
     templates,
   };
 
-  console.log(JSON.stringify(report, null, 2));
-  const out = join(REAL, 'verify-real.actual.json');
-  writeFileSync(out, JSON.stringify(report, null, 2));
-  console.error(`\n[verify:real] Summary: ${JSON.stringify(report.summary)}`);
-  console.error(`[verify:real] Full JSON written to ${relative(join(HERE, '..'), out)} (gitignored)`);
+  return sortReport(report);
 }
 
-main();
+export function writeActual(report: RealReport): string {
+  writeFileSync(ACTUAL_PATH, JSON.stringify(report, null, 2));
+  return ACTUAL_PATH;
+}
+
+function main(): void {
+  let report: RealReport;
+  try {
+    report = buildReport();
+  } catch (e) {
+    console.error(`\n[verify:real] ${(e as Error).message}\n`);
+    process.exit(1);
+  }
+  console.log(JSON.stringify(report, null, 2));
+  writeActual(report);
+  console.error(`\n[verify:real] Summary: ${JSON.stringify(report.summary)}`);
+  console.error(`[verify:real] Full JSON written to ${relative(join(HERE, '..'), ACTUAL_PATH)} (gitignored)`);
+}
+
+// Only run when invoked directly (so verify-real-check.ts can import buildReport
+// without triggering a full run on import).
+if (process.argv[1] && process.argv[1].endsWith('verify-real.ts')) main();

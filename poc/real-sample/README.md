@@ -30,6 +30,26 @@ Subfolders are fine — `*.ts` is globbed recursively.
   here, then used to resolve template child-component deps.
 - `routes[]` — parsed route trees per route file.
 - `templates[]` — resolved / indirect / unresolved-static child deps per component.
+- `summary.standaloneMisclassified` — count of components whose raw `standalone`
+  (v19-default heuristic) disagrees with `standaloneResolved` (NgModule-membership
+  cross-check). On a pure Angular-15 NgModule repo this should equal the component
+  count — see `STND-01` in `REQUIREMENTS.md`.
+
+## Repeatable / regression check (golden baseline)
+
+Smoke mode has no pass/fail. To make verification repeatable, snapshot a reviewed
+output as a committed baseline and diff future runs against it:
+
+```bash
+npm run verify:real:bless    # write verify-real.expected.json from current output
+npm run verify:real:check    # rebuild + diff vs baseline; exit 1 (with paths) if it drifts
+```
+
+- `verify-real.expected.json` is committed (it is NOT a `*.actual.json`, so not gitignored).
+- Output is sorted deterministically, so the baseline diff is machine-independent.
+- `:check` prints precise paths of every difference, e.g.
+  `components[3].selector: expected "app-x" | actual "app-y"`.
+- After an **intentional** sample change, re-run `:bless` to update the baseline.
 
 ## Caveats (smoke mode)
 

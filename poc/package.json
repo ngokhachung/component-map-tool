@@ -11,7 +11,9 @@
     "spike:routing": "tsx spikes/spike-routing.ts",
     "spike:template": "tsx spikes/spike-template.ts",
     "report": "tsx spikes/report-all.ts",
-    "verify:real": "tsx spikes/verify-real.ts"
+    "verify:real": "tsx spikes/verify-real.ts",
+    "verify:real:check": "tsx spikes/verify-real-check.ts",
+    "verify:real:bless": "tsx spikes/verify-real-check.ts --bless"
   },
   "dependencies": {
     "@angular/compiler": "19.2.14",

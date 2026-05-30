@@ -1,0 +1,972 @@
+{
+  "summary": {
+    "sourceFiles": 64,
+    "components": 18,
+    "routeFiles": 2,
+    "totalRoutes": 6,
+    "templatesParsed": 21,
+    "totalTemplateParseErrors": 0,
+    "standaloneMisclassified": 18
+  },
+  "components": [
+    {
+      "className": "AppComponent",
+      "selector": "app-root",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [],
+      "outputs": [],
+      "module": "AppModule",
+      "file": "src\\app\\app.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "InvoiceManagementComponent",
+      "selector": "app-invoice-management",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "filter",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "FinanceModule",
+      "file": "src\\app\\features\\finance\\components\\invoice-management\\invoice-management.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "PaymentSummaryComponent",
+      "selector": "app-payment-summary",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "paymentId",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "FinanceModule",
+      "file": "src\\app\\features\\finance\\components\\payment-summary\\payment-summary.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "ReportFilterComponent",
+      "selector": "app-report-filter",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "apply",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "module": "FinanceModule",
+      "file": "src\\app\\features\\finance\\components\\report-filter\\report-filter.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "InvoiceListPage",
+      "selector": "app-invoice-list-page",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [],
+      "outputs": [],
+      "module": "FinanceModule",
+      "file": "src\\app\\features\\finance\\pages\\invoice-list\\invoice-list.page.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "PaymentDetailPage",
+      "selector": "app-payment-detail-page",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [],
+      "outputs": [],
+      "module": "FinanceModule",
+      "file": "src\\app\\features\\finance\\pages\\payment-detail\\payment-detail.page.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "ReportDashboardPage",
+      "selector": "app-report-dashboard-page",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [],
+      "outputs": [],
+      "module": "FinanceModule",
+      "file": "src\\app\\features\\finance\\pages\\report-dashboard\\report-dashboard.page.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "DataTableComponent",
+      "selector": "app-data-table",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "rows",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "sortKey",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "rowClick",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\data-table\\data-table.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "DropdownSelectorComponent",
+      "selector": "app-dropdown-selector",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "options",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "value",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "valueChange",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\dropdown-selector\\dropdown-selector.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "ErrorMessageComponent",
+      "selector": "app-error-message",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "text",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "code",
+          "alias": "errorCode",
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\error-message\\error-message.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "FileUploaderComponent",
+      "selector": "app-file-uploader",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "accept",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filesPicked",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\file-uploader\\file-uploader.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "FormControlWrapperComponent",
+      "selector": "app-form-control-wrapper",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "label",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "required",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\form-control-wrapper\\form-control-wrapper.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "ModalContainerComponent",
+      "selector": "app-modal-container",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "title",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\modal-container\\modal-container.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "NotificationBannerComponent",
+      "selector": "app-notification-banner",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "level",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "message",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\notification-banner\\notification-banner.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "PaginationComponent",
+      "selector": "app-pagination",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "total",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "page",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pageChange",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\pagination\\pagination.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "ProgressIndicatorComponent",
+      "selector": "app-progress-indicator",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "value",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        },
+        {
+          "name": "indeterminate",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\progress-indicator\\progress-indicator.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "SearchBoxComponent",
+      "selector": "app-search-box",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "placeholder",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "search",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\search-box\\search-box.component.ts",
+      "standaloneResolved": false
+    },
+    {
+      "className": "TooltipComponent",
+      "selector": "app-tooltip",
+      "standalone": true,
+      "templateKind": "templateUrl",
+      "inputs": [
+        {
+          "name": "text",
+          "alias": null,
+          "kind": "decorator",
+          "required": false
+        }
+      ],
+      "outputs": [],
+      "module": "SharedModule",
+      "file": "src\\app\\shared\\components\\tooltip\\tooltip.component.ts",
+      "standaloneResolved": false
+    }
+  ],
+  "selectorRegistry": [
+    {
+      "selector": "app-data-table",
+      "className": "DataTableComponent"
+    },
+    {
+      "selector": "app-dropdown-selector",
+      "className": "DropdownSelectorComponent"
+    },
+    {
+      "selector": "app-error-message",
+      "className": "ErrorMessageComponent"
+    },
+    {
+      "selector": "app-file-uploader",
+      "className": "FileUploaderComponent"
+    },
+    {
+      "selector": "app-form-control-wrapper",
+      "className": "FormControlWrapperComponent"
+    },
+    {
+      "selector": "app-invoice-list-page",
+      "className": "InvoiceListPage"
+    },
+    {
+      "selector": "app-invoice-management",
+      "className": "InvoiceManagementComponent"
+    },
+    {
+      "selector": "app-modal-container",
+      "className": "ModalContainerComponent"
+    },
+    {
+      "selector": "app-notification-banner",
+      "className": "NotificationBannerComponent"
+    },
+    {
+      "selector": "app-pagination",
+      "className": "PaginationComponent"
+    },
+    {
+      "selector": "app-payment-detail-page",
+      "className": "PaymentDetailPage"
+    },
+    {
+      "selector": "app-payment-summary",
+      "className": "PaymentSummaryComponent"
+    },
+    {
+      "selector": "app-progress-indicator",
+      "className": "ProgressIndicatorComponent"
+    },
+    {
+      "selector": "app-report-dashboard-page",
+      "className": "ReportDashboardPage"
+    },
+    {
+      "selector": "app-report-filter",
+      "className": "ReportFilterComponent"
+    },
+    {
+      "selector": "app-root",
+      "className": "AppComponent"
+    },
+    {
+      "selector": "app-search-box",
+      "className": "SearchBoxComponent"
+    },
+    {
+      "selector": "app-tooltip",
+      "className": "TooltipComponent"
+    }
+  ],
+  "routes": [
+    {
+      "file": "src\\app\\app-routing.module.ts",
+      "routes": [
+        {
+          "path": "",
+          "component": null,
+          "redirectTo": "finance",
+          "loadChildren": null,
+          "loadComponent": null,
+          "guards": [],
+          "children": [],
+          "unresolvedLazy": false
+        },
+        {
+          "path": "finance",
+          "component": null,
+          "redirectTo": null,
+          "loadChildren": {
+            "importPath": "./features/finance/finance.module",
+            "symbol": "FinanceModule"
+          },
+          "loadComponent": null,
+          "guards": [
+            "authGuard"
+          ],
+          "children": [],
+          "unresolvedLazy": false
+        }
+      ]
+    },
+    {
+      "file": "src\\app\\features\\finance\\finance-routing.module.ts",
+      "routes": [
+        {
+          "path": "",
+          "component": null,
+          "redirectTo": "invoices",
+          "loadChildren": null,
+          "loadComponent": null,
+          "guards": [],
+          "children": [],
+          "unresolvedLazy": false
+        },
+        {
+          "path": "invoices",
+          "component": "InvoiceListPage",
+          "redirectTo": null,
+          "loadChildren": null,
+          "loadComponent": null,
+          "guards": [],
+          "children": [],
+          "unresolvedLazy": false
+        },
+        {
+          "path": "payments/:id",
+          "component": "PaymentDetailPage",
+          "redirectTo": null,
+          "loadChildren": null,
+          "loadComponent": null,
+          "guards": [
+            "roleGuard"
+          ],
+          "children": [],
+          "unresolvedLazy": false
+        },
+        {
+          "path": "reports",
+          "component": "ReportDashboardPage",
+          "redirectTo": null,
+          "loadChildren": null,
+          "loadComponent": null,
+          "guards": [],
+          "children": [],
+          "unresolvedLazy": false
+        }
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "component": "AppComponent",
+      "file": "src\\app\\app.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-notification-banner",
+            "component": "NotificationBannerComponent",
+            "kind": "resolved",
+            "reason": null
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "DataTableComponent",
+      "file": "src\\app\\shared\\components\\data-table\\data-table.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "ngTemplateOutlet",
+            "component": null,
+            "kind": "indirect",
+            "reason": "ngTemplateOutlet"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "DataTableComponent",
+      "file": "src\\app\\shared\\components\\data-table\\data-table.component.ts",
+      "source": "ts",
+      "result": {
+        "deps": [
+          {
+            "tag": "ViewChild",
+            "component": null,
+            "kind": "unresolved-static",
+            "reason": "@ViewChild query"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "DropdownSelectorComponent",
+      "file": "src\\app\\shared\\components\\dropdown-selector\\dropdown-selector.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "ErrorMessageComponent",
+      "file": "src\\app\\shared\\components\\error-message\\error-message.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "FileUploaderComponent",
+      "file": "src\\app\\shared\\components\\file-uploader\\file-uploader.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "FileUploaderComponent",
+      "file": "src\\app\\shared\\components\\file-uploader\\file-uploader.component.ts",
+      "source": "ts",
+      "result": {
+        "deps": [
+          {
+            "tag": "ViewChild",
+            "component": null,
+            "kind": "unresolved-static",
+            "reason": "@ViewChild query"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "FormControlWrapperComponent",
+      "file": "src\\app\\shared\\components\\form-control-wrapper\\form-control-wrapper.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "ng-content",
+            "component": null,
+            "kind": "indirect",
+            "reason": "ng-content"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "InvoiceListPage",
+      "file": "src\\app\\features\\finance\\pages\\invoice-list\\invoice-list.page.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-search-box",
+            "component": "SearchBoxComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-invoice-management",
+            "component": "InvoiceManagementComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-data-table",
+            "component": "DataTableComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-data-table",
+            "component": "DataTableComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-pagination",
+            "component": "PaginationComponent",
+            "kind": "resolved",
+            "reason": null
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "InvoiceManagementComponent",
+      "file": "src\\app\\features\\finance\\components\\invoice-management\\invoice-management.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-form-control-wrapper",
+            "component": "FormControlWrapperComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-data-table",
+            "component": "DataTableComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-data-table",
+            "component": "DataTableComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-payment-summary",
+            "component": "PaymentSummaryComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-payment-summary",
+            "component": "PaymentSummaryComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-modal-container",
+            "component": "ModalContainerComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-modal-container",
+            "component": "ModalContainerComponent",
+            "kind": "resolved",
+            "reason": null
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "ModalContainerComponent",
+      "file": "src\\app\\shared\\components\\modal-container\\modal-container.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "ng-content",
+            "component": null,
+            "kind": "indirect",
+            "reason": "ng-content"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "ModalContainerComponent",
+      "file": "src\\app\\shared\\components\\modal-container\\modal-container.component.ts",
+      "source": "ts",
+      "result": {
+        "deps": [
+          {
+            "tag": "ViewChild",
+            "component": null,
+            "kind": "unresolved-static",
+            "reason": "@ViewChild query"
+          },
+          {
+            "tag": "ViewContainerRef.createComponent",
+            "component": null,
+            "kind": "unresolved-static",
+            "reason": "dynamic createComponent"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "NotificationBannerComponent",
+      "file": "src\\app\\shared\\components\\notification-banner\\notification-banner.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "PaginationComponent",
+      "file": "src\\app\\shared\\components\\pagination\\pagination.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "PaymentDetailPage",
+      "file": "src\\app\\features\\finance\\pages\\payment-detail\\payment-detail.page.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-notification-banner",
+            "component": "NotificationBannerComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-tooltip",
+            "component": "TooltipComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-tooltip",
+            "component": "TooltipComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-payment-summary",
+            "component": "PaymentSummaryComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-payment-summary",
+            "component": "PaymentSummaryComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-payment-summary",
+            "component": "PaymentSummaryComponent",
+            "kind": "resolved",
+            "reason": null
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "PaymentSummaryComponent",
+      "file": "src\\app\\features\\finance\\components\\payment-summary\\payment-summary.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-progress-indicator",
+            "component": "ProgressIndicatorComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-progress-indicator",
+            "component": "ProgressIndicatorComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-error-message",
+            "component": "ErrorMessageComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-error-message",
+            "component": "ErrorMessageComponent",
+            "kind": "resolved",
+            "reason": null
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "ProgressIndicatorComponent",
+      "file": "src\\app\\shared\\components\\progress-indicator\\progress-indicator.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "ReportDashboardPage",
+      "file": "src\\app\\features\\finance\\pages\\report-dashboard\\report-dashboard.page.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-report-filter",
+            "component": "ReportFilterComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-data-table",
+            "component": "DataTableComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-data-table",
+            "component": "DataTableComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "ngComponentOutlet",
+            "component": null,
+            "kind": "unresolved-static",
+            "reason": "ngComponentOutlet"
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "ReportFilterComponent",
+      "file": "src\\app\\features\\finance\\components\\report-filter\\report-filter.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "app-dropdown-selector",
+            "component": "DropdownSelectorComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-search-box",
+            "component": "SearchBoxComponent",
+            "kind": "resolved",
+            "reason": null
+          },
+          {
+            "tag": "app-file-uploader",
+            "component": "FileUploaderComponent",
+            "kind": "resolved",
+            "reason": null
+          }
+        ],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "SearchBoxComponent",
+      "file": "src\\app\\shared\\components\\search-box\\search-box.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [],
+        "parseErrors": 0
+      }
+    },
+    {
+      "component": "TooltipComponent",
+      "file": "src\\app\\shared\\components\\tooltip\\tooltip.component.html",
+      "source": "templateUrl",
+      "result": {
+        "deps": [
+          {
+            "tag": "ng-content",
+            "component": null,
+            "kind": "indirect",
+            "reason": "ng-content"
+          }
+        ],
+        "parseErrors": 0
+      }
+    }
+  ]
+}
