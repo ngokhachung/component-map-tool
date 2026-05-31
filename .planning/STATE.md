@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M6 task 3/6 complete; Waves 1-2 done)
+**Phase:** Step 7 — Execute (M6 tasks 4-5/6 complete; Waves 1-3 done)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -100,6 +100,8 @@ Approve the 4 M6 plans (`.planning/phase4-{1..4}-PLAN.md`) + pick execution mode
 - M6/P1/T1 DONE (509e93b): `audit/report.ts` `auditReport` (md+override git-stale via injected mtimes; override orphans; coverage/gaps passthrough) + `renderAuditMd`. 3 tests. Suite 149 green.
 - M6/P1/T2 DONE (055b718): `audit/mtime.ts` `gitMtime`/`gitMtimes` (`git log -1 --format=%ct`, null-safe, execFileSync array args = injection-safe). 3 tests. Wave-1 review: Spec PASS + Quality APPROVED (suggestion → backlog: rename `.map((g)=>)` lambda to `gap`). Suite **152 green, tsc clean**.
 - M6/P2/T3 DONE (70eadc4): `cli/index.ts` `audit` command (+`--report` flag, USAGE, merged `posix` into node:path import) — builds overrideFiles + realPaths, `gitMtimes`, `auditReport`; prints md or writes `<prefix>.md/.json`. 2 integration tests on real-sample. **Implemented by controller** (subagent session limit; verbatim plan code). Spec PASS (key-consistency invariant verified both sides) + Quality APPROVED. Suite **154 green, tsc clean**.
+- M6/P3/T4 DONE (ad83e36): `azure-pipelines-pr.yml` (port M3 comment + M4 lint gate; sticky PR-thread via Azure REST, `$(System.AccessToken)` via env, jq --rawfile body, TargetBranch stripped); **deleted** `.github/workflows/component-map-pr.yml` + `workflow.test.ts` + `workflow-lint.test.ts`. `azure-pr.test.ts` (5 tests). Suite 153.
+- M6/P3/T5 DONE (821d43c): `azure-pipelines-audit.yml` (quarterly cron `0 9 1 1,4,7,10 *` → `cmap audit --report` → uploadsummary + PublishPipelineArtifact). `azure-audit.test.ts` (2 tests). Wave-3 review (4+5): Spec PASS + Quality APPROVED — **injection vector fully closed** (body→jq --rawfile→curl -d @-; token via env; branch stripped; set -euo pipefail). Suite **155 green, tsc clean**.
 
 ## Open Blockers
 
