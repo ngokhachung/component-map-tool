@@ -2,21 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship COMPLETE (M4 merged to master `5a9666a`; demo/6 pushed; manual UAT deferred)
-**Status:** complete
+**Phase:** Step 3 — Mode Gate complete (M5 brainstorm + spec done; awaiting spec review → STEP 6 Plan)
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M4 — Phase 2b: MD Migration + Enforcement (**COMPLETE** 2026-05-31, manual UAT deferred)
+**Milestone:** M5 — Phase 3: Renderer & UX (in progress, started 2026-05-31)
 **Started:** 2026-05-31
-**Completed:** 2026-05-31
-**Next milestone:** M5 — Phase 3 (Renderer & UX) — not started
-**Prior:** M3 — Phase 2a + 2.5 MD Overrides + PR Bot (COMPLETE, merged `3315736`, 2026-05-31; manual UAT deferred)
+**Completed:** —
+**Next milestone:** M6 — Phase 4 (Long-term Maintenance)
+**Prior:** M4 — Phase 2b MD Migration + Enforcement (COMPLETE, merged `5a9666a`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
 
-Start **M5 — Phase 3 (Renderer & UX)** when ready (STEP 1/2). M4 merged to master (`--no-ff`, `5a9666a`); demo branch `demo/6-phase2b-enforcement` pushed. **Manual UAT pending** — run `.planning/phase2b-UAT.md` (and still-pending M3 `.planning/phase2-UAT.md`) against a real Angular repo + commit a `.cmap-baseline.json` (same `--root` as CI) before enabling the lint gate in production. phase2b-SUMMARY written; ROADMAP M4→done/M5→active.
+User reviews spec `docs/specs/2026-05-31-phase3-renderer-ux-design.md`; on approval run **writing-plans** (STEP 6) for M5. Branch: `feature/phase3-renderer-ux-2026-05-31`. (Manual UAT for M3 + M4 still pending before enabling the CI lint gate in production.)
 
 ## QA Gate (M4)
 
@@ -127,11 +127,13 @@ Start **M5 — Phase 3 (Renderer & UX)** when ready (STEP 1/2). M4 merged to mas
 - 2026-05-31: M4 gate (`cmap lint`) **blocks** ① open gap (unfilled+unwaived), ② missing MD (componentId null), ③ broken/orphan override, + clean→dirty **regression**; **warns** ④ stale (construct vanished). Dropped time-based staleness (no reliable timestamp, YAGNI).
 - 2026-05-31: M4 rollout = **baseline grandfather** (`.cmap-baseline.json`, keyed by repo-relative filePath) — only new debt / regression blocks; existing debt warned. Two escape hatches: **waiver** (`waived` in schema v2 ⇒ covered, permanent) + **`cmap lint --accept`** (record into baseline, debt remains in coverage).
 - 2026-05-31: M4 CI wiring = **Option A** (extend the M3 `component-map-pr.yml`: comment step always green + fail-able `cmap lint` step; build graph once; keep M3 hardening). `cmap lint` is a CLI command (runs local + CI).
+- 2026-05-31: **M5 kicked off** (branch `feature/phase3-renderer-ux-2026-05-31`). STEP 1 Fast Lane NOT eligible (milestone-scale renderer). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (0/5). Spec `docs/specs/2026-05-31-phase3-renderer-ux-design.md`. REQ RND-01..06.
+- 2026-05-31: M5 decisions — surface = **offline single-file HTML** (no VSCode/CLI-ASCII); **two views**: focused subgraph per `cmap query` (Mermaid) + whole-graph overview (`cmap render`, hand-rolled SVG); **render tech** = Mermaid inlined for subgraph + hand-rolled SVG for whole-graph; **read-focused** interactivity (hover/dashed-dynamic; search/filter + pan/zoom + click-highlight + meta panel), no cross-file nav. Mermaid = npm dep, `dist/mermaid.min.js` inlined at render time (offline). No Phase -1 UX research exists (greenfield) → UX decided in brainstorm.
 - 2026-05-31: **M4 STEP 6 plans written** — 5 wave-grouped plans (`.planning/phase2b-{1..5}-PLAN.md`), 7 tasks, zero file-overlap, dependency=wave order. **Deviation flagged:** keep `OVERRIDE_SCHEMA_VERSION=1` (waiver is an optional additive field; no bump → no v1 churn) vs spec §4's "bump to v2". **Lint ③ scope:** blocking `override-broken` = unresolvable/orphan *target* (attributable to a changed component); malformed override *files* → non-blocking warnings (can't attribute to a changed file under the filePath-keyed grandfather model). Plan models per task: P1 sonnet, P2 sonnet+opus, P3 sonnet, P4 sonnet+sonnet, P5 sonnet. Execution mode pending user choice (Subagent-Driven recommended).
 
 ## Approved Mode
 
-Mode A — approved 2026-05-31 (M4, 0/5 Mode B signals); M3/M2/M1 also Mode A
+Mode A — approved 2026-05-31 (M5, 0/5 Mode B signals); M4/M3/M2/M1 also Mode A
 
 ## Config
 

@@ -16,7 +16,7 @@ Each requirement must be:
 
 Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% coverage required.
 
-> **Scope note:** This file covers **M1 — Phase 0**, **M2 — Phase 1**, **M3 — Phase 2a + 2.5 (MD Overrides + PR Bot)**, and **M4 — Phase 2b (MD Migration + Enforcement)**. Later milestones (Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
+> **Scope note:** This file covers **M1 — Phase 0**, **M2 — Phase 1**, **M3 — Phase 2a + 2.5**, **M4 — Phase 2b**, and **M5 — Phase 3 (Renderer & UX)**. The last milestone (Phase 4 Maintenance) gets its own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
 
 ## v1 Requirements (Ship in initial release)
 
@@ -76,12 +76,25 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 | ENF-03 | `cmap lint --accept` records current violations into the baseline (deferred debt; still shown in coverage) | Phase 2b |
 | ENF-04 | Wire `cmap lint` into the M3 PR workflow as a fail-able step, preserving M3 hardening (env-routed context, no `pull_request_target`) | Phase 2b |
 
+## M5 — Phase 3 Requirements (Renderer & UX)
+
+**Design spec:** `docs/specs/2026-05-31-phase3-renderer-ux-design.md` — brainstorm output 2026-05-31. All map to phase **Phase 3** (M5) in ROADMAP. Surface = offline single-file HTML (no VSCode/CLI-ASCII); Mermaid for the focused query subgraph + hand-rolled SVG for the whole-graph overview; read-focused interactivity.
+
+| REQ-ID | Requirement | Phase |
+|---|---|---|
+| RND-01 | `focusedSubgraph(graph, id)` — target + impact ancestors + immediate forward children + route-entry nodes, each edge carrying a `dynamic` flag (pure) | Phase 3 |
+| RND-02 | `toMermaid(subgraph)` — `flowchart` definition: sanitized node ids, human labels, dashed dynamic edges, deterministic order | Phase 3 |
+| RND-03 | Enhance `cmap query --html` — embed the Mermaid subgraph (Mermaid runtime **inlined** → offline) + hover tooltips; keep existing meta/images/impact/access-path sections | Phase 3 |
+| RND-04 | `wholeGraphSvg(graph)` — hand-rolled SVG, all components + resolved edges, modest deterministic layout, stable `data-id` attributes | Phase 3 |
+| RND-05 | Whole-graph interactivity — inlined client JS: search/filter highlight, pan/zoom, click-node highlight + meta side panel | Phase 3 |
+| RND-06 | `cmap render --html <file>` — whole-graph offline single-file report; prints node/edge counts | Phase 3 |
+
 ## v2 Requirements (Deferred — later milestones)
 
 | REQ-ID | Requirement | Reason deferred |
 |---|---|---|
-| (TBD) | Mermaid / standalone HTML interactive renderer | Phase 3 |
-| (TBD) | VSCode snippet / dev-helper UX | Phase 3 |
+| (TBD) | VSCode extension / snippet dev-helper UX | Phase 3 out-of-scope → later |
+| (TBD) | Quarterly audit job + Angular-upgrade buffer + schema evolution | Phase 4 (M6) |
 
 ## Out of Scope (Explicit exclusions — Phase 0)
 
