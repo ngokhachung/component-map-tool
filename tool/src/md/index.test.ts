@@ -6,7 +6,7 @@ import { enrichGraph } from './index.js';
 import type { Graph, ComponentNode } from '../types.js';
 
 function node(className: string, filePath: string): ComponentNode {
-  return { id: className, componentId: null, className, selector: null, filePath, standalone: false, module: null, templateKind: 'none', inputs: [], outputs: [], docPath: null, images: [] };
+  return { id: className, componentId: null, className, selector: null, filePath, standalone: false, module: null, templateKind: 'none', inputs: [], outputs: [], docPath: null, images: [], description: null };
 }
 
 describe('enrichGraph', () => {

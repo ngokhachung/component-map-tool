@@ -1,6 +1,6 @@
 // Shared data contracts for the Component Map Tool (Phase 1).
 // Bump SCHEMA_VERSION on any shape change; a graph.json whose version != this forces a full rebuild.
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 // ---- Component I/O ----
 export type IoKind = 'decorator' | 'signal';
@@ -29,6 +29,7 @@ export interface ComponentNode extends ComponentRecord {
   componentId: string | null;                // from MD (Plan 8), else null
   docPath: string | null;                    // linked .md path, else null
   images: { caption: string | null; path: string }[];  // representative images from MD
+  description: string | null;  // from project MD 機能概要 (read-only), else null
 }
 
 // ---- Edges ----
@@ -37,7 +38,7 @@ export interface Edge {
   from: string;              // ComponentNode.id
   to: string | null;         // ComponentNode.id, or null when not statically knowable
   kind: DepKind;
-  via: 'template' | 'route';
+  via: 'template' | 'route' | 'override';
   reason: string | null;     // e.g. 'ng-content', 'ngTemplateOutlet', 'ngComponentOutlet'
 }
 

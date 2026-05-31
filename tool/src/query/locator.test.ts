@@ -6,7 +6,7 @@ function node(p: Partial<ComponentNode> & { className: string }): ComponentNode 
   return {
     id: p.className, componentId: null, selector: null,
     filePath: `src/${p.className}.ts`, standalone: false, module: null,
-    templateKind: 'none', inputs: [], outputs: [], docPath: null, images: [],
+    templateKind: 'none', inputs: [], outputs: [], docPath: null, images: [], description: null,
     ...p,
   };
 }

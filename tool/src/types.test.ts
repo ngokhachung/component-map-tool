@@ -5,7 +5,7 @@ import type { Graph, ComponentNode, Edge, RouteNode } from './types.js';
 describe('types contract', () => {
   it('exposes an integer SCHEMA_VERSION', () => {
     expect(Number.isInteger(SCHEMA_VERSION)).toBe(true);
-    expect(SCHEMA_VERSION).toBe(1);
+    expect(SCHEMA_VERSION).toBe(2);
   });
 
   it('a sample Graph object satisfies the contract shapes', () => {
@@ -22,6 +22,7 @@ describe('types contract', () => {
       outputs: [],
       docPath: null,
       images: [],
+      description: null,
     };
     const edge: Edge = { from: 'FooComponent', to: 'BarComponent', kind: 'resolved', via: 'template', reason: null };
     const route: RouteNode = {
