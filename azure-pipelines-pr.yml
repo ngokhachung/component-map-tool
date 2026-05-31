@@ -1,0 +1,77 @@
+# Component Map — PR pipeline (Azure DevOps). Ports the GitHub PR-bot comment + lint gate.
+#
+# PREREQUISITES (one-time, in Azure DevOps):
+#   1. Pipeline setting: enable "Allow scripts to access the OAuth token".
+#   2. Grant the build service identity ("<Project> Build Service") "Contribute to pull requests" on the repo.
+#   3. Add this pipeline as a Build Validation branch policy on the target branch to BLOCK PRs on lint failure.
+# SECURITY: the OAuth token is mapped via `env` (never interpolated into a script); the comment body is
+# passed to `jq --rawfile` (no shell interpolation); changed filenames only feed `cmap` (controlled output).
+pr:
+  branches:
+    include: ['*']
+  paths:
+    include: ['**/*.component.ts']
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  CMAP_ROOT: src
+  CMAP_DOCS: docs/components
+  CMAP_OVERRIDES: docs/component-map
+
+steps:
+  - checkout: self
+    fetchDepth: 0
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: Use Node 20
+
+  - script: npm --prefix tool ci
+    displayName: Install tool deps
+
+  - script: |
+      set -euo pipefail
+      TARGET="${TARGET#refs/heads/}"
+      CHANGED=$(git diff --name-only --diff-filter=ACMR "origin/${TARGET}...HEAD" -- '*.component.ts' | paste -sd, -)
+      echo "##vso[task.setvariable variable=CHANGED_FILES]$CHANGED"
+    env:
+      TARGET: $(System.PullRequest.TargetBranch)
+    displayName: Compute changed component files
+
+  - script: |
+      set -euo pipefail
+      npm --prefix tool run --silent cmap -- pr --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --changed "$CHANGED_FILES" > body.md
+    env:
+      CHANGED_FILES: $(CHANGED_FILES)
+    displayName: Render PR comment
+
+  - script: |
+      set -euo pipefail
+      API="$(System.CollectionUri)$(System.TeamProject)/_apis/git/repositories/$(Build.Repository.ID)/pullRequests/$(System.PullRequest.PullRequestId)"
+      MARKER="<!-- cmap-pr-bot -->"
+      THREADS=$(curl -sf -H "Authorization: Bearer $SYSTEM_ACCESSTOKEN" "$API/threads?api-version=7.1")
+      TID=$(echo "$THREADS" | jq -r --arg m "$MARKER" '[.value[]? | select((.comments[0].content // "") | contains($m))][0].id // empty')
+      if [ -n "$TID" ]; then
+        CID=$(echo "$THREADS" | jq -r --arg m "$MARKER" '[.value[]? | select((.comments[0].content // "") | contains($m))][0].comments[0].id // empty')
+        jq -n --rawfile c body.md '{content:$c}' \
+          | curl -sf -X PATCH -H "Authorization: Bearer $SYSTEM_ACCESSTOKEN" -H "Content-Type: application/json" -d @- \
+            "$API/threads/$TID/comments/$CID?api-version=7.1" > /dev/null
+      else
+        jq -n --rawfile c body.md '{comments:[{parentCommentId:0,content:$c,commentType:1}],status:1}' \
+          | curl -sf -X POST -H "Authorization: Bearer $SYSTEM_ACCESSTOKEN" -H "Content-Type: application/json" -d @- \
+            "$API/threads?api-version=7.1" > /dev/null
+      fi
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    displayName: Post/update sticky PR comment
+
+  - script: |
+      set -euo pipefail
+      npm --prefix tool run --silent cmap -- lint --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --changed "$CHANGED_FILES" --baseline .cmap-baseline.json
+    env:
+      CHANGED_FILES: $(CHANGED_FILES)
+    displayName: Lint gate (blocks PR on new doc debt)
