@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M4 task 4/7 complete; Waves 1-3 done)
+**Phase:** Step 7 — Execute (M4 tasks 5-6/7 complete; Waves 1-4 done)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -73,6 +73,9 @@ Approve the 5 M4 plans (`.planning/phase2b-{1..5}-PLAN.md`) + pick execution mod
 - M4/P2/T2 DONE (a78e341): `cli/baseline.ts` — `BaselineFile` (filePath→codes), `emptyBaseline`/`readBaseline` (missing+malformed-safe)/`writeBaseline` (deterministic sorted) + `newViolations`/`acceptInto` set-diff. 4 tests. Spec PASS + Quality APPROVED. Suite **117 green, tsc clean**.
 - M4/P2/T3 DONE (0aadb73): `cli/lint.ts` — `computeIssues` (missing-md / gap:* / override-broken:*), `lintChanged` (suffix-filter → newViolations diff; stale→warn), `renderLint`. 6 tests. **Implemented by controller** (opus subagent hit session limit; code verbatim from plan). Spec PASS + Quality APPROVED (suggestions only → QA backlog: use `=== null` guard consistency; add combined missing-md+gap test). Suite **123 green, tsc clean**.
 - M4/P3/T4 DONE (dd98f63): `cli/migrate.ts` — `computeCoverage` (withMd/needingDoc/documented/missingMd) + `renderCoverageMd` + `migrate` (scaffoldGaps + baseline snapshot via computeIssues + coverage md/json). 2 tests. Spec PASS + Quality APPROVED (suggestions → QA backlog: share construct-filter with gaps.ts; guard `.md`→`.json` no-op). Suite **125 green, tsc clean**.
+- M4/P4/T5 DONE (0d2f0ed): `cli/index.ts` — `cmap migrate` + `cmap lint` (+`--baseline`/`--accept`/`--coverage`) branches, USAGE; existing cmds unchanged. 2 CLI tests on real-sample (lint exit1→accept→0). Suite 127 green.
+- M4/P4/T6 DONE (62a48e1): `.github/workflows/component-map-pr.yml` — fail-able `cmap lint` step AFTER comment step, env-routed CHANGED_FILES (no `${{}}` in run), no `pull_request_target` + `workflow-lint.test.ts` (3 tests). Wave-4 review (5+6): Spec PASS + Quality APPROVED (no Critical/Important). Suite **130 green, tsc clean**.
+- M4 fixup (post-review, after 62a48e1): restored `pr` in USAGE string (review suggestion). tsc clean.
 
 ## Open Blockers
 
