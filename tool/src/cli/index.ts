@@ -1,6 +1,6 @@
 import { parseArgs } from 'node:util';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { extname, resolve, relative, isAbsolute } from 'node:path';
+import { extname, resolve, relative, isAbsolute, posix } from 'node:path';
 import { buildIncremental } from '../cache/index.js';
 import { enrichGraph } from '../md/index.js';
 import { writeGraph } from '../graph/index.js';
@@ -20,6 +20,8 @@ import type { Graph } from '../types.js';
 import { readBaseline, writeBaseline, acceptInto } from './baseline.js';
 import { computeIssues, lintChanged, renderLint } from './lint.js';
 import { migrate } from './migrate.js';
+import { auditReport, renderAuditMd } from '../audit/report.js';
+import { gitMtimes } from '../audit/mtime.js';
 
 export interface CliResult { code: number; lines: string[]; }
 
@@ -74,7 +76,7 @@ function pathSuffixMatch(a: string, b: string): boolean {
   return true;
 }
 
-const USAGE = 'usage: cmap <index|query|gaps|pr|migrate|lint|render> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file]';
+const USAGE = 'usage: cmap <index|query|gaps|pr|migrate|lint|render|audit> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file] [--report prefix]';
 
 export function runCli(argv: string[]): CliResult {
   const { values, positionals } = parseArgs({
@@ -91,6 +93,7 @@ export function runCli(argv: string[]): CliResult {
       baseline: { type: 'string' },
       accept: { type: 'boolean', default: false },
       coverage: { type: 'string' },
+      report: { type: 'string' },
     },
   });
   const cmd = positionals[0];
@@ -206,6 +209,27 @@ export function runCli(argv: string[]): CliResult {
     writeFileSync(values.html as string, renderWholeHtml(graph));
     const resolved = graph.edges.filter((e) => e.kind === 'resolved' && e.to).length;
     return { code: 0, lines: [`wrote ${values.html} (${graph.components.length} components, ${resolved} resolved edges)`] };
+  }
+
+  if (cmd === 'audit') {
+    const { graph, overrides, warnings } = buildEnriched(root, out, docs, overridesDir);
+    const overrideFiles = new Map<string, string>();
+    for (const id of overrides.keys()) overrideFiles.set(id, posix.join(overridesDir, `${id}.cmap.yaml`));
+    const realPaths = new Set<string>();
+    for (const c of graph.components) {
+      realPaths.add(posix.join(root, c.filePath));
+      if (c.docPath) realPaths.add(c.docPath);
+    }
+    for (const p of overrideFiles.values()) realPaths.add(p);
+    const mtimes = gitMtimes([...realPaths]);
+    const report = auditReport(graph, overrides, { mtimes, root, overrideFiles, warnings });
+    if (values.report) {
+      const prefix = values.report as string;
+      writeFileSync(`${prefix}.md`, renderAuditMd(report));
+      writeFileSync(`${prefix}.json`, `${JSON.stringify(report, null, 2)}\n`);
+      return { code: 0, lines: [`wrote ${prefix}.md + ${prefix}.json (${report.stale.length} stale, ${report.overrideOrphans.length} orphan override(s), ${report.gaps.length} gap component(s))`] };
+    }
+    return { code: 0, lines: [renderAuditMd(report)] };
   }
 
   return { code: 1, lines: [USAGE] };
