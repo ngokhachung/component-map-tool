@@ -10,7 +10,10 @@ function push<K, V>(m: Map<K, V[]>, k: K, v: V): void {
   const a = m.get(k); if (a) a.push(v); else m.set(k, [v]);
 }
 
-// layer = longest distance from a resolved-edge root; cycles/unreachable settle at 0.
+// Approximate depth layering over resolved edges: a relaxation-BFS from roots (indeg 0).
+// Exact for trees/chains; may UNDER-assign depth on convergent/diamond paths (the `seen`
+// guard skips re-propagation) — acceptable for this "modest" overview layout. Cycles and
+// unreachable nodes settle at layer 0 (the `seen` guard also guarantees termination).
 function layers(graph: Graph): Map<string, number> {
   const fwd = new Map<string, string[]>();
   const indeg = new Map<string, number>();
@@ -37,6 +40,7 @@ function layers(graph: Graph): Map<string, number> {
   return layer;
 }
 
+// box width / box height / x-stride between layers / y-stride between rows (px)
 const NW = 170, NH = 26, DX = 230, DY = 40;
 
 export function wholeGraphSvg(graph: Graph): WholeGraphSvg {
