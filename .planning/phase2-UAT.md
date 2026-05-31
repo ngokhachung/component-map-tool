@@ -42,7 +42,22 @@ npm run cmap -- pr --root ../poc/real-sample/src --changed app/shared/components
 
 ---
 
+## UAT Checklist (tick when verified)
+
+Run from `tool/` (or `npm --prefix tool ...` from repo root).
+
+- [ ] **Tests + coverage** — `npm run test:cov` → 109 tests pass (28 files), coverage ≥80% (≈98%/89%), exit 0.
+- [ ] **Typecheck** — `npx tsc --noEmit` → no output (clean).
+- [ ] **gaps lists undocumented dynamic deps** — `npm run cmap -- gaps --root ../poc/real-sample/src` → shows e.g. `ReportDashboardPage … ngComponentOutlet`, `ModalContainerComponent … createComponent / @ViewChild query`, `…ng-content`. Components with no dynamic deps are absent.
+- [ ] **gaps --write scaffolds (and warns on missing componentId)** — `npm run cmap -- gaps --write --root ../poc/real-sample/src --overrides ../poc/real-sample/.cmap-test` → for componentId-less components, prints "has dynamic deps but no componentId … cannot scaffold"; (clean up `.cmap-test` after).
+- [ ] **override closes a gap (the core flow)** — create a project MD giving a component a `componentId` + a `docs/component-map/<id>.cmap.yaml` with a filled `target`, then `npm run cmap -- query <id> --docs … --overrides …` → impact/access-path includes the documented target (a `via:"override"` edge); that component no longer appears in `cmap gaps`. (This is auto-proven in `tool/src/overrides/integration.test.ts`.)
+- [ ] **PR comment preview** — `npm run cmap -- pr --root ../poc/real-sample/src --changed app/shared/components/data-table/data-table.component.ts` → markdown starting with `<!-- cmap-pr-bot -->`, a `DataTableComponent` section with affected ancestors + UI access paths, capped/uncertain-flagged.
+- [ ] **PR comment: no-match** — `npm run cmap -- pr --root ../poc/real-sample/src --changed nope/none.ts` → marker + "_No mapped component changes._".
+- [ ] **Workflow sanity** — open `.github/workflows/component-map-pr.yml`: triggers on `pull_request` (paths `**/*.component.ts`), `permissions: pull-requests: write`, `concurrency`, `fetch-depth: 0`, runs `cmap -- pr`, posts via `actions/github-script`, no `pull_request_target`. Adapt `CMAP_ROOT/CMAP_DOCS/CMAP_OVERRIDES` to your real repo before enabling.
+
 ## Confirm
-Reply **"confirmed"** → proceed to STEP 9 QA Gate + ship (merge to master). Or describe any difference (command + expected vs actual) and AI fixes before proceeding.
+When the checklist is green, reply **"confirmed"** → proceed to STEP 9 QA Gate + ship (merge to master). Or describe any difference (command + expected vs actual) and AI fixes before proceeding.
+
+> **Status: UAT DEFERRED** (user will run later). Code pushed + demo branch `demo/5-phase2-md-overrides-pr-bot` created. Goal-backward verification already PASS (`phase2-VERIFICATION.md`).
 
 (Goal-backward verification already PASS — see `phase2-VERIFICATION.md`: 7/7 REQ, override flow proven on real v15.)

@@ -16,7 +16,7 @@
 
 ## Next Action
 
-User runs `cmap gaps`/`pr` per `.planning/phase2-UAT.md` and confirms. Goal-backward verification PASS (`.planning/phase2-VERIFICATION.md`, 7/7 REQ). On confirm → STEP 9 QA Gate → STEP 10/11 ship (merge feature branch → master + phase2-SUMMARY + ROADMAP M3→done/M4→active). Branch not pushed (29 commits).
+**UAT DEFERRED** (user will run later via the `.planning/phase2-UAT.md` checklist). Code pushed to origin; demo branch `demo/5-phase2-md-overrides-pr-bot` created. On user "confirmed" → STEP 9 QA Gate → STEP 10/11 ship (merge feature branch → master, NOT yet merged + phase2-SUMMARY + ROADMAP M3→done/M4→active). Goal-backward verification PASS (`.planning/phase2-VERIFICATION.md`, 7/7 REQ).
 
 ## Execution Log
 
