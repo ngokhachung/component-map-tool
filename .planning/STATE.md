@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 4 — Research complete (M3); ready for writing-plans
+**Phase:** Step 7 — Execute (M3 Wave 1; plans written wave-by-wave; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Run writing-plans (STEP 6) for M3, consuming `.planning/phase2-RESEARCH.md`. Design approved + amended (construct-identity scaffold key, skip-stale + cycle-warn merge, comment marker/cap/concurrency). Create feature branch at execute. Working on master currently.
+Write Plan 1 (`.planning/phase2-1-PLAN.md`, Foundation: T1 types `via:'override'`+`description`+schemaVersion 2 + js-yaml deps, T2 MD `機能概要`→description) then execute. M3 wave map approved (6 plans/~10 tasks); cadence wave-by-wave; execution Subagent-Driven; branch feature/phase2-md-overrides-pr-bot-2026-05-31.
 
 ## Execution Log
 
