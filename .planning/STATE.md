@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M3 Plans 1-3 done: +Gaps/scaffold; 98 tests; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
+**Phase:** Step 7 — Execute (M3 Plans 1-4 done: +CLI wiring/gaps; 100 tests; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 4 (`.planning/phase2-4-PLAN.md`, CLI wiring: T6 `cmap gaps [--write]` + wire applyOverrides into buildEnriched) then execute. M3 Plans 1-3 done (98 tests). Branch feature/phase2-md-overrides-pr-bot-2026-05-31.
+Write Plan 5 (`.planning/phase2-5-PLAN.md`, PR comment: T7 renderPrComment pure, T8 `cmap pr --changed`) then execute. M3 Plans 1-4 done (100 tests). Branch feature/phase2-md-overrides-pr-bot-2026-05-31.
 
 ## Execution Log
 
@@ -57,6 +57,7 @@ Write Plan 4 (`.planning/phase2-4-PLAN.md`, CLI wiring: T6 `cmap gaps [--write]`
 - M3/P1/T1 DONE (d955171): types — `Edge.via`+'override', `ComponentNode.description`, `SCHEMA_VERSION=2`; +`js-yaml@4.1.0`/`@types/js-yaml@4.0.9`; ripple to assembleGraph + 3 test constructors. 78 tests.
 - M3/P1/T2 DONE (02d6386): `md/parse.ts`+`index.ts` — extract `## コンポーネント機能概要` → `node.description` (OVR-05). Suite **81/81 green, tsc clean**.
 - M3/P2/T3 DONE (4686f80): `overrides/schema.ts` (CmapOverride+validate, OVERRIDE_SCHEMA_VERSION) + `parse.ts` (readOverrides via js-yaml, per-file try/catch, skip unknown-version, dup-id warn). 7 tests.
+- M3/P4/T6 DONE (015611b): `cli/index.ts` — buildEnriched applies overrides (enrich→readOverrides→applyOverrides→writeGraph); `cmap gaps [--write]` + `--overrides`/`--write` flags. Suite **100/100 green, tsc clean**.
 - M3/P3/T5 DONE (controller, after subagent session-limit): `overrides/gaps.ts` — findGaps (uncovered construct reasons) + scaffoldGaps (merge-safe `.cmap.yaml` skeleton, preserve filled target, stale-mark, idempotent LF) (OVR-03/04). 6 tests. Suite **98/98 green, tsc clean**.
 - M3/P2/T4 DONE (8536745): `overrides/merge.ts` applyOverrides — resolve target via locator → `via:'override'` resolved edge, skip stale/empty, dedup, cycle-warn, unresolvable warn (OVR-02). 4 tests. Suite **92/92 green, tsc clean**.
 
