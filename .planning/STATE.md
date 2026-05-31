@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 6 — Plan (complete) — 4 M6 plans written, awaiting approval + execution-mode choice
-**Status:** waiting_for_user
+**Phase:** Step 7 — Execute (M6 tasks 1-2/6 complete; Wave 1 done)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -94,6 +94,11 @@ Approve the 4 M6 plans (`.planning/phase4-{1..4}-PLAN.md`) + pick execution mode
 - M5/P3/T4 DONE (30efc63): `render/assets.ts` `mermaidRuntime()` (reads `mermaid/dist/mermaid.min.js`) + `cli/html.ts` graph section (`<pre class="mermaid">` + inlined runtime + CMAP_TIP tooltip init); `HtmlData` gains OPTIONAL mermaidDef/tips/mermaidRuntime (back-compatible). Added `mermaid` dep. 3 tests. Suite 142 green.
 - M5/P3/T5 DONE (90809d4): `cli/render-html.ts` `renderWholeHtml` — offline whole-graph page (svg + search/filter + pan/zoom + click-highlight + META side panel). 1 test. Wave-3 review (4+5): Spec PASS + Quality APPROVED (no Critical/Important). **QA backlog (suggestions):** esc() META values in meta-panel innerHTML; JSON.stringify into `<script>` doesn't escape `</script>` (both theoretical — developer-controlled data can't contain HTML metachars: Angular classNames/posix filePaths). Suite **143 green, tsc clean**.
 - M5/P4/T6 DONE (7ddead9): `cli/index.ts` — `query --html` now builds focusedSubgraph→toMermaid→tips→mermaidRuntime into HtmlData; new `cmap render --html` (whole-graph, prints counts; no --html → exit 1); USAGE += render. `render-integration.test.ts` (real-sample: query embeds flowchart for DataTableComponent; render emits svg w/ ≥18 nodes). 3 tests. **STEP 7 EXECUTE COMPLETE: 4 plans / 6 tasks, suite 146 green, coverage 98.25% lines / 89.19% branch / 98.55% func, tsc clean.**
+
+## M6 Execution Log
+
+- M6/P1/T1 DONE (509e93b): `audit/report.ts` `auditReport` (md+override git-stale via injected mtimes; override orphans; coverage/gaps passthrough) + `renderAuditMd`. 3 tests. Suite 149 green.
+- M6/P1/T2 DONE (055b718): `audit/mtime.ts` `gitMtime`/`gitMtimes` (`git log -1 --format=%ct`, null-safe, execFileSync array args = injection-safe). 3 tests. Wave-1 review: Spec PASS + Quality APPROVED (suggestion → backlog: rename `.map((g)=>)` lambda to `gap`). Suite **152 green, tsc clean**.
 
 ## Open Blockers
 
