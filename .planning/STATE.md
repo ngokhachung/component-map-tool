@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M3 Plans 1-5 done: +PR comment; 105 tests; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
-**Status:** in_progress
+**Phase:** Step 8 — UAT + Verification (M3 Execute COMPLETE: 6 plans/10 tasks, 109 tests, 98% cov; verification PASS; awaiting user UAT)
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 6 (`.planning/phase2-6-PLAN.md`, Action + verify: T9 `.github/workflows/component-map-pr.yml`, T10 real-sample integration `.cmap.yaml` + coverage) then execute. M3 Plans 1-5 done (105 tests). After Plan 6 → STEP 8 UAT. Branch feature/phase2-md-overrides-pr-bot-2026-05-31.
+User runs `cmap gaps`/`pr` per `.planning/phase2-UAT.md` and confirms. Goal-backward verification PASS (`.planning/phase2-VERIFICATION.md`, 7/7 REQ). On confirm → STEP 9 QA Gate → STEP 10/11 ship (merge feature branch → master + phase2-SUMMARY + ROADMAP M3→done/M4→active). Branch not pushed (29 commits).
 
 ## Execution Log
 
@@ -57,6 +57,7 @@ Write Plan 6 (`.planning/phase2-6-PLAN.md`, Action + verify: T9 `.github/workflo
 - M3/P1/T1 DONE (d955171): types — `Edge.via`+'override', `ComponentNode.description`, `SCHEMA_VERSION=2`; +`js-yaml@4.1.0`/`@types/js-yaml@4.0.9`; ripple to assembleGraph + 3 test constructors. 78 tests.
 - M3/P1/T2 DONE (02d6386): `md/parse.ts`+`index.ts` — extract `## コンポーネント機能概要` → `node.description` (OVR-05). Suite **81/81 green, tsc clean**.
 - M3/P2/T3 DONE (4686f80): `overrides/schema.ts` (CmapOverride+validate, OVERRIDE_SCHEMA_VERSION) + `parse.ts` (readOverrides via js-yaml, per-file try/catch, skip unknown-version, dup-id warn). 7 tests.
+- M3/P6/T9+T10 DONE (645ed8f, 832f398): `.github/workflows/component-map-pr.yml` (PR-bot Action: pull_request/permissions/concurrency/fetch-depth:0 diff/cmap pr/github-script sticky/no pull_request_target) + `cli/workflow.test.ts` + `overrides/integration.test.ts` (real-sample ngComponentOutlet → via:override edge + gap closed). **M3 EXECUTE COMPLETE: 6 plans/10 tasks, 109 tests, coverage 98%/89%, tsc clean.**
 - M3/P5/T7+T8 DONE (fe13104, 70c71d7): `cli/pr.ts` renderPrComment (marker, ancestor cap, byte-cap truncation) + `cmap pr --changed` (map files→nodes via suffix, impact/access-paths/gaps → comment) (BOT-01). Suite **105/105 green, tsc clean**.
 - M3/P4/T6 DONE (015611b): `cli/index.ts` — buildEnriched applies overrides (enrich→readOverrides→applyOverrides→writeGraph); `cmap gaps [--write]` + `--overrides`/`--write` flags. Suite **100/100 green, tsc clean**.
 - M3/P3/T5 DONE (controller, after subagent session-limit): `overrides/gaps.ts` — findGaps (uncovered construct reasons) + scaffoldGaps (merge-safe `.cmap.yaml` skeleton, preserve filled target, stale-mark, idempotent LF) (OVR-03/04). 6 tests. Suite **98/98 green, tsc clean**.
