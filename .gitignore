@@ -1,3 +1,6 @@
 # happypowerprocess workflow
 .worktrees/
 .claude/settings.local.json
+
+# node / build caches (deps live under tool/)
+node_modules/
