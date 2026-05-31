@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 3 — Mode Gate complete (M5 brainstorm + spec done; awaiting spec review → STEP 6 Plan)
+**Phase:** Step 6 — Plan (complete) — 4 M5 plans written, awaiting approval + execution-mode choice
 **Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-User reviews spec `docs/specs/2026-05-31-phase3-renderer-ux-design.md`; on approval run **writing-plans** (STEP 6) for M5. Branch: `feature/phase3-renderer-ux-2026-05-31`. (Manual UAT for M3 + M4 still pending before enabling the CI lint gate in production.)
+Approve the 4 M5 plans (`.planning/phase3-{1..4}-PLAN.md`) + pick execution mode (Subagent-Driven recommended) → STEP 7 Execute wave-by-wave. Branch: `feature/phase3-renderer-ux-2026-05-31`. New dep `mermaid` (inlined offline). (Manual UAT for M3 + M4 still pending before enabling the CI lint gate in production.)
 
 ## QA Gate (M4)
 
@@ -129,6 +129,7 @@ User reviews spec `docs/specs/2026-05-31-phase3-renderer-ux-design.md`; on appro
 - 2026-05-31: M4 CI wiring = **Option A** (extend the M3 `component-map-pr.yml`: comment step always green + fail-able `cmap lint` step; build graph once; keep M3 hardening). `cmap lint` is a CLI command (runs local + CI).
 - 2026-05-31: **M5 kicked off** (branch `feature/phase3-renderer-ux-2026-05-31`). STEP 1 Fast Lane NOT eligible (milestone-scale renderer). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (0/5). Spec `docs/specs/2026-05-31-phase3-renderer-ux-design.md`. REQ RND-01..06.
 - 2026-05-31: M5 decisions — surface = **offline single-file HTML** (no VSCode/CLI-ASCII); **two views**: focused subgraph per `cmap query` (Mermaid) + whole-graph overview (`cmap render`, hand-rolled SVG); **render tech** = Mermaid inlined for subgraph + hand-rolled SVG for whole-graph; **read-focused** interactivity (hover/dashed-dynamic; search/filter + pan/zoom + click-highlight + meta panel), no cross-file nav. Mermaid = npm dep, `dist/mermaid.min.js` inlined at render time (offline). No Phase -1 UX research exists (greenfield) → UX decided in brainstorm.
+- 2026-05-31: **M5 STEP 6 plans written** — 4 wave-grouped plans (`.planning/phase3-{1..4}-PLAN.md`), 6 tasks, zero file-overlap, dependency=wave order. W1 subgraph+mermaid · W2 whole-graph svg · W3 html+assets (mermaid runtime) + render-html · W4 CLI wiring + integration. New dep `mermaid` added in P3/T4. `HtmlData` new fields OPTIONAL (back-compatible). All tasks sonnet. Execution mode pending user choice.
 - 2026-05-31: **M4 STEP 6 plans written** — 5 wave-grouped plans (`.planning/phase2b-{1..5}-PLAN.md`), 7 tasks, zero file-overlap, dependency=wave order. **Deviation flagged:** keep `OVERRIDE_SCHEMA_VERSION=1` (waiver is an optional additive field; no bump → no v1 churn) vs spec §4's "bump to v2". **Lint ③ scope:** blocking `override-broken` = unresolvable/orphan *target* (attributable to a changed component); malformed override *files* → non-blocking warnings (can't attribute to a changed file under the filePath-keyed grandfather model). Plan models per task: P1 sonnet, P2 sonnet+opus, P3 sonnet, P4 sonnet+sonnet, P5 sonnet. Execution mode pending user choice (Subagent-Driven recommended).
 
 ## Approved Mode

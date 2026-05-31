@@ -3,7 +3,7 @@
 ## Active Milestone
 
 **M5: Phase 3 — Renderer & UX**
-Status: not_started
+Status: in_progress (STEP 6 plans written; awaiting approval → execute)
 Goal: Interactive dependency-graph renderer — Mermaid + standalone offline HTML report + CLI UX. UX research first (apply Phase -1 insights). Carry-forward in `.planning/phase2b-SUMMARY.md`.
 
 ## Completed Milestones
