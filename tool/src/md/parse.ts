@@ -6,6 +6,7 @@ export interface MdDoc {
   componentId: string | null;
   sourcePath: string | null;
   images: MdImage[];
+  description: string | null;
 }
 
 function splitRow(line: string): string[] {
@@ -42,6 +43,19 @@ function extractSourcePath(lines: string[]): string | null {
   return null;
 }
 
+function extractDescription(lines: string[]): string | null {
+  for (let i = 0; i < lines.length; i++) {
+    if (/^##\s*コンポーネント機能概要/.test(lines[i])) {
+      const body: string[] = [];
+      for (let j = i + 1; j < lines.length && !/^#/.test(lines[j]); j++) {
+        if (lines[j].trim()) body.push(lines[j].trim());
+      }
+      return body.length ? body.join(' ') : null;
+    }
+  }
+  return null;
+}
+
 function extractImages(lines: string[], mdPath: string): MdImage[] {
   const dir = posix.dirname(mdPath.replace(/\\/g, '/'));
   const images: MdImage[] = [];
@@ -65,5 +79,6 @@ export function parseMdDoc(content: string, mdPath: string): MdDoc {
     componentId: extractComponentId(lines, content),
     sourcePath: extractSourcePath(lines),
     images: extractImages(lines, mdPath),
+    description: extractDescription(lines),
   };
 }

@@ -53,6 +53,23 @@ describe('enrichGraph', () => {
     } finally { rmSync(dir, { recursive: true, force: true }); }
   });
 
+  it('sets node.description from the project MD', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'cmap-md-'));
+    try {
+      writeFileSync(join(dir, 'D1.md'), `# [D1] Foo
+
+## コンポーネント機能概要
+A reusable foo.
+
+## ソースパス
+\`features/foo/foo.component.ts\`
+`);
+      const graph: Graph = { schemaVersion: 2, components: [node('FooComponent', 'src/app/features/foo/foo.component.ts')], edges: [], routes: [] };
+      enrichGraph(graph, dir);
+      expect(graph.components[0].description).toBe('A reusable foo.');
+    } finally { rmSync(dir, { recursive: true, force: true }); }
+  });
+
   it('does NOT assign a duplicated componentId to matched nodes (alias stays unambiguous)', () => {
     const dir = mkdtempSync(join(tmpdir(), 'cmap-md-'));
     try {

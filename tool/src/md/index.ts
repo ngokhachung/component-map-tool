@@ -53,6 +53,7 @@ export function enrichGraph(graph: Graph, docsDir: string): { warnings: string[]
     node.componentId = d.componentId && duplicateIds.has(d.componentId) ? null : d.componentId;
     node.docPath = d.mdPath;
     node.images = d.images;
+    node.description = d.description;
   }
   return { warnings };
 }

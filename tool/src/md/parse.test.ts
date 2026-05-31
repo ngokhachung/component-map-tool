@@ -45,4 +45,10 @@ describe('parseMdDoc', () => {
     expect(d.sourcePath).toBeNull();
     expect(d.images).toEqual([]);
   });
+  it('extracts the 機能概要 description', () => {
+    expect(parseMdDoc(SAMPLE, 'components/C000011.md').description).toBe('Displays information.');
+  });
+  it('description is null when the section is absent', () => {
+    expect(parseMdDoc('# [C1] Bare', 'x.md').description).toBeNull();
+  });
 });
