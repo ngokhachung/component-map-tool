@@ -3,6 +3,7 @@ import { mkdtempSync, writeFileSync, rmSync, existsSync, readFileSync, mkdirSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { runCli, imageDataUris } from './index.js';
+import { PR_MARKER } from './pr.js';
 
 function repo(): string {
   const d = mkdtempSync(join(tmpdir(), 'cmap-cli-'));
@@ -116,6 +117,29 @@ describe('runCli gaps', () => {
       const r = runCli(['gaps', '--write', '--root', d, '--out', join(d, '.cmap'), '--overrides', join(d, 'docs/cmap')]);
       expect(r.code).toBe(0);
       expect(r.lines.join('\n').toLowerCase()).toContain('componentid');
+    } finally { rmSync(d, { recursive: true, force: true }); }
+  });
+});
+
+describe('runCli pr', () => {
+  it('renders a sticky PR comment for changed component files', () => {
+    const d = repo();
+    try {
+      const r = runCli(['pr', '--root', d, '--out', join(d, '.cmap'), '--changed', 'x.ts']);
+      expect(r.code).toBe(0);
+      const md = r.lines.join('\n');
+      expect(md.startsWith(PR_MARKER)).toBe(true);
+      expect(md).toContain('ChildComponent');
+      expect(md).toContain('ParentComponent');
+    } finally { rmSync(d, { recursive: true, force: true }); }
+  });
+
+  it('renders the no-changes comment when nothing maps', () => {
+    const d = repo();
+    try {
+      const r = runCli(['pr', '--root', d, '--out', join(d, '.cmap'), '--changed', 'nope/none.ts']);
+      expect(r.code).toBe(0);
+      expect(r.lines.join('\n').toLowerCase()).toContain('no mapped');
     } finally { rmSync(d, { recursive: true, force: true }); }
   });
 });

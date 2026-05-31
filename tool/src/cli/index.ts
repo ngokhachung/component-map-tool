@@ -9,6 +9,7 @@ import { impact, uiAccessPaths } from '../query/index.js';
 import { readOverrides } from '../overrides/parse.js';
 import { applyOverrides } from '../overrides/merge.js';
 import { findGaps, scaffoldGaps } from '../overrides/gaps.js';
+import { renderPrComment, type PrComponent } from './pr.js';
 import type { CmapOverride } from '../overrides/schema.js';
 import { renderHtml, type HtmlData } from './html.js';
 import type { Graph } from '../types.js';
@@ -55,7 +56,18 @@ export function imageDataUris(
   return out;
 }
 
-const USAGE = 'usage: cmap <index|query|gaps> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write]';
+// A repo path and a node filePath match when one is a full-segment suffix of the other
+// (changed-file paths from git diff need not share the analyzed root's prefix).
+function pathSuffixMatch(a: string, b: string): boolean {
+  const x = a.replace(/\\/g, '/').split('/').filter(Boolean);
+  const y = b.replace(/\\/g, '/').split('/').filter(Boolean);
+  const n = Math.min(x.length, y.length);
+  if (n === 0) return false;
+  for (let i = 1; i <= n; i++) if (x[x.length - i] !== y[y.length - i]) return false;
+  return true;
+}
+
+const USAGE = 'usage: cmap <index|query|gaps|pr> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv]';
 
 export function runCli(argv: string[]): CliResult {
   const { values, positionals } = parseArgs({
@@ -68,6 +80,7 @@ export function runCli(argv: string[]): CliResult {
       html: { type: 'string' },
       overrides: { type: 'string' },
       write: { type: 'boolean', default: false },
+      changed: { type: 'string' },
     },
   });
   const cmd = positionals[0];
@@ -119,6 +132,29 @@ export function runCli(argv: string[]): CliResult {
     const gaps = findGaps(graph, overrides);
     if (gaps.length === 0) return { code: 0, lines: ['no gaps — all components are statically complete or documented'] };
     return { code: 0, lines: [`${gaps.length} component(s) need documentation:`, ...gaps.map((g) => `  ${g.componentId ?? g.id} (${g.filePath}): ${g.uncovered.join(', ')}`), ...warnings] };
+  }
+
+  if (cmd === 'pr') {
+    const files = ((values.changed as string | undefined) ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+    const { graph, overrides } = buildEnriched(root, out, docs, overridesDir);
+    const gapsByNode = new Map(findGaps(graph, overrides).map((g) => [g.id, g.uncovered]));
+    const items: PrComponent[] = [];
+    const seen = new Set<string>();
+    for (const f of files) {
+      for (const node of graph.components.filter((c) => pathSuffixMatch(c.filePath, f))) {
+        if (seen.has(node.id)) continue;
+        seen.add(node.id);
+        const imp = impact(graph, node.id);
+        const paths = uiAccessPaths(graph, node.id);
+        items.push({
+          id: node.id, componentId: node.componentId, selector: node.selector, filePath: node.filePath,
+          description: node.description, ancestors: imp.ancestors, uncertain: imp.uncertain,
+          accessPaths: paths.map((p) => ({ routeUrl: p.routeUrl, componentChain: p.componentChain })),
+          gaps: gapsByNode.get(node.id) ?? [],
+        });
+      }
+    }
+    return { code: 0, lines: [renderPrComment(items)] };
   }
 
   return { code: 1, lines: [USAGE] };
