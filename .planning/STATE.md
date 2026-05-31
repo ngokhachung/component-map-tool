@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 9 — QA Gate PASS (M4 execute done; verification PASS; manual UAT deferred) → ship decision
-**Status:** waiting_for_user
+**Phase:** Step 11 — Ship COMPLETE (M4 merged to master `5a9666a`; demo/6 pushed; manual UAT deferred)
+**Status:** complete
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-M4 ship decision: merge `feature/phase2b-md-migration-enforcement-2026-05-31` → master (`--no-ff`, like M1/M2/M3) + write phase2b-SUMMARY + ROADMAP M4→done/M5→active, OR hold. Verification PASS (7/7), QA APPROVED, 132 tests / 98% cov. Manual UAT deferred (`.planning/phase2b-UAT.md`) + M3 UAT still pending (`.planning/phase2-UAT.md`).
+Start **M5 — Phase 3 (Renderer & UX)** when ready (STEP 1/2). M4 merged to master (`--no-ff`, `5a9666a`); demo branch `demo/6-phase2b-enforcement` pushed. **Manual UAT pending** — run `.planning/phase2b-UAT.md` (and still-pending M3 `.planning/phase2-UAT.md`) against a real Angular repo + commit a `.cmap-baseline.json` (same `--root` as CI) before enabling the lint gate in production. phase2b-SUMMARY written; ROADMAP M4→done/M5→active.
 
 ## QA Gate (M4)
 
