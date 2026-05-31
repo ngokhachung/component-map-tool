@@ -70,7 +70,7 @@ function pathSuffixMatch(a: string, b: string): boolean {
   return true;
 }
 
-const USAGE = 'usage: cmap <index|query|gaps|migrate|lint> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file]';
+const USAGE = 'usage: cmap <index|query|gaps|pr|migrate|lint> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file]';
 
 export function runCli(argv: string[]): CliResult {
   const { values, positionals } = parseArgs({
