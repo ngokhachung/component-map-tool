@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 8 — UAT + Verification (M3 Execute COMPLETE: 6 plans/10 tasks, 109 tests, 98% cov; verification PASS; awaiting user UAT)
-**Status:** waiting_for_user
+**Phase:** Step 9 — QA Gate (M3; manual UAT DEFERRED by user, 8b verification PASS)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
