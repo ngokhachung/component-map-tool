@@ -8,10 +8,10 @@
 
 ## Current Milestone
 
-**Milestone:** M6 — Phase 4: Long-term Maintenance (in progress, started 2026-05-31) — FINAL planned milestone
+**Milestone:** M6 — Phase 4: Long-term Maintenance (**COMPLETE** 2026-06-01, manual UAT deferred) — FINAL planned milestone
 **Started:** 2026-05-31
-**Completed:** —
-**Next milestone:** none (M6 is the final planned milestone; project plan complete after M6)
+**Completed:** 2026-06-01
+**Next milestone:** none — **planned roadmap M1–M6 COMPLETE**. New scope = fresh brainstorm cycle.
 **Prior:** M5 — Phase 3 Renderer & UX (COMPLETE, merged `4b3f057`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
