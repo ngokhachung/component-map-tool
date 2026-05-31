@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute COMPLETE (M5 6/6 tasks, all 4 waves) → final review → STEP 8
-**Status:** in_progress
+**Phase:** Step 9 — QA Gate PASS (M5 execute done; verification PASS; manual UAT deferred) → ship decision
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,11 @@
 
 ## Next Action
 
-Approve the 4 M5 plans (`.planning/phase3-{1..4}-PLAN.md`) + pick execution mode (Subagent-Driven recommended) → STEP 7 Execute wave-by-wave. Branch: `feature/phase3-renderer-ux-2026-05-31`. New dep `mermaid` (inlined offline). (Manual UAT for M3 + M4 still pending before enabling the CI lint gate in production.)
+M5 ship decision: merge `feature/phase3-renderer-ux-2026-05-31` → master (`--no-ff`, like M1-M4) + phase3-SUMMARY + ROADMAP M5→done/M6→active, OR tach demo branch first, OR hold. Verification PASS (6/6), QA APPROVED, 146 tests / 98% cov. Manual UAT deferred (`.planning/phase3-UAT.md`); M3+M4 UAT also pending before enabling the CI lint gate in production.
+
+## QA Gate (M5)
+
+- 2026-05-31: Final holistic review (opus, whole `master..HEAD` diff) = **APPROVED**. 0 Critical, 0 Important. Verified: end-to-end coherence (shared keys across modules); **offline guarantee against the real 3.3 MB Mermaid bundle** (no CDN/fetch reached by flowchart init); no analysis-pipeline contamination (`import 'mermaid'` nowhere — file-read only); purely additive diff (only deletion = USAGE string); determinism (sorted mermaid/svg). Suggestions → backlog: esc() meta-panel innerHTML; `</script>` JSON escaping; Set-based pushEdge; share SHAPE; whole-graph node-count guard. 146 tests, coverage 98.25%/89.19%. STEP 8: goal-backward verification PASS (6/6, `.planning/phase3-VERIFICATION.md`); manual UAT deferred (`.planning/phase3-UAT.md`).
 
 ## QA Gate (M4)
 
