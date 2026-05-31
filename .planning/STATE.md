@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M6 tasks 4-5/6 complete; Waves 1-3 done)
+**Phase:** Step 7 — Execute COMPLETE (M6 6/6 tasks, all 4 waves) → final review → STEP 8
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -102,6 +102,7 @@ Approve the 4 M6 plans (`.planning/phase4-{1..4}-PLAN.md`) + pick execution mode
 - M6/P2/T3 DONE (70eadc4): `cli/index.ts` `audit` command (+`--report` flag, USAGE, merged `posix` into node:path import) — builds overrideFiles + realPaths, `gitMtimes`, `auditReport`; prints md or writes `<prefix>.md/.json`. 2 integration tests on real-sample. **Implemented by controller** (subagent session limit; verbatim plan code). Spec PASS (key-consistency invariant verified both sides) + Quality APPROVED. Suite **154 green, tsc clean**.
 - M6/P3/T4 DONE (ad83e36): `azure-pipelines-pr.yml` (port M3 comment + M4 lint gate; sticky PR-thread via Azure REST, `$(System.AccessToken)` via env, jq --rawfile body, TargetBranch stripped); **deleted** `.github/workflows/component-map-pr.yml` + `workflow.test.ts` + `workflow-lint.test.ts`. `azure-pr.test.ts` (5 tests). Suite 153.
 - M6/P3/T5 DONE (821d43c): `azure-pipelines-audit.yml` (quarterly cron `0 9 1 1,4,7,10 *` → `cmap audit --report` → uploadsummary + PublishPipelineArtifact). `azure-audit.test.ts` (2 tests). Wave-3 review (4+5): Spec PASS + Quality APPROVED — **injection vector fully closed** (body→jq --rawfile→curl -d @-; token via env; branch stripped; set -euo pipefail). Suite **155 green, tsc clean**.
+- M6/P4/T6 DONE (f2ba6b2): docs — `docs/COMPATIBILITY.md` (matrix + upgrade checklist), `docs/SCHEMA.md` (3 schema versions + semver/migration), `CHANGELOG.md` (M1–M6), `docs/accuracy-sampling-checklist.md`, README CI&maintenance section. `docs.test.ts` (5 existence/content tests). README already existed (appended). **STEP 7 EXECUTE COMPLETE: 4 plans / 6 tasks, suite 160 green, coverage 98.17% lines / 88.67% branch / 98.6% func, tsc clean.**
 
 ## Open Blockers
 
