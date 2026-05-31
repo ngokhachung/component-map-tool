@@ -3,8 +3,8 @@
 ## Active Milestone
 
 **M6: Phase 4 — Long-term Maintenance**
-Status: not_started
-Goal: Quarterly audit job, Angular-upgrade buffer (parser version bumps), schema evolution. Carry-forward in `.planning/phase3-SUMMARY.md`.
+Status: in_progress (STEP 6 plans written; awaiting approval → execute)
+Goal: `cmap audit` (git-stale + coverage + orphans + gaps) + Azure DevOps Pipelines (PR comment+lint gate, quarterly scheduled audit) **replacing** the GitHub Actions workflow + maintenance docs (compatibility matrix, schema policy, CHANGELOG, accuracy checklist). Spec `docs/specs/2026-05-31-phase4-maintenance-design.md`; plans `.planning/phase4-{1..4}-PLAN.md`.
 
 ## Completed Milestones
 

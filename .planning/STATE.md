@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 3 — Mode Gate complete (M6 brainstorm + spec done; awaiting spec review → STEP 6 Plan)
+**Phase:** Step 6 — Plan (complete) — 4 M6 plans written, awaiting approval + execution-mode choice
 **Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-User reviews spec `docs/specs/2026-05-31-phase4-maintenance-design.md`; on approval run **writing-plans** (STEP 6) for M6. Branch: `feature/phase4-maintenance-2026-05-31`. **Pivot:** Azure DevOps Pipelines REPLACE the GitHub Actions workflow. **Manual UAT pending across M3/M4/M5** before enabling the CI gate in production.
+Approve the 4 M6 plans (`.planning/phase4-{1..4}-PLAN.md`) + pick execution mode (Subagent-Driven recommended) → STEP 7 Execute wave-by-wave. Branch: `feature/phase4-maintenance-2026-05-31`. **Pivot:** Azure DevOps Pipelines REPLACE the GitHub Actions workflow (Plan 3 deletes it + its 2 tests). **Manual UAT pending across M3/M4/M5** before enabling the CI gate in production.
 
 ## QA Gate (M5)
 
@@ -145,6 +145,7 @@ User reviews spec `docs/specs/2026-05-31-phase4-maintenance-design.md`; on appro
 - 2026-05-31: **M5 STEP 6 plans written** — 4 wave-grouped plans (`.planning/phase3-{1..4}-PLAN.md`), 6 tasks, zero file-overlap, dependency=wave order. W1 subgraph+mermaid · W2 whole-graph svg · W3 html+assets (mermaid runtime) + render-html · W4 CLI wiring + integration. New dep `mermaid` added in P3/T4. `HtmlData` new fields OPTIONAL (back-compatible). All tasks sonnet. Execution mode pending user choice.
 - 2026-05-31: **M6 kicked off** (branch `feature/phase4-maintenance-2026-05-31`), FINAL planned milestone. STEP 1 Fast Lane NOT eligible (CI port + multi-file). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (1/5 — CI/CD design). Spec `docs/specs/2026-05-31-phase4-maintenance-design.md`. REQ MNT-01 + AZ-01/02 + DOC-01/02/03.
 - 2026-05-31: **M6 PIVOT — Azure DevOps**: team CI = Azure DevOps. `cmap` CLI stays platform-agnostic; **Azure Pipelines REPLACE the GitHub Actions workflow** (Azure-only, user choice). PR pipeline ports M3 PR-bot (sticky PR-thread comment via Azure REST + `$(System.AccessToken)`, injection-safe) + M4 lint gate (fail-able). Audit pipeline = quarterly cron (`0 9 1 1,4,7,10 *`) → `cmap audit` → build summary + artifact. `cmap audit` = git-mtime staleness (component committed after its doc) + coverage + orphans + gaps; staleness via injected mtimes (pure) + `git log -1 --format=%ct` in CLI. Docs: compatibility matrix + upgrade checklist, SCHEMA + CHANGELOG, accuracy-sampling checklist. Removing GitHub workflow = no CI on github.com until repo moves to Azure Repos (flagged, accepted).
+- 2026-05-31: **M6 STEP 6 plans written** — 4 wave-grouped plans (`.planning/phase4-{1..4}-PLAN.md`), 6 tasks, zero file-overlap, dependency=wave order. W1 audit core (report+mtime) · W2 CLI audit+integration · W3 Azure pipelines (PR port + scheduled audit; deletes `.github` workflow + `workflow.test.ts`+`workflow-lint.test.ts`) · W4 docs. Azure REST sticky comment = text-validated only (live verify in UAT). All tasks sonnet. Execution mode pending user choice.
 - 2026-05-31: **M4 STEP 6 plans written** — 5 wave-grouped plans (`.planning/phase2b-{1..5}-PLAN.md`), 7 tasks, zero file-overlap, dependency=wave order. **Deviation flagged:** keep `OVERRIDE_SCHEMA_VERSION=1` (waiver is an optional additive field; no bump → no v1 churn) vs spec §4's "bump to v2". **Lint ③ scope:** blocking `override-broken` = unresolvable/orphan *target* (attributable to a changed component); malformed override *files* → non-blocking warnings (can't attribute to a changed file under the filePath-keyed grandfather model). Plan models per task: P1 sonnet, P2 sonnet+opus, P3 sonnet, P4 sonnet+sonnet, P5 sonnet. Execution mode pending user choice (Subagent-Driven recommended).
 
 ## Approved Mode
