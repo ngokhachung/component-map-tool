@@ -23,6 +23,9 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     env:
+      # IMPORTANT: `.cmap-baseline.json` is keyed by component paths relative to CMAP_ROOT.
+      # `cmap migrate` (run locally to generate the baseline) MUST use the SAME --root as this,
+      # or pre-existing debt won't be grandfathered and every changed component will re-block.
       CMAP_ROOT: src
       CMAP_DOCS: docs/components
       CMAP_OVERRIDES: docs/component-map

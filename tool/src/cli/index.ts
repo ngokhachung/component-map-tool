@@ -171,7 +171,7 @@ export function runCli(argv: string[]): CliResult {
     return { code: 0, lines: [
       'migrate complete:',
       `  scaffolded ${r.scaffolded.length} override file(s) in ${overridesDir}`,
-      `  baseline → ${r.baselinePath}`,
+      `  baseline → ${r.baselinePath} (keys relative to --root "${root}"; CI \`cmap lint\` must use the same root)`,
       `  coverage → ${r.coveragePath} (+ .json): ${r.coverage.withMd}/${r.coverage.totalComponents} have MD; ${r.coverage.documented}/${r.coverage.needingDoc} dynamic-dep components documented`,
       ...r.scaffoldWarnings,
     ] };
