@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M3 Wave 1; plans written wave-by-wave; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
+**Phase:** Step 7 — Execute (M3 Plan 1 done: Foundation; 81 tests; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 1 (`.planning/phase2-1-PLAN.md`, Foundation: T1 types `via:'override'`+`description`+schemaVersion 2 + js-yaml deps, T2 MD `機能概要`→description) then execute. M3 wave map approved (6 plans/~10 tasks); cadence wave-by-wave; execution Subagent-Driven; branch feature/phase2-md-overrides-pr-bot-2026-05-31.
+Write Plan 2 (`.planning/phase2-2-PLAN.md`, Overrides core: T3 schema+parse `.cmap.yaml`, T4 merge applyOverrides) then execute. M3 Plans 1 done (81 tests). Branch feature/phase2-md-overrides-pr-bot-2026-05-31. Cadence wave-by-wave, Subagent-Driven.
 
 ## Execution Log
 
@@ -51,6 +51,11 @@ Write Plan 1 (`.planning/phase2-1-PLAN.md`, Foundation: T1 types `via:'override'
 - P7/T13+T14 DONE (4a600b9 + fix, c31bbdc): `src/query/locator.ts` (resolveLocator: componentId→className→file→selector + ambiguity) + `src/query/index.ts` (impact reverse-BFS cycle-safe + uncertain flag; uiAccessPaths route→chain). 11 tests. Full suite **57/57 green, tsc clean**. (Fixed a TS2783 in the locator test helper I'd authored — duplicate className via spread.)
 - P6/T12 DONE (ed6b972): `src/cache/{manifest,index}.ts` — hashSources/manifest io/diff + buildIncremental (cache-or-rebuild; any change → full sound rebuild). 5 tests. Full suite **46/46 green, tsc clean**. (Fine-grained per-file re-parse deferred.)
 - **End-to-end validation on real-sample** (buildGraphFromRoot ../poc/real-sample/src): 18 comp (0 standalone ✓), 28 deduped edges (19 resolved/4 indirect/5 unresolved-static ✓), 0 parse errors. Caught + FIXED a real bug — lazy stitching missed forChild in a SEPARATE `*-routing.module.ts` imported by the feature module. Fix (commit after 4421351): `stitch` now follows the lazy module's imports. Re-validated: `finance/invoices`, `finance/payments/:id`, `finance/reports` stitch correctly. +1 test (routes suite now 3); full suite **41/41 green**.
+
+## M3 Execution Log
+
+- M3/P1/T1 DONE (d955171): types — `Edge.via`+'override', `ComponentNode.description`, `SCHEMA_VERSION=2`; +`js-yaml@4.1.0`/`@types/js-yaml@4.0.9`; ripple to assembleGraph + 3 test constructors. 78 tests.
+- M3/P1/T2 DONE (02d6386): `md/parse.ts`+`index.ts` — extract `## コンポーネント機能概要` → `node.description` (OVR-05). Suite **81/81 green, tsc clean**.
 
 ## Open Blockers
 
