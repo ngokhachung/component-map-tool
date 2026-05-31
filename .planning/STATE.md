@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute COMPLETE (M6 6/6 tasks, all 4 waves) → final review → STEP 8
-**Status:** in_progress
+**Phase:** Step 9 — QA Gate PASS (M6 execute done; final-review Critical fixed; verification PASS; manual UAT deferred) → ship decision
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,11 @@
 
 ## Next Action
 
-Approve the 4 M6 plans (`.planning/phase4-{1..4}-PLAN.md`) + pick execution mode (Subagent-Driven recommended) → STEP 7 Execute wave-by-wave. Branch: `feature/phase4-maintenance-2026-05-31`. **Pivot:** Azure DevOps Pipelines REPLACE the GitHub Actions workflow (Plan 3 deletes it + its 2 tests). **Manual UAT pending across M3/M4/M5** before enabling the CI gate in production.
+M6 ship decision: tách demo branch + merge `feature/phase4-maintenance-2026-05-31` → master (`--no-ff`, like M1-M5) + phase4-SUMMARY + ROADMAP M6→done (project plan COMPLETE). Verification PASS (6/6), QA APPROVED (Critical fixed), 161 tests / 98% cov. **Manual UAT pending across M3/M4/M5/M6** + Azure pipelines/git-staleness need live verification on a real Azure DevOps repo before production.
+
+## QA Gate (M6)
+
+- 2026-05-31: Final holistic review (opus, whole `master..HEAD`) found **1 Critical** — md-staleness silently dead because `docPath` (docs-relative) was keyed/queried raw, asymmetric with component/override keys. **Fixed** (444a54d): both CLI + `auditReport` key by `posix.join(docs, docPath)`; `docs` threaded through `AuditOpts`; guard + 2 unit tests. **Re-review: RESOLVED.** Security: Azure PR pipeline injection-safe (jq --rawfile body, token via env, branch stripped) — M3 bug NOT reintroduced. Suggestions → backlog: batch git log; doc CWD coupling; rename lambda. 161 tests, coverage 98.17%/88.67%. STEP 8: goal-backward verification PASS (6/6, `.planning/phase4-VERIFICATION.md`); manual UAT deferred (`.planning/phase4-UAT.md`; Azure + git-staleness need live verify).
 
 ## QA Gate (M5)
 
