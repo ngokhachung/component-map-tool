@@ -87,3 +87,35 @@ describe('imageDataUris (security)', () => {
     }
   });
 });
+
+describe('runCli gaps', () => {
+  function dynRepo(): string {
+    const d = mkdtempSync(join(tmpdir(), 'cmap-gap-'));
+    writeFileSync(join(d, 'h.ts'), `
+      import { Component, NgModule } from '@angular/core';
+      @Component({ selector: 'app-host', template: '<ng-container *ngComponentOutlet="w"></ng-container>' })
+      export class HostComponent {}
+      @NgModule({ declarations: [HostComponent] }) export class M {}`);
+    return d;
+  }
+
+  it('lists components with undocumented dynamic deps', () => {
+    const d = dynRepo();
+    try {
+      const r = runCli(['gaps', '--root', d, '--out', join(d, '.cmap'), '--overrides', join(d, 'docs/cmap')]);
+      expect(r.code).toBe(0);
+      const text = r.lines.join('\n');
+      expect(text).toContain('HostComponent');
+      expect(text).toContain('ngComponentOutlet');
+    } finally { rmSync(d, { recursive: true, force: true }); }
+  });
+
+  it('gaps --write warns when a gap component has no componentId', () => {
+    const d = dynRepo();
+    try {
+      const r = runCli(['gaps', '--write', '--root', d, '--out', join(d, '.cmap'), '--overrides', join(d, 'docs/cmap')]);
+      expect(r.code).toBe(0);
+      expect(r.lines.join('\n').toLowerCase()).toContain('componentid');
+    } finally { rmSync(d, { recursive: true, force: true }); }
+  });
+});
