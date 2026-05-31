@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M6 tasks 1-2/6 complete; Wave 1 done)
+**Phase:** Step 7 — Execute (M6 task 3/6 complete; Waves 1-2 done)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -99,6 +99,7 @@ Approve the 4 M6 plans (`.planning/phase4-{1..4}-PLAN.md`) + pick execution mode
 
 - M6/P1/T1 DONE (509e93b): `audit/report.ts` `auditReport` (md+override git-stale via injected mtimes; override orphans; coverage/gaps passthrough) + `renderAuditMd`. 3 tests. Suite 149 green.
 - M6/P1/T2 DONE (055b718): `audit/mtime.ts` `gitMtime`/`gitMtimes` (`git log -1 --format=%ct`, null-safe, execFileSync array args = injection-safe). 3 tests. Wave-1 review: Spec PASS + Quality APPROVED (suggestion → backlog: rename `.map((g)=>)` lambda to `gap`). Suite **152 green, tsc clean**.
+- M6/P2/T3 DONE (70eadc4): `cli/index.ts` `audit` command (+`--report` flag, USAGE, merged `posix` into node:path import) — builds overrideFiles + realPaths, `gitMtimes`, `auditReport`; prints md or writes `<prefix>.md/.json`. 2 integration tests on real-sample. **Implemented by controller** (subagent session limit; verbatim plan code). Spec PASS (key-consistency invariant verified both sides) + Quality APPROVED. Suite **154 green, tsc clean**.
 
 ## Open Blockers
 
