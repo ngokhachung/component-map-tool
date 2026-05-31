@@ -11,10 +11,14 @@ export interface GapComponent {
   uncovered: string[];
 }
 
+// A "gap" is a PINNABLE dynamic construct — one where the user can name a target component.
+// Only `unresolved-static` edges qualify (ngComponentOutlet / @ViewChild / createComponent).
+// `indirect` edges (ng-content, ngTemplateOutlet) are structural/projection with no component
+// target to document, so they are NOT gaps (avoids adoption-killing noise — QA S1).
 function constructsByComponent(graph: Graph): Map<string, string[]> {
   const m = new Map<string, Set<string>>();
   for (const e of graph.edges) {
-    if (e.kind !== 'resolved' && e.reason) {
+    if (e.kind === 'unresolved-static' && e.reason) {
       const s = m.get(e.from) ?? new Set<string>();
       s.add(e.reason);
       m.set(e.from, s);

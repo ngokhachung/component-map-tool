@@ -32,6 +32,10 @@ describe('findGaps', () => {
     const g = graph([node('Plain', 'C2')], [{ from: 'Plain', to: 'X', kind: 'resolved', via: 'template', reason: null }]);
     expect(findGaps(g, new Map())).toEqual([]);
   });
+  it('does NOT treat structural indirect edges (ng-content) as gaps', () => {
+    const g = graph([node('Wrapper', 'C3')], [{ from: 'Wrapper', to: null, kind: 'indirect', via: 'template', reason: 'ng-content' }]);
+    expect(findGaps(g, new Map())).toEqual([]);
+  });
 });
 
 describe('scaffoldGaps', () => {

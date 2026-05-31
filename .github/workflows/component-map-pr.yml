@@ -41,12 +41,18 @@ jobs:
           path: .cmap
           key: cmap-${{ runner.os }}-${{ hashFiles(format('{0}/**/*.ts', env.CMAP_ROOT)) }}
       - id: changed
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        # SECURITY: GitHub-context values go through env, never interpolated into the shell,
+        # so a PR-controlled filename with shell metacharacters cannot inject commands.
         run: |
-          CHANGED=$(git diff --name-only --diff-filter=ACMR "origin/${{ github.base_ref }}...HEAD" -- '*.component.ts' | paste -sd, -)
+          CHANGED=$(git diff --name-only --diff-filter=ACMR "origin/${BASE_REF}...HEAD" -- '*.component.ts' | paste -sd, -)
           echo "files=$CHANGED" >> "$GITHUB_OUTPUT"
       - id: cmap
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
         run: |
-          BODY=$(npm --prefix tool run --silent cmap -- pr --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --changed "${{ steps.changed.outputs.files }}")
+          BODY=$(npm --prefix tool run --silent cmap -- pr --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --changed "$CHANGED_FILES")
           {
             echo "body<<CMAP_EOF"
             echo "$BODY"
