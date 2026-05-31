@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 3 — Mode Gate complete (M4 brainstorm + spec done; awaiting spec review → STEP 6 Plan)
+**Phase:** Step 6 — Plan (complete) — 5 M4 plans written, awaiting approval + execution-mode choice
 **Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-User reviews spec `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design.md`; on approval run **writing-plans** (STEP 6) to draft M4 implementation plans. Branch: `feature/phase2b-md-migration-enforcement-2026-05-31`. (M3 manual UAT still pending — `.planning/phase2-UAT.md`.)
+Approve the 5 M4 plans (`.planning/phase2b-{1..5}-PLAN.md`) + pick execution mode (Subagent-Driven recommended) → STEP 7 Execute wave-by-wave. Branch: `feature/phase2b-md-migration-enforcement-2026-05-31`. (M3 manual UAT still pending — `.planning/phase2-UAT.md`.)
 
 ## QA Gate (M3)
 
@@ -112,6 +112,7 @@ User reviews spec `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design
 - 2026-05-31: M4 gate (`cmap lint`) **blocks** ① open gap (unfilled+unwaived), ② missing MD (componentId null), ③ broken/orphan override, + clean→dirty **regression**; **warns** ④ stale (construct vanished). Dropped time-based staleness (no reliable timestamp, YAGNI).
 - 2026-05-31: M4 rollout = **baseline grandfather** (`.cmap-baseline.json`, keyed by repo-relative filePath) — only new debt / regression blocks; existing debt warned. Two escape hatches: **waiver** (`waived` in schema v2 ⇒ covered, permanent) + **`cmap lint --accept`** (record into baseline, debt remains in coverage).
 - 2026-05-31: M4 CI wiring = **Option A** (extend the M3 `component-map-pr.yml`: comment step always green + fail-able `cmap lint` step; build graph once; keep M3 hardening). `cmap lint` is a CLI command (runs local + CI).
+- 2026-05-31: **M4 STEP 6 plans written** — 5 wave-grouped plans (`.planning/phase2b-{1..5}-PLAN.md`), 7 tasks, zero file-overlap, dependency=wave order. **Deviation flagged:** keep `OVERRIDE_SCHEMA_VERSION=1` (waiver is an optional additive field; no bump → no v1 churn) vs spec §4's "bump to v2". **Lint ③ scope:** blocking `override-broken` = unresolvable/orphan *target* (attributable to a changed component); malformed override *files* → non-blocking warnings (can't attribute to a changed file under the filePath-keyed grandfather model). Plan models per task: P1 sonnet, P2 sonnet+opus, P3 sonnet, P4 sonnet+sonnet, P5 sonnet. Execution mode pending user choice (Subagent-Driven recommended).
 
 ## Approved Mode
 

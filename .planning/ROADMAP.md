@@ -3,8 +3,8 @@
 ## Active Milestone
 
 **M4: Phase 2b — MD Migration + Enforcement**
-Status: not_started
-Goal: Auto-generate skeleton MD/overrides for all components; MANDATORY CI linter (block PR when a changed component's docs are stale/missing). Builds on M3's overrides + PR bot. Carry-forward in `.planning/phase2-SUMMARY.md`.
+Status: in_progress (STEP 6 plans written; awaiting approval → execute)
+Goal: `cmap migrate` (repo-scale scaffold + baseline + coverage) + `cmap lint` MANDATORY CI gate blocking NEW doc debt (baseline-grandfather rollout; waiver + accept escape hatches). Re-grounded vs read-only MD (tool never writes MD). Spec `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design.md`; plans `.planning/phase2b-{1..5}-PLAN.md`.
 
 ## Completed Milestones
 
