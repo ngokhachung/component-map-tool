@@ -2,21 +2,25 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship COMPLETE (M3 merged to master `3315736`; manual UAT deferred)
-**Status:** complete
+**Phase:** Step 9 — QA Gate PASS (M4 execute done; verification PASS; manual UAT deferred) → ship decision
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (**COMPLETE** 2026-05-31, manual UAT deferred)
+**Milestone:** M4 — Phase 2b: MD Migration + Enforcement (**COMPLETE** 2026-05-31, manual UAT deferred)
 **Started:** 2026-05-31
 **Completed:** 2026-05-31
-**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement) — not started
-**Prior:** M2 — Phase 1 Static Analysis Core (COMPLETE, merged, 2026-05-31)
+**Next milestone:** M5 — Phase 3 (Renderer & UX) — not started
+**Prior:** M3 — Phase 2a + 2.5 MD Overrides + PR Bot (COMPLETE, merged `3315736`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
 
-Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3 merged to master (`--no-ff`). **Manual UAT still pending** — run `.planning/phase2-UAT.md` checklist against a real repo before enabling the PR-bot Action in production. phase2-SUMMARY written; ROADMAP M3→done/M4→active.
+M4 ship decision: merge `feature/phase2b-md-migration-enforcement-2026-05-31` → master (`--no-ff`, like M1/M2/M3) + write phase2b-SUMMARY + ROADMAP M4→done/M5→active, OR hold. Verification PASS (7/7), QA APPROVED, 132 tests / 98% cov. Manual UAT deferred (`.planning/phase2b-UAT.md`) + M3 UAT still pending (`.planning/phase2-UAT.md`).
+
+## QA Gate (M4)
+
+- 2026-05-31: Final holistic review (opus, whole `master..HEAD` diff) = **APPROVED**. 0 Critical. **1 Important** — baseline keys relative to `--root` ⇒ migrate(local)/CI must share root (fail-SAFE: over-blocks) → **mitigated** (doc note in workflow + migrate output). Suggestions → backlog: share construct-filter migrate↔gaps; `=== null` consistency; `.md`→`.json` guard; baseline schemaVersion migration (v2); combined missing-md+gap unit test. 132 tests, coverage 98.28%/89.13%/100%. STEP 8: goal-backward verification PASS (7/7, `.planning/phase2b-VERIFICATION.md`); manual UAT deferred (`.planning/phase2b-UAT.md`).
 
 ## QA Gate (M3)
 
@@ -67,6 +71,17 @@ Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3
 - M3/P3/T5 DONE (controller, after subagent session-limit): `overrides/gaps.ts` — findGaps (uncovered construct reasons) + scaffoldGaps (merge-safe `.cmap.yaml` skeleton, preserve filled target, stale-mark, idempotent LF) (OVR-03/04). 6 tests. Suite **98/98 green, tsc clean**.
 - M3/P2/T4 DONE (8536745): `overrides/merge.ts` applyOverrides — resolve target via locator → `via:'override'` resolved edge, skip stale/empty, dedup, cycle-warn, unresolvable warn (OVR-02). 4 tests. Suite **92/92 green, tsc clean**.
 
+## M4 Execution Log
+
+- M4/P1/T1 DONE (0a8a012): waiver — `DynamicDep.waived?` (no version bump), `gaps.coveredReasons` counts waived as covered, `merge.applyOverrides` skips waived (no edge/warning) + `waiver.test.ts` (3 tests). Spec PASS + Quality APPROVED. Suite **113 green, tsc clean**.
+- M4/P2/T2 DONE (a78e341): `cli/baseline.ts` — `BaselineFile` (filePath→codes), `emptyBaseline`/`readBaseline` (missing+malformed-safe)/`writeBaseline` (deterministic sorted) + `newViolations`/`acceptInto` set-diff. 4 tests. Spec PASS + Quality APPROVED. Suite **117 green, tsc clean**.
+- M4/P2/T3 DONE (0aadb73): `cli/lint.ts` — `computeIssues` (missing-md / gap:* / override-broken:*), `lintChanged` (suffix-filter → newViolations diff; stale→warn), `renderLint`. 6 tests. **Implemented by controller** (opus subagent hit session limit; code verbatim from plan). Spec PASS + Quality APPROVED (suggestions only → QA backlog: use `=== null` guard consistency; add combined missing-md+gap test). Suite **123 green, tsc clean**.
+- M4/P3/T4 DONE (dd98f63): `cli/migrate.ts` — `computeCoverage` (withMd/needingDoc/documented/missingMd) + `renderCoverageMd` + `migrate` (scaffoldGaps + baseline snapshot via computeIssues + coverage md/json). 2 tests. Spec PASS + Quality APPROVED (suggestions → QA backlog: share construct-filter with gaps.ts; guard `.md`→`.json` no-op). Suite **125 green, tsc clean**.
+- M4/P4/T5 DONE (0d2f0ed): `cli/index.ts` — `cmap migrate` + `cmap lint` (+`--baseline`/`--accept`/`--coverage`) branches, USAGE; existing cmds unchanged. 2 CLI tests on real-sample (lint exit1→accept→0). Suite 127 green.
+- M4/P4/T6 DONE (62a48e1): `.github/workflows/component-map-pr.yml` — fail-able `cmap lint` step AFTER comment step, env-routed CHANGED_FILES (no `${{}}` in run), no `pull_request_target` + `workflow-lint.test.ts` (3 tests). Wave-4 review (5+6): Spec PASS + Quality APPROVED (no Critical/Important). Suite **130 green, tsc clean**.
+- M4 fixup (post-review, after 62a48e1): restored `pr` in USAGE string (review suggestion). tsc clean.
+- M4/P5/T7 DONE (2f6c894): `cli/lint-integration.test.ts` — end-to-end on real v15 (missing-md blocks→accept grandfathers; real `ngComponentOutlet` gap on ReportDashboardPage closed by waiver). 2 tests, no test adjustment needed. **STEP 7 EXECUTE COMPLETE: 5 plans / 7 tasks, suite 132 green, coverage 98.28% lines / 89.13% branch / 100% func / 98.28% stmt, tsc clean.**
+
 ## Open Blockers
 
 - None
@@ -107,9 +122,16 @@ Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3
 - 2026-05-31: M3 REQ-IDs = OVR-01..05 + BOT-01/02 (REQUIREMENTS.md). Mode A approved for M3 (1/5 Mode B signals — light CI).
 - 2026-05-31: STEP 4 Research done (`.planning/phase2-RESEARCH.md`). Refinements folded into spec: scaffold keyed by **stable construct identity (kind+location)** not free-text reason (avoid clobbering filled targets); merge **skips stale** + **cycle-check-warns**; PR comment uses hidden marker + ancestor cap + 65KB truncation; workflow = `pull_request` + `permissions:pull-requests:write` + `concurrency` + `checkout fetch-depth:0` + `git diff --diff-filter=ACMR base...HEAD` + `actions/github-script@v7` (env body) + `actions/cache` for `.cmap/`, NO `pull_request_target`; js-yaml `load()` (safe v4) per-file try/catch + hand-validate; add `js-yaml`+`@types/js-yaml` deps.
 
+- 2026-05-31: **M4 kicked off** (branch `feature/phase2b-md-migration-enforcement-2026-05-31`). STEP 1 Fast Lane = NOT eligible (mandatory CI gate = arch/policy + migration). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (0/5). Spec: `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design.md`. REQ-IDs MIG-01..03 + ENF-01..04.
+- 2026-05-31: **M4 re-grounded vs read-only MD**: "migration" = scaffold tool-owned `.cmap.yaml` at repo scale + snapshot debt + coverage report + missing-MD list (tool never writes MD). "Enforcement" gates only on tool-owned/readable signals.
+- 2026-05-31: M4 gate (`cmap lint`) **blocks** ① open gap (unfilled+unwaived), ② missing MD (componentId null), ③ broken/orphan override, + clean→dirty **regression**; **warns** ④ stale (construct vanished). Dropped time-based staleness (no reliable timestamp, YAGNI).
+- 2026-05-31: M4 rollout = **baseline grandfather** (`.cmap-baseline.json`, keyed by repo-relative filePath) — only new debt / regression blocks; existing debt warned. Two escape hatches: **waiver** (`waived` in schema v2 ⇒ covered, permanent) + **`cmap lint --accept`** (record into baseline, debt remains in coverage).
+- 2026-05-31: M4 CI wiring = **Option A** (extend the M3 `component-map-pr.yml`: comment step always green + fail-able `cmap lint` step; build graph once; keep M3 hardening). `cmap lint` is a CLI command (runs local + CI).
+- 2026-05-31: **M4 STEP 6 plans written** — 5 wave-grouped plans (`.planning/phase2b-{1..5}-PLAN.md`), 7 tasks, zero file-overlap, dependency=wave order. **Deviation flagged:** keep `OVERRIDE_SCHEMA_VERSION=1` (waiver is an optional additive field; no bump → no v1 churn) vs spec §4's "bump to v2". **Lint ③ scope:** blocking `override-broken` = unresolvable/orphan *target* (attributable to a changed component); malformed override *files* → non-blocking warnings (can't attribute to a changed file under the filePath-keyed grandfather model). Plan models per task: P1 sonnet, P2 sonnet+opus, P3 sonnet, P4 sonnet+sonnet, P5 sonnet. Execution mode pending user choice (Subagent-Driven recommended).
+
 ## Approved Mode
 
-Mode A — approved 2026-05-31 (M3); prior M2/M1 also Mode A
+Mode A — approved 2026-05-31 (M4, 0/5 Mode B signals); M3/M2/M1 also Mode A
 
 ## Config
 

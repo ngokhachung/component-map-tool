@@ -32,7 +32,7 @@ export function applyOverrides(graph: Graph, overrides: Map<string, CmapOverride
     const ov = overrides.get(node.componentId);
     if (!ov) continue;
     for (const dep of ov.dynamicDeps) {
-      if (dep.stale || dep.target.trim().length === 0) continue;
+      if (dep.stale || dep.waived || dep.target.trim().length === 0) continue;
       const r = resolveLocator(graph, dep.target);
       if (!r.ok) { warnings.push(`override ${node.componentId}: target "${dep.target}" ${r.reason}`); continue; }
       const edge: Edge = { from: node.id, to: r.node.id, kind: 'resolved', via: 'override', reason: dep.reason ?? 'documented dynamic dependency' };

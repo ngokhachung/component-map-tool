@@ -4,6 +4,7 @@ export interface DynamicDep {
   target: string;
   reason?: string;
   stale?: boolean;
+  waived?: boolean;   // intentionally dynamic — no static target; counts as covered, yields no edge
 }
 export interface CmapOverride {
   schemaVersion: number;

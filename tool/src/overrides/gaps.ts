@@ -29,7 +29,7 @@ function constructsByComponent(graph: Graph): Map<string, string[]> {
 
 function coveredReasons(ov: CmapOverride | undefined): Set<string> {
   const covered = new Set<string>();
-  if (ov) for (const d of ov.dynamicDeps) if (!d.stale && d.target.trim() && d.reason) covered.add(d.reason);
+  if (ov) for (const d of ov.dynamicDeps) if (!d.stale && d.reason && (d.target.trim() || d.waived)) covered.add(d.reason);
   return covered;
 }
 
