@@ -8,10 +8,10 @@
 
 ## Current Milestone
 
-**Milestone:** M4 — Phase 2b: MD Migration + Enforcement (in progress, started 2026-05-31)
+**Milestone:** M4 — Phase 2b: MD Migration + Enforcement (**COMPLETE** 2026-05-31, manual UAT deferred)
 **Started:** 2026-05-31
-**Completed:** —
-**Next milestone:** M5 — Phase 3 (Renderer & UX)
+**Completed:** 2026-05-31
+**Next milestone:** M5 — Phase 3 (Renderer & UX) — not started
 **Prior:** M3 — Phase 2a + 2.5 MD Overrides + PR Bot (COMPLETE, merged `3315736`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
