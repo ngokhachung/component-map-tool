@@ -16,7 +16,7 @@ Each requirement must be:
 
 Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% coverage required.
 
-> **Scope note:** This file covers **M1 — Phase 0**, **M2 — Phase 1**, and **M3 — Phase 2a + 2.5 (MD Overrides + PR Bot)**. Later milestones (Phase 2b enforcement, Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
+> **Scope note:** This file covers **M1 — Phase 0**, **M2 — Phase 1**, **M3 — Phase 2a + 2.5 (MD Overrides + PR Bot)**, and **M4 — Phase 2b (MD Migration + Enforcement)**. Later milestones (Phase 3 Renderer, Phase 4 Maintenance) get their own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
 
 ## v1 Requirements (Ship in initial release)
 
@@ -62,12 +62,26 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 | BOT-01 | `cmap pr --changed <files>` renders a Markdown comment: per changed component, impact (ancestors + routes), UI access paths, uncertainty/gap warnings + description (pure/testable) | Phase 2.5 |
 | BOT-02 | GitHub Action `.github/workflows/component-map-pr.yml`: on PR, diff changed `*.component.ts`, build graph in CI, run `cmap pr`, post/update a sticky PR comment | Phase 2.5 |
 
+## M4 — Phase 2b Requirements (MD Migration + Enforcement)
+
+**Design spec:** `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design.md` — brainstorm output 2026-05-31. All map to phase **Phase 2b** (M4) in ROADMAP. Re-grounded against M3's read-only-MD constraint: the tool never writes/requires MD; it scaffolds the tool-owned `.cmap.yaml` layer and gates on what it owns/reads.
+
+| REQ-ID | Requirement | Phase |
+|---|---|---|
+| MIG-01 | `cmap migrate` bulk-scaffolds `.cmap.yaml` for every gap-component that has a componentId (repo-wide extension of `gaps --write`) | Phase 2b |
+| MIG-02 | `cmap migrate` generates `.cmap-baseline.json` snapshotting current debt (open gaps + missing-MD), keyed by repo-relative filePath | Phase 2b |
+| MIG-03 | `cmap migrate` generates a coverage report (md + json) + a missing-MD list (components with `componentId == null`) | Phase 2b |
+| ENF-01 | `cmap lint --changed --baseline` blocks ① open gap, ② missing MD, ③ broken/orphan override, + clean→dirty regression; warns ④ stale; exits ≠ 0 on block with fix-path messages | Phase 2b |
+| ENF-02 | Waiver: `waived` field in override schema (bump to v2, tolerant of v1); `gaps` + `merge` treat waived entries as covered (no edge, no warning) | Phase 2b |
+| ENF-03 | `cmap lint --accept` records current violations into the baseline (deferred debt; still shown in coverage) | Phase 2b |
+| ENF-04 | Wire `cmap lint` into the M3 PR workflow as a fail-able step, preserving M3 hardening (env-routed context, no `pull_request_target`) | Phase 2b |
+
 ## v2 Requirements (Deferred — later milestones)
 
 | REQ-ID | Requirement | Reason deferred |
 |---|---|---|
-| (TBD) | MD migration tool + MANDATORY CI linter / enforcement | Phase 2b (M4) |
 | (TBD) | Mermaid / standalone HTML interactive renderer | Phase 3 |
+| (TBD) | VSCode snippet / dev-helper UX | Phase 3 |
 
 ## Out of Scope (Explicit exclusions — Phase 0)
 

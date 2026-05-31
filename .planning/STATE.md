@@ -2,21 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship COMPLETE (M3 merged to master `3315736`; manual UAT deferred)
-**Status:** complete
+**Phase:** Step 3 — Mode Gate complete (M4 brainstorm + spec done; awaiting spec review → STEP 6 Plan)
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (**COMPLETE** 2026-05-31, manual UAT deferred)
+**Milestone:** M4 — Phase 2b: MD Migration + Enforcement (in progress, started 2026-05-31)
 **Started:** 2026-05-31
-**Completed:** 2026-05-31
-**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement) — not started
-**Prior:** M2 — Phase 1 Static Analysis Core (COMPLETE, merged, 2026-05-31)
+**Completed:** —
+**Next milestone:** M5 — Phase 3 (Renderer & UX)
+**Prior:** M3 — Phase 2a + 2.5 MD Overrides + PR Bot (COMPLETE, merged `3315736`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
 
-Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3 merged to master (`--no-ff`). **Manual UAT still pending** — run `.planning/phase2-UAT.md` checklist against a real repo before enabling the PR-bot Action in production. phase2-SUMMARY written; ROADMAP M3→done/M4→active.
+User reviews spec `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design.md`; on approval run **writing-plans** (STEP 6) to draft M4 implementation plans. Branch: `feature/phase2b-md-migration-enforcement-2026-05-31`. (M3 manual UAT still pending — `.planning/phase2-UAT.md`.)
 
 ## QA Gate (M3)
 
@@ -107,9 +107,15 @@ Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3
 - 2026-05-31: M3 REQ-IDs = OVR-01..05 + BOT-01/02 (REQUIREMENTS.md). Mode A approved for M3 (1/5 Mode B signals — light CI).
 - 2026-05-31: STEP 4 Research done (`.planning/phase2-RESEARCH.md`). Refinements folded into spec: scaffold keyed by **stable construct identity (kind+location)** not free-text reason (avoid clobbering filled targets); merge **skips stale** + **cycle-check-warns**; PR comment uses hidden marker + ancestor cap + 65KB truncation; workflow = `pull_request` + `permissions:pull-requests:write` + `concurrency` + `checkout fetch-depth:0` + `git diff --diff-filter=ACMR base...HEAD` + `actions/github-script@v7` (env body) + `actions/cache` for `.cmap/`, NO `pull_request_target`; js-yaml `load()` (safe v4) per-file try/catch + hand-validate; add `js-yaml`+`@types/js-yaml` deps.
 
+- 2026-05-31: **M4 kicked off** (branch `feature/phase2b-md-migration-enforcement-2026-05-31`). STEP 1 Fast Lane = NOT eligible (mandatory CI gate = arch/policy + migration). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (0/5). Spec: `docs/specs/2026-05-31-phase2b-md-migration-enforcement-design.md`. REQ-IDs MIG-01..03 + ENF-01..04.
+- 2026-05-31: **M4 re-grounded vs read-only MD**: "migration" = scaffold tool-owned `.cmap.yaml` at repo scale + snapshot debt + coverage report + missing-MD list (tool never writes MD). "Enforcement" gates only on tool-owned/readable signals.
+- 2026-05-31: M4 gate (`cmap lint`) **blocks** ① open gap (unfilled+unwaived), ② missing MD (componentId null), ③ broken/orphan override, + clean→dirty **regression**; **warns** ④ stale (construct vanished). Dropped time-based staleness (no reliable timestamp, YAGNI).
+- 2026-05-31: M4 rollout = **baseline grandfather** (`.cmap-baseline.json`, keyed by repo-relative filePath) — only new debt / regression blocks; existing debt warned. Two escape hatches: **waiver** (`waived` in schema v2 ⇒ covered, permanent) + **`cmap lint --accept`** (record into baseline, debt remains in coverage).
+- 2026-05-31: M4 CI wiring = **Option A** (extend the M3 `component-map-pr.yml`: comment step always green + fail-able `cmap lint` step; build graph once; keep M3 hardening). `cmap lint` is a CLI command (runs local + CI).
+
 ## Approved Mode
 
-Mode A — approved 2026-05-31 (M3); prior M2/M1 also Mode A
+Mode A — approved 2026-05-31 (M4, 0/5 Mode B signals); M3/M2/M1 also Mode A
 
 ## Config
 
