@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute COMPLETE (M4 7/7 tasks, all 5 waves) → final review → STEP 8
-**Status:** in_progress
+**Phase:** Step 9 — QA Gate PASS (M4 execute done; verification PASS; manual UAT deferred) → ship decision
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,11 @@
 
 ## Next Action
 
-Approve the 5 M4 plans (`.planning/phase2b-{1..5}-PLAN.md`) + pick execution mode (Subagent-Driven recommended) → STEP 7 Execute wave-by-wave. Branch: `feature/phase2b-md-migration-enforcement-2026-05-31`. (M3 manual UAT still pending — `.planning/phase2-UAT.md`.)
+M4 ship decision: merge `feature/phase2b-md-migration-enforcement-2026-05-31` → master (`--no-ff`, like M1/M2/M3) + write phase2b-SUMMARY + ROADMAP M4→done/M5→active, OR hold. Verification PASS (7/7), QA APPROVED, 132 tests / 98% cov. Manual UAT deferred (`.planning/phase2b-UAT.md`) + M3 UAT still pending (`.planning/phase2-UAT.md`).
+
+## QA Gate (M4)
+
+- 2026-05-31: Final holistic review (opus, whole `master..HEAD` diff) = **APPROVED**. 0 Critical. **1 Important** — baseline keys relative to `--root` ⇒ migrate(local)/CI must share root (fail-SAFE: over-blocks) → **mitigated** (doc note in workflow + migrate output). Suggestions → backlog: share construct-filter migrate↔gaps; `=== null` consistency; `.md`→`.json` guard; baseline schemaVersion migration (v2); combined missing-md+gap unit test. 132 tests, coverage 98.28%/89.13%/100%. STEP 8: goal-backward verification PASS (7/7, `.planning/phase2b-VERIFICATION.md`); manual UAT deferred (`.planning/phase2b-UAT.md`).
 
 ## QA Gate (M3)
 
