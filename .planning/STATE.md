@@ -2,21 +2,25 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship COMPLETE (M5 merged to master `4b3f057`; demo/7 pushed; manual UAT deferred)
-**Status:** complete
+**Phase:** Step 9 — QA Gate PASS (M6 execute done; final-review Critical fixed; verification PASS; manual UAT deferred) → ship decision
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M5 — Phase 3: Renderer & UX (**COMPLETE** 2026-05-31, manual UAT deferred)
+**Milestone:** M6 — Phase 4: Long-term Maintenance (**COMPLETE** 2026-06-01, manual UAT deferred) — FINAL planned milestone
 **Started:** 2026-05-31
-**Completed:** 2026-05-31
-**Next milestone:** M6 — Phase 4 (Long-term Maintenance) — not started (final planned milestone)
-**Prior:** M4 — Phase 2b MD Migration + Enforcement (COMPLETE, merged `5a9666a`, 2026-05-31; manual UAT deferred)
+**Completed:** 2026-06-01
+**Next milestone:** none — **planned roadmap M1–M6 COMPLETE**. New scope = fresh brainstorm cycle.
+**Prior:** M5 — Phase 3 Renderer & UX (COMPLETE, merged `4b3f057`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
 
-Start **M6 — Phase 4 (Long-term Maintenance)** when ready (final planned milestone; STEP 1/2). M5 merged to master (`--no-ff`, `4b3f057`); demo branch `demo/7-phase3-renderer` pushed. **Manual UAT pending across M3/M4/M5** — run `.planning/phase2-UAT.md` + `phase2b-UAT.md` + `phase3-UAT.md` against a real Angular repo + commit a `.cmap-baseline.json` (same `--root` as CI) before enabling the M4 CI lint gate in production.
+M6 ship decision: tách demo branch + merge `feature/phase4-maintenance-2026-05-31` → master (`--no-ff`, like M1-M5) + phase4-SUMMARY + ROADMAP M6→done (project plan COMPLETE). Verification PASS (6/6), QA APPROVED (Critical fixed), 161 tests / 98% cov. **Manual UAT pending across M3/M4/M5/M6** + Azure pipelines/git-staleness need live verification on a real Azure DevOps repo before production.
+
+## QA Gate (M6)
+
+- 2026-05-31: Final holistic review (opus, whole `master..HEAD`) found **1 Critical** — md-staleness silently dead because `docPath` (docs-relative) was keyed/queried raw, asymmetric with component/override keys. **Fixed** (444a54d): both CLI + `auditReport` key by `posix.join(docs, docPath)`; `docs` threaded through `AuditOpts`; guard + 2 unit tests. **Re-review: RESOLVED.** Security: Azure PR pipeline injection-safe (jq --rawfile body, token via env, branch stripped) — M3 bug NOT reintroduced. Suggestions → backlog: batch git log; doc CWD coupling; rename lambda. 161 tests, coverage 98.17%/88.67%. STEP 8: goal-backward verification PASS (6/6, `.planning/phase4-VERIFICATION.md`); manual UAT deferred (`.planning/phase4-UAT.md`; Azure + git-staleness need live verify).
 
 ## QA Gate (M5)
 
@@ -95,6 +99,15 @@ Start **M6 — Phase 4 (Long-term Maintenance)** when ready (final planned miles
 - M5/P3/T5 DONE (90809d4): `cli/render-html.ts` `renderWholeHtml` — offline whole-graph page (svg + search/filter + pan/zoom + click-highlight + META side panel). 1 test. Wave-3 review (4+5): Spec PASS + Quality APPROVED (no Critical/Important). **QA backlog (suggestions):** esc() META values in meta-panel innerHTML; JSON.stringify into `<script>` doesn't escape `</script>` (both theoretical — developer-controlled data can't contain HTML metachars: Angular classNames/posix filePaths). Suite **143 green, tsc clean**.
 - M5/P4/T6 DONE (7ddead9): `cli/index.ts` — `query --html` now builds focusedSubgraph→toMermaid→tips→mermaidRuntime into HtmlData; new `cmap render --html` (whole-graph, prints counts; no --html → exit 1); USAGE += render. `render-integration.test.ts` (real-sample: query embeds flowchart for DataTableComponent; render emits svg w/ ≥18 nodes). 3 tests. **STEP 7 EXECUTE COMPLETE: 4 plans / 6 tasks, suite 146 green, coverage 98.25% lines / 89.19% branch / 98.55% func, tsc clean.**
 
+## M6 Execution Log
+
+- M6/P1/T1 DONE (509e93b): `audit/report.ts` `auditReport` (md+override git-stale via injected mtimes; override orphans; coverage/gaps passthrough) + `renderAuditMd`. 3 tests. Suite 149 green.
+- M6/P1/T2 DONE (055b718): `audit/mtime.ts` `gitMtime`/`gitMtimes` (`git log -1 --format=%ct`, null-safe, execFileSync array args = injection-safe). 3 tests. Wave-1 review: Spec PASS + Quality APPROVED (suggestion → backlog: rename `.map((g)=>)` lambda to `gap`). Suite **152 green, tsc clean**.
+- M6/P2/T3 DONE (70eadc4): `cli/index.ts` `audit` command (+`--report` flag, USAGE, merged `posix` into node:path import) — builds overrideFiles + realPaths, `gitMtimes`, `auditReport`; prints md or writes `<prefix>.md/.json`. 2 integration tests on real-sample. **Implemented by controller** (subagent session limit; verbatim plan code). Spec PASS (key-consistency invariant verified both sides) + Quality APPROVED. Suite **154 green, tsc clean**.
+- M6/P3/T4 DONE (ad83e36): `azure-pipelines-pr.yml` (port M3 comment + M4 lint gate; sticky PR-thread via Azure REST, `$(System.AccessToken)` via env, jq --rawfile body, TargetBranch stripped); **deleted** `.github/workflows/component-map-pr.yml` + `workflow.test.ts` + `workflow-lint.test.ts`. `azure-pr.test.ts` (5 tests). Suite 153.
+- M6/P3/T5 DONE (821d43c): `azure-pipelines-audit.yml` (quarterly cron `0 9 1 1,4,7,10 *` → `cmap audit --report` → uploadsummary + PublishPipelineArtifact). `azure-audit.test.ts` (2 tests). Wave-3 review (4+5): Spec PASS + Quality APPROVED — **injection vector fully closed** (body→jq --rawfile→curl -d @-; token via env; branch stripped; set -euo pipefail). Suite **155 green, tsc clean**.
+- M6/P4/T6 DONE (f2ba6b2): docs — `docs/COMPATIBILITY.md` (matrix + upgrade checklist), `docs/SCHEMA.md` (3 schema versions + semver/migration), `CHANGELOG.md` (M1–M6), `docs/accuracy-sampling-checklist.md`, README CI&maintenance section. `docs.test.ts` (5 existence/content tests). README already existed (appended). **STEP 7 EXECUTE COMPLETE: 4 plans / 6 tasks, suite 160 green, coverage 98.17% lines / 88.67% branch / 98.6% func, tsc clean.**
+
 ## Open Blockers
 
 - None
@@ -143,11 +156,14 @@ Start **M6 — Phase 4 (Long-term Maintenance)** when ready (final planned miles
 - 2026-05-31: **M5 kicked off** (branch `feature/phase3-renderer-ux-2026-05-31`). STEP 1 Fast Lane NOT eligible (milestone-scale renderer). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (0/5). Spec `docs/specs/2026-05-31-phase3-renderer-ux-design.md`. REQ RND-01..06.
 - 2026-05-31: M5 decisions — surface = **offline single-file HTML** (no VSCode/CLI-ASCII); **two views**: focused subgraph per `cmap query` (Mermaid) + whole-graph overview (`cmap render`, hand-rolled SVG); **render tech** = Mermaid inlined for subgraph + hand-rolled SVG for whole-graph; **read-focused** interactivity (hover/dashed-dynamic; search/filter + pan/zoom + click-highlight + meta panel), no cross-file nav. Mermaid = npm dep, `dist/mermaid.min.js` inlined at render time (offline). No Phase -1 UX research exists (greenfield) → UX decided in brainstorm.
 - 2026-05-31: **M5 STEP 6 plans written** — 4 wave-grouped plans (`.planning/phase3-{1..4}-PLAN.md`), 6 tasks, zero file-overlap, dependency=wave order. W1 subgraph+mermaid · W2 whole-graph svg · W3 html+assets (mermaid runtime) + render-html · W4 CLI wiring + integration. New dep `mermaid` added in P3/T4. `HtmlData` new fields OPTIONAL (back-compatible). All tasks sonnet. Execution mode pending user choice.
+- 2026-05-31: **M6 kicked off** (branch `feature/phase4-maintenance-2026-05-31`), FINAL planned milestone. STEP 1 Fast Lane NOT eligible (CI port + multi-file). STEP 2 Brainstorm + STEP 3 Mode Gate done; Mode A (1/5 — CI/CD design). Spec `docs/specs/2026-05-31-phase4-maintenance-design.md`. REQ MNT-01 + AZ-01/02 + DOC-01/02/03.
+- 2026-05-31: **M6 PIVOT — Azure DevOps**: team CI = Azure DevOps. `cmap` CLI stays platform-agnostic; **Azure Pipelines REPLACE the GitHub Actions workflow** (Azure-only, user choice). PR pipeline ports M3 PR-bot (sticky PR-thread comment via Azure REST + `$(System.AccessToken)`, injection-safe) + M4 lint gate (fail-able). Audit pipeline = quarterly cron (`0 9 1 1,4,7,10 *`) → `cmap audit` → build summary + artifact. `cmap audit` = git-mtime staleness (component committed after its doc) + coverage + orphans + gaps; staleness via injected mtimes (pure) + `git log -1 --format=%ct` in CLI. Docs: compatibility matrix + upgrade checklist, SCHEMA + CHANGELOG, accuracy-sampling checklist. Removing GitHub workflow = no CI on github.com until repo moves to Azure Repos (flagged, accepted).
+- 2026-05-31: **M6 STEP 6 plans written** — 4 wave-grouped plans (`.planning/phase4-{1..4}-PLAN.md`), 6 tasks, zero file-overlap, dependency=wave order. W1 audit core (report+mtime) · W2 CLI audit+integration · W3 Azure pipelines (PR port + scheduled audit; deletes `.github` workflow + `workflow.test.ts`+`workflow-lint.test.ts`) · W4 docs. Azure REST sticky comment = text-validated only (live verify in UAT). All tasks sonnet. Execution mode pending user choice.
 - 2026-05-31: **M4 STEP 6 plans written** — 5 wave-grouped plans (`.planning/phase2b-{1..5}-PLAN.md`), 7 tasks, zero file-overlap, dependency=wave order. **Deviation flagged:** keep `OVERRIDE_SCHEMA_VERSION=1` (waiver is an optional additive field; no bump → no v1 churn) vs spec §4's "bump to v2". **Lint ③ scope:** blocking `override-broken` = unresolvable/orphan *target* (attributable to a changed component); malformed override *files* → non-blocking warnings (can't attribute to a changed file under the filePath-keyed grandfather model). Plan models per task: P1 sonnet, P2 sonnet+opus, P3 sonnet, P4 sonnet+sonnet, P5 sonnet. Execution mode pending user choice (Subagent-Driven recommended).
 
 ## Approved Mode
 
-Mode A — approved 2026-05-31 (M5, 0/5 Mode B signals); M4/M3/M2/M1 also Mode A
+Mode A — approved 2026-05-31 (M6, 1/5 Mode B signals — CI/CD design, user-approved A); M5/M4/M3/M2/M1 also Mode A
 
 ## Config
 

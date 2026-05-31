@@ -2,9 +2,8 @@
 
 ## Active Milestone
 
-**M6: Phase 4 — Long-term Maintenance**
-Status: not_started
-Goal: Quarterly audit job, Angular-upgrade buffer (parser version bumps), schema evolution. Carry-forward in `.planning/phase3-SUMMARY.md`.
+**— none — the planned roadmap (M1–M6) is COMPLETE.**
+Remaining work is operational, not a milestone: run the deferred UATs (M3–M6) and verify the Azure pipelines + git-staleness live on a real Azure DevOps repo before production. Any new scope (e.g. VSCode extension, multi-version parser) starts a fresh brainstorm → spec → plan cycle.
 
 ## Completed Milestones
 
@@ -15,11 +14,12 @@ Goal: Quarterly audit job, Angular-upgrade buffer (parser version bumps), schema
 | M3: Phase 2a + 2.5 — MD Overrides + PR Bot | 2026-05-31 | Shipped — tool-owned `.cmap.yaml` overrides (scaffolded, fill `target`) patch dynamic-dep gaps → `via:'override'` edges; `cmap gaps`/`pr`; PR-bot GitHub Action (sticky comment). 110 tests, 98% cov. Manual UAT deferred. See `.planning/phase2-SUMMARY.md`. |
 | M4: Phase 2b — MD Migration + Enforcement | 2026-05-31 | Shipped — `cmap migrate` (repo-scale scaffold + `.cmap-baseline.json` + coverage report) + `cmap lint` MANDATORY CI gate (blocks NEW doc debt; baseline-grandfather; `waived` + `--accept` escape hatches); fail-able lint step in PR workflow. 132 tests, 98% cov. Manual UAT deferred. See `.planning/phase2b-SUMMARY.md`. |
 | M5: Phase 3 — Renderer & UX | 2026-05-31 | Shipped — `cmap query --html` embeds an offline interactive Mermaid neighborhood diagram (dashed=dynamic, hover=file); `cmap render --html` = searchable/pannable whole-graph SVG + click-highlight + meta panel. Mermaid inlined (offline, client-only). 146 tests, 98% cov. Manual UAT deferred. See `.planning/phase3-SUMMARY.md`. |
+| M6: Phase 4 — Long-term Maintenance | 2026-06-01 | Shipped — `cmap audit` (git-based stale docs + coverage + orphans + gaps); Azure DevOps Pipelines (PR comment+lint gate, quarterly scheduled audit) **replacing** the GitHub Actions workflow; maintenance docs (compatibility matrix, schema policy, CHANGELOG, accuracy checklist). 161 tests, 98% cov. Final review Critical (md-staleness key) fixed. Manual UAT + live Azure verify deferred. See `.planning/phase4-SUMMARY.md`. |
 
 ## Planned Milestones
 
-_(none — M6 is the final planned milestone)_
+_(none — the planned roadmap M1–M6 is complete)_
 
 ## Last updated
 
-2026-05-31 (M5 shipped)
+2026-06-01 (M6 shipped — roadmap M1–M6 complete)
