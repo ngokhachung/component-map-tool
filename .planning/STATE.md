@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 9 — QA Gate (M3; manual UAT DEFERRED by user, 8b verification PASS)
-**Status:** in_progress
+**Phase:** Step 9 — QA Gate PASS (APPROVE WITH CONDITIONS → conditions fixed; manual UAT deferred)
+**Status:** waiting_for_user
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -16,7 +16,11 @@
 
 ## Next Action
 
-**UAT DEFERRED** (user will run later via the `.planning/phase2-UAT.md` checklist). Code pushed to origin; demo branch `demo/5-phase2-md-overrides-pr-bot` created. On user "confirmed" → STEP 9 QA Gate → STEP 10/11 ship (merge feature branch → master, NOT yet merged + phase2-SUMMARY + ROADMAP M3→done/M4→active). Goal-backward verification PASS (`.planning/phase2-VERIFICATION.md`, 7/7 REQ).
+STEP 10/11 ship decision (user): merge `feature/phase2-md-overrides-pr-bot-2026-05-31` → master now, OR hold for the deferred manual UAT. QA Gate PASS (conditions I1+S1 fixed). On merge → phase2-SUMMARY + ROADMAP M3→done/M4→active. 110 tests, coverage 98%. Manual UAT still pending (checklist in `.planning/phase2-UAT.md`); 8b verification PASS.
+
+## QA Gate (M3)
+
+- 2026-05-31: code-reviewer verdict **APPROVE WITH CONDITIONS** (0 Critical). **I1 (security, blocking)** fixed: PR-bot Action no longer interpolates `steps.changed.outputs.files`/`github.base_ref` into `run:` (routed via env — command-injection closed). **S1** fixed: `findGaps`/scaffold flag only pinnable `unresolved-static` constructs; structural `ng-content`/`ngTemplateOutlet` excluded (noise). Backlog (Phase 2b): S2 randomized heredoc delimiter, S3 warn on duplicate hand-authored `reason`. 110 tests, coverage 98%.
 
 ## Execution Log
 

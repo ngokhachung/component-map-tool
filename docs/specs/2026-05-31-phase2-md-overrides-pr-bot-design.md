@@ -77,7 +77,7 @@ For a node whose `componentId` matches an override: for each `dynamicDeps` entry
 
 ## 7. Gaps + scaffold (OVR-03/04)
 
-A "gap construct" = an `unresolved-static` edge on a component (ngComponentOutlet / ViewChild / createComponent), or an `indirect` edge the user may want to pin. `cmap gaps`:
+A "gap construct" = a **PINNABLE** `unresolved-static` edge on a component (ngComponentOutlet / @ViewChild / createComponent) — one where the user can name a target component. Structural `indirect` edges (`ng-content`, `ngTemplateOutlet`) are NOT gaps (no component target to document; flagging them would be adoption-killing noise — QA S1). `cmap gaps`:
 - lists each gap component (id/className/file) + its detected constructs + whether an override file exists and how many `target`s are still empty.
 
 `cmap gaps --write` per gap component:
