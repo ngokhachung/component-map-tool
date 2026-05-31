@@ -16,6 +16,7 @@
   "dependencies": {
     "@angular/compiler": "19.2.14",
     "js-yaml": "4.1.0",
+    "mermaid": "^11.15.0",
     "ts-morph": "24.0.0"
   },
   "devDependencies": {
