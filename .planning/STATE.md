@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M3 Plan 1 done: Foundation; 81 tests; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
+**Phase:** Step 7 — Execute (M3 Plans 1-2 done: Foundation + Overrides core; 92 tests; branch feature/phase2-md-overrides-pr-bot-2026-05-31)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-Write Plan 2 (`.planning/phase2-2-PLAN.md`, Overrides core: T3 schema+parse `.cmap.yaml`, T4 merge applyOverrides) then execute. M3 Plans 1 done (81 tests). Branch feature/phase2-md-overrides-pr-bot-2026-05-31. Cadence wave-by-wave, Subagent-Driven.
+Write Plan 3 (`.planning/phase2-3-PLAN.md`, Gaps + scaffold: T5 `gaps.ts` detect + `cmap gaps --write` scaffold keyed by construct-identity) then execute. M3 Plans 1-2 done (92 tests). Branch feature/phase2-md-overrides-pr-bot-2026-05-31.
 
 ## Execution Log
 
@@ -56,6 +56,8 @@ Write Plan 2 (`.planning/phase2-2-PLAN.md`, Overrides core: T3 schema+parse `.cm
 
 - M3/P1/T1 DONE (d955171): types — `Edge.via`+'override', `ComponentNode.description`, `SCHEMA_VERSION=2`; +`js-yaml@4.1.0`/`@types/js-yaml@4.0.9`; ripple to assembleGraph + 3 test constructors. 78 tests.
 - M3/P1/T2 DONE (02d6386): `md/parse.ts`+`index.ts` — extract `## コンポーネント機能概要` → `node.description` (OVR-05). Suite **81/81 green, tsc clean**.
+- M3/P2/T3 DONE (4686f80): `overrides/schema.ts` (CmapOverride+validate, OVERRIDE_SCHEMA_VERSION) + `parse.ts` (readOverrides via js-yaml, per-file try/catch, skip unknown-version, dup-id warn). 7 tests.
+- M3/P2/T4 DONE (8536745): `overrides/merge.ts` applyOverrides — resolve target via locator → `via:'override'` resolved edge, skip stale/empty, dedup, cycle-warn, unresolvable warn (OVR-02). 4 tests. Suite **92/92 green, tsc clean**.
 
 ## Open Blockers
 
