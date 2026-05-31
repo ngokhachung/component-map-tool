@@ -16,7 +16,7 @@ Each requirement must be:
 
 Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% coverage required.
 
-> **Scope note:** This file covers **M1 — Phase 0**, **M2 — Phase 1**, **M3 — Phase 2a + 2.5**, **M4 — Phase 2b**, and **M5 — Phase 3 (Renderer & UX)**. The last milestone (Phase 4 Maintenance) gets its own REQ-IDs when brainstormed. See `specs/component-map-plan-v2.md` for the full project plan.
+> **Scope note:** This file covers **M1 — Phase 0** through **M6 — Phase 4 (Long-term Maintenance)** — all milestones of the project plan. See `specs/component-map-plan-v2.md` for the full project plan.
 
 ## v1 Requirements (Ship in initial release)
 
@@ -89,12 +89,24 @@ Every v1 requirement must map to exactly one phase in ROADMAP.md — 100% covera
 | RND-05 | Whole-graph interactivity — inlined client JS: search/filter highlight, pan/zoom, click-node highlight + meta side panel | Phase 3 |
 | RND-06 | `cmap render --html <file>` — whole-graph offline single-file report; prints node/edge counts | Phase 3 |
 
+## M6 — Phase 4 Requirements (Long-term Maintenance)
+
+**Design spec:** `docs/specs/2026-05-31-phase4-maintenance-design.md` — brainstorm output 2026-05-31. All map to phase **Phase 4** (M6) in ROADMAP. **Pivot:** CI = Azure DevOps (Azure Pipelines **replace** the GitHub Actions workflow). `cmap` CLI stays platform-agnostic.
+
+| REQ-ID | Requirement | Phase |
+|---|---|---|
+| MNT-01 | `cmap audit` — git-based stale docs (component committed after its MD/override) + coverage + orphans + open gaps → markdown/json; pure `auditReport` with injected mtimes + CLI | Phase 4 |
+| AZ-01 | `azure-pipelines-pr.yml` — sticky PR-thread comment (port M3) + fail-able `cmap lint` gate (port M4) via `$(System.AccessToken)`, injection-safe; remove the GitHub Actions workflow | Phase 4 |
+| AZ-02 | `azure-pipelines-audit.yml` — quarterly scheduled `cmap audit` → build summary (`##vso[task.uploadsummary]`) + published artifact | Phase 4 |
+| DOC-01 | README compatibility matrix (Angular 15.x verified) + Angular-upgrade verify checklist | Phase 4 |
+| DOC-02 | `docs/SCHEMA.md` (schemaVersions graph=2/override=1/baseline=1, semver, breaking→migration rule) + `CHANGELOG.md` | Phase 4 |
+| DOC-03 | `docs/accuracy-sampling-checklist.md` — manual quarterly accuracy verification process | Phase 4 |
+
 ## v2 Requirements (Deferred — later milestones)
 
 | REQ-ID | Requirement | Reason deferred |
 |---|---|---|
-| (TBD) | VSCode extension / snippet dev-helper UX | Phase 3 out-of-scope → later |
-| (TBD) | Quarterly audit job + Angular-upgrade buffer + schema evolution | Phase 4 (M6) |
+| (TBD) | VSCode extension / snippet dev-helper UX | Phase 3 out-of-scope → backlog |
 
 ## Out of Scope (Explicit exclusions — Phase 0)
 
