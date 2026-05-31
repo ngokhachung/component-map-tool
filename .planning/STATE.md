@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 6 — Plan (complete) — 5 M4 plans written, awaiting approval + execution-mode choice
-**Status:** waiting_for_user
+**Phase:** Step 7 — Execute (M4 task 1/7 complete)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -66,6 +66,10 @@ Approve the 5 M4 plans (`.planning/phase2b-{1..5}-PLAN.md`) + pick execution mod
 - M3/P4/T6 DONE (015611b): `cli/index.ts` — buildEnriched applies overrides (enrich→readOverrides→applyOverrides→writeGraph); `cmap gaps [--write]` + `--overrides`/`--write` flags. Suite **100/100 green, tsc clean**.
 - M3/P3/T5 DONE (controller, after subagent session-limit): `overrides/gaps.ts` — findGaps (uncovered construct reasons) + scaffoldGaps (merge-safe `.cmap.yaml` skeleton, preserve filled target, stale-mark, idempotent LF) (OVR-03/04). 6 tests. Suite **98/98 green, tsc clean**.
 - M3/P2/T4 DONE (8536745): `overrides/merge.ts` applyOverrides — resolve target via locator → `via:'override'` resolved edge, skip stale/empty, dedup, cycle-warn, unresolvable warn (OVR-02). 4 tests. Suite **92/92 green, tsc clean**.
+
+## M4 Execution Log
+
+- M4/P1/T1 DONE (0a8a012): waiver — `DynamicDep.waived?` (no version bump), `gaps.coveredReasons` counts waived as covered, `merge.applyOverrides` skips waived (no edge/warning) + `waiver.test.ts` (3 tests). Spec PASS + Quality APPROVED. Suite **113 green, tsc clean**.
 
 ## Open Blockers
 
