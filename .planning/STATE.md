@@ -8,10 +8,10 @@
 
 ## Current Milestone
 
-**Milestone:** M5 — Phase 3: Renderer & UX (in progress, started 2026-05-31)
+**Milestone:** M5 — Phase 3: Renderer & UX (**COMPLETE** 2026-05-31, manual UAT deferred)
 **Started:** 2026-05-31
-**Completed:** —
-**Next milestone:** M6 — Phase 4 (Long-term Maintenance)
+**Completed:** 2026-05-31
+**Next milestone:** M6 — Phase 4 (Long-term Maintenance) — not started (final planned milestone)
 **Prior:** M4 — Phase 2b MD Migration + Enforcement (COMPLETE, merged `5a9666a`, 2026-05-31; manual UAT deferred)
 
 ## Next Action
