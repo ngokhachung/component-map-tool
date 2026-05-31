@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M4 task 1/7 complete)
+**Phase:** Step 7 — Execute (M4 task 2/7 complete)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -70,6 +70,7 @@ Approve the 5 M4 plans (`.planning/phase2b-{1..5}-PLAN.md`) + pick execution mod
 ## M4 Execution Log
 
 - M4/P1/T1 DONE (0a8a012): waiver — `DynamicDep.waived?` (no version bump), `gaps.coveredReasons` counts waived as covered, `merge.applyOverrides` skips waived (no edge/warning) + `waiver.test.ts` (3 tests). Spec PASS + Quality APPROVED. Suite **113 green, tsc clean**.
+- M4/P2/T2 DONE (a78e341): `cli/baseline.ts` — `BaselineFile` (filePath→codes), `emptyBaseline`/`readBaseline` (missing+malformed-safe)/`writeBaseline` (deterministic sorted) + `newViolations`/`acceptInto` set-diff. 4 tests. Spec PASS + Quality APPROVED. Suite **117 green, tsc clean**.
 
 ## Open Blockers
 
