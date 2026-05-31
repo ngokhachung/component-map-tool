@@ -12,6 +12,10 @@ import { findGaps, scaffoldGaps } from '../overrides/gaps.js';
 import { renderPrComment, type PrComponent } from './pr.js';
 import type { CmapOverride } from '../overrides/schema.js';
 import { renderHtml, type HtmlData } from './html.js';
+import { focusedSubgraph } from '../render/subgraph.js';
+import { toMermaid } from '../render/mermaid.js';
+import { mermaidRuntime } from '../render/assets.js';
+import { renderWholeHtml } from './render-html.js';
 import type { Graph } from '../types.js';
 import { readBaseline, writeBaseline, acceptInto } from './baseline.js';
 import { computeIssues, lintChanged, renderLint } from './lint.js';
@@ -70,7 +74,7 @@ function pathSuffixMatch(a: string, b: string): boolean {
   return true;
 }
 
-const USAGE = 'usage: cmap <index|query|gaps|pr|migrate|lint> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file]';
+const USAGE = 'usage: cmap <index|query|gaps|pr|migrate|lint|render> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file]';
 
 export function runCli(argv: string[]): CliResult {
   const { values, positionals } = parseArgs({
@@ -116,9 +120,13 @@ export function runCli(argv: string[]): CliResult {
     const imp = impact(graph, node.id);
     const paths = uiAccessPaths(graph, node.id);
     if (values.html) {
+      const sub = focusedSubgraph(graph, node.id);
+      const tips: Record<string, string> = {};
+      for (const n of sub.nodes) if (n.title) tips[n.label] = n.title;
       const data: HtmlData = {
         component: { id: node.id, componentId: node.componentId, selector: node.selector, filePath: node.filePath, standalone: node.standalone, module: node.module },
         impact: imp, accessPaths: paths, images: imageDataUris(node.images, docs),
+        mermaidDef: toMermaid(sub), tips, mermaidRuntime: mermaidRuntime(),
       };
       writeFileSync(values.html as string, renderHtml(data));
       return { code: 0, lines: [`wrote ${values.html}`] };
@@ -190,6 +198,14 @@ export function runCli(argv: string[]): CliResult {
     }
     const result = lintChanged(graph, overrides, files, baseline, warnings);
     return { code: result.ok ? 0 : 1, lines: renderLint(result) };
+  }
+
+  if (cmd === 'render') {
+    if (!values.html) return { code: 1, lines: ['render requires --html <file>'] };
+    const { graph } = buildEnriched(root, out, docs, overridesDir);
+    writeFileSync(values.html as string, renderWholeHtml(graph));
+    const resolved = graph.edges.filter((e) => e.kind === 'resolved' && e.to).length;
+    return { code: 0, lines: [`wrote ${values.html} (${graph.components.length} components, ${resolved} resolved edges)`] };
   }
 
   return { code: 1, lines: [USAGE] };
