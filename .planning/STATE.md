@@ -2,9 +2,9 @@
 
 ## Current Position
 
-**Phase:** Step 9 — QA Gate PASS (M6 execute done; final-review Critical fixed; verification PASS; manual UAT deferred) → ship decision
-**Status:** waiting_for_user
-**Last updated:** 2026-05-31
+**Phase:** Step 11 — Ship COMPLETE (M6 merged to master `c29ed89`; demo/8 pushed). **PLANNED ROADMAP M1–M6 COMPLETE.**
+**Status:** complete
+**Last updated:** 2026-06-01
 
 ## Current Milestone
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-M6 ship decision: tách demo branch + merge `feature/phase4-maintenance-2026-05-31` → master (`--no-ff`, like M1-M5) + phase4-SUMMARY + ROADMAP M6→done (project plan COMPLETE). Verification PASS (6/6), QA APPROVED (Critical fixed), 161 tests / 98% cov. **Manual UAT pending across M3/M4/M5/M6** + Azure pipelines/git-staleness need live verification on a real Azure DevOps repo before production.
+**Planned roadmap M1–M6 COMPLETE** (M6 merged `c29ed89`, demo/8 pushed). Remaining work is OPERATIONAL, not a milestone: (1) run deferred manual UATs `phase2-UAT.md`(M3) + `phase2b-UAT.md`(M4) + `phase3-UAT.md`(M5) + `phase4-UAT.md`(M6) against a real Angular repo; (2) live-verify the Azure pipelines (PR comment REST + quarterly cron) + git-staleness on a real Azure DevOps repo; (3) configure OAuth-token prereqs + Build Validation policy + commit a `.cmap-baseline.json` (same `--root` as CI) before enabling the gate. New feature scope → fresh brainstorm cycle.
 
 ## QA Gate (M6)
 
