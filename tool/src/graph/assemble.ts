@@ -8,6 +8,7 @@ export function assembleGraph(records: ComponentRecord[], edges: Edge[], routes:
     componentId: null,
     docPath: null,
     images: [],
+    description: null,
   }));
   return { schemaVersion: SCHEMA_VERSION, components, edges, routes };
 }

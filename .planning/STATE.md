@@ -2,21 +2,25 @@
 
 ## Current Position
 
-**Phase:** Step 4 — Research complete (M3); ready for writing-plans
+**Phase:** Step 11 — Ship (M3 merging to master; manual UAT deferred)
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (in progress, started 2026-05-31)
+**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (**COMPLETE** 2026-05-31, manual UAT deferred)
 **Started:** 2026-05-31
-**Completed:** —
-**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement)
+**Completed:** 2026-05-31
+**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement) — not started
 **Prior:** M2 — Phase 1 Static Analysis Core (COMPLETE, merged, 2026-05-31)
 
 ## Next Action
 
-Run writing-plans (STEP 6) for M3, consuming `.planning/phase2-RESEARCH.md`. Design approved + amended (construct-identity scaffold key, skip-stale + cycle-warn merge, comment marker/cap/concurrency). Create feature branch at execute. Working on master currently.
+Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3 merged to master (`--no-ff`). **Manual UAT still pending** — run `.planning/phase2-UAT.md` checklist against a real repo before enabling the PR-bot Action in production. phase2-SUMMARY written; ROADMAP M3→done/M4→active.
+
+## QA Gate (M3)
+
+- 2026-05-31: code-reviewer verdict **APPROVE WITH CONDITIONS** (0 Critical). **I1 (security, blocking)** fixed: PR-bot Action no longer interpolates `steps.changed.outputs.files`/`github.base_ref` into `run:` (routed via env — command-injection closed). **S1** fixed: `findGaps`/scaffold flag only pinnable `unresolved-static` constructs; structural `ng-content`/`ngTemplateOutlet` excluded (noise). Backlog (Phase 2b): S2 randomized heredoc delimiter, S3 warn on duplicate hand-authored `reason`. 110 tests, coverage 98%.
 
 ## Execution Log
 
@@ -51,6 +55,17 @@ Run writing-plans (STEP 6) for M3, consuming `.planning/phase2-RESEARCH.md`. Des
 - P7/T13+T14 DONE (4a600b9 + fix, c31bbdc): `src/query/locator.ts` (resolveLocator: componentId→className→file→selector + ambiguity) + `src/query/index.ts` (impact reverse-BFS cycle-safe + uncertain flag; uiAccessPaths route→chain). 11 tests. Full suite **57/57 green, tsc clean**. (Fixed a TS2783 in the locator test helper I'd authored — duplicate className via spread.)
 - P6/T12 DONE (ed6b972): `src/cache/{manifest,index}.ts` — hashSources/manifest io/diff + buildIncremental (cache-or-rebuild; any change → full sound rebuild). 5 tests. Full suite **46/46 green, tsc clean**. (Fine-grained per-file re-parse deferred.)
 - **End-to-end validation on real-sample** (buildGraphFromRoot ../poc/real-sample/src): 18 comp (0 standalone ✓), 28 deduped edges (19 resolved/4 indirect/5 unresolved-static ✓), 0 parse errors. Caught + FIXED a real bug — lazy stitching missed forChild in a SEPARATE `*-routing.module.ts` imported by the feature module. Fix (commit after 4421351): `stitch` now follows the lazy module's imports. Re-validated: `finance/invoices`, `finance/payments/:id`, `finance/reports` stitch correctly. +1 test (routes suite now 3); full suite **41/41 green**.
+
+## M3 Execution Log
+
+- M3/P1/T1 DONE (d955171): types — `Edge.via`+'override', `ComponentNode.description`, `SCHEMA_VERSION=2`; +`js-yaml@4.1.0`/`@types/js-yaml@4.0.9`; ripple to assembleGraph + 3 test constructors. 78 tests.
+- M3/P1/T2 DONE (02d6386): `md/parse.ts`+`index.ts` — extract `## コンポーネント機能概要` → `node.description` (OVR-05). Suite **81/81 green, tsc clean**.
+- M3/P2/T3 DONE (4686f80): `overrides/schema.ts` (CmapOverride+validate, OVERRIDE_SCHEMA_VERSION) + `parse.ts` (readOverrides via js-yaml, per-file try/catch, skip unknown-version, dup-id warn). 7 tests.
+- M3/P6/T9+T10 DONE (645ed8f, 832f398): `.github/workflows/component-map-pr.yml` (PR-bot Action: pull_request/permissions/concurrency/fetch-depth:0 diff/cmap pr/github-script sticky/no pull_request_target) + `cli/workflow.test.ts` + `overrides/integration.test.ts` (real-sample ngComponentOutlet → via:override edge + gap closed). **M3 EXECUTE COMPLETE: 6 plans/10 tasks, 109 tests, coverage 98%/89%, tsc clean.**
+- M3/P5/T7+T8 DONE (fe13104, 70c71d7): `cli/pr.ts` renderPrComment (marker, ancestor cap, byte-cap truncation) + `cmap pr --changed` (map files→nodes via suffix, impact/access-paths/gaps → comment) (BOT-01). Suite **105/105 green, tsc clean**.
+- M3/P4/T6 DONE (015611b): `cli/index.ts` — buildEnriched applies overrides (enrich→readOverrides→applyOverrides→writeGraph); `cmap gaps [--write]` + `--overrides`/`--write` flags. Suite **100/100 green, tsc clean**.
+- M3/P3/T5 DONE (controller, after subagent session-limit): `overrides/gaps.ts` — findGaps (uncovered construct reasons) + scaffoldGaps (merge-safe `.cmap.yaml` skeleton, preserve filled target, stale-mark, idempotent LF) (OVR-03/04). 6 tests. Suite **98/98 green, tsc clean**.
+- M3/P2/T4 DONE (8536745): `overrides/merge.ts` applyOverrides — resolve target via locator → `via:'override'` resolved edge, skip stale/empty, dedup, cycle-warn, unresolvable warn (OVR-02). 4 tests. Suite **92/92 green, tsc clean**.
 
 ## Open Blockers
 

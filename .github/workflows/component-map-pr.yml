@@ -1,0 +1,77 @@
+# Component Map PR bot — comments the impact (affected parents/routes) of changed
+# Angular components on a PR. Adapt CMAP_ROOT/CMAP_DOCS/CMAP_OVERRIDES to your repo.
+#
+# SECURITY: this uses `on: pull_request`, which gives a WRITABLE token only for same-repo
+# (non-fork) PRs. Do NOT use the _target variant and check out the PR head — that
+# runs untrusted PR code with a write-scoped token (a known security footgun).
+name: Component Map PR
+
+on:
+  pull_request:
+    paths:
+      - '**/*.component.ts'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: cmap-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    env:
+      CMAP_ROOT: src
+      CMAP_DOCS: docs/components
+      CMAP_OVERRIDES: docs/component-map
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: tool/package-lock.json
+      - run: npm --prefix tool ci
+      - uses: actions/cache@v4
+        with:
+          path: .cmap
+          key: cmap-${{ runner.os }}-${{ hashFiles(format('{0}/**/*.ts', env.CMAP_ROOT)) }}
+      - id: changed
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        # SECURITY: GitHub-context values go through env, never interpolated into the shell,
+        # so a PR-controlled filename with shell metacharacters cannot inject commands.
+        run: |
+          CHANGED=$(git diff --name-only --diff-filter=ACMR "origin/${BASE_REF}...HEAD" -- '*.component.ts' | paste -sd, -)
+          echo "files=$CHANGED" >> "$GITHUB_OUTPUT"
+      - id: cmap
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        run: |
+          BODY=$(npm --prefix tool run --silent cmap -- pr --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --changed "$CHANGED_FILES")
+          {
+            echo "body<<CMAP_EOF"
+            echo "$BODY"
+            echo "CMAP_EOF"
+          } >> "$GITHUB_OUTPUT"
+      - uses: actions/github-script@v7
+        env:
+          CMAP_BODY: ${{ steps.cmap.outputs.body }}
+        with:
+          script: |
+            const marker = '<!-- cmap-pr-bot -->';
+            const body = process.env.CMAP_BODY;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.issue.number, per_page: 100,
+            });
+            const existing = comments.find((c) => c.body && c.body.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({ owner: context.repo.owner, repo: context.repo.repo, comment_id: existing.id, body });
+            } else {
+              await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
+            }
