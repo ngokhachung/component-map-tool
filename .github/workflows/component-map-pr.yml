@@ -75,3 +75,11 @@ jobs:
             } else {
               await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.issue.number, body });
             }
+      - name: Enforce component-map docs (lint gate)
+        env:
+          CHANGED_FILES: ${{ steps.changed.outputs.files }}
+        # A non-zero exit BLOCKS the PR. The comment above is posted first. The baseline
+        # grandfathers pre-existing debt — only NEW debt / regressions fail here.
+        # SECURITY: CHANGED_FILES via env (never interpolated into the shell) — same as M3.
+        run: |
+          npm --prefix tool run --silent cmap -- lint --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --changed "$CHANGED_FILES" --baseline .cmap-baseline.json
