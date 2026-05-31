@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship (M3 merging to master; manual UAT deferred)
-**Status:** in_progress
+**Phase:** Step 11 — Ship COMPLETE (M3 merged to master `3315736`; manual UAT deferred)
+**Status:** complete
 **Last updated:** 2026-05-31
 
 ## Current Milestone
