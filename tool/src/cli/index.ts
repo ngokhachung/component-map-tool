@@ -13,6 +13,9 @@ import { renderPrComment, type PrComponent } from './pr.js';
 import type { CmapOverride } from '../overrides/schema.js';
 import { renderHtml, type HtmlData } from './html.js';
 import type { Graph } from '../types.js';
+import { readBaseline, writeBaseline, acceptInto } from './baseline.js';
+import { computeIssues, lintChanged, renderLint } from './lint.js';
+import { migrate } from './migrate.js';
 
 export interface CliResult { code: number; lines: string[]; }
 
@@ -67,7 +70,7 @@ function pathSuffixMatch(a: string, b: string): boolean {
   return true;
 }
 
-const USAGE = 'usage: cmap <index|query|gaps|pr> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv]';
+const USAGE = 'usage: cmap <index|query|gaps|migrate|lint> [--root dir] [--docs dir] [--overrides dir] [--out dir] [--html file] [--write] [--changed csv] [--baseline file] [--accept] [--coverage file]';
 
 export function runCli(argv: string[]): CliResult {
   const { values, positionals } = parseArgs({
@@ -81,6 +84,9 @@ export function runCli(argv: string[]): CliResult {
       overrides: { type: 'string' },
       write: { type: 'boolean', default: false },
       changed: { type: 'string' },
+      baseline: { type: 'string' },
+      accept: { type: 'boolean', default: false },
+      coverage: { type: 'string' },
     },
   });
   const cmd = positionals[0];
@@ -155,6 +161,35 @@ export function runCli(argv: string[]): CliResult {
       }
     }
     return { code: 0, lines: [renderPrComment(items)] };
+  }
+
+  if (cmd === 'migrate') {
+    const { graph, overrides } = buildEnriched(root, out, docs, overridesDir);
+    const baselinePath = (values.baseline as string | undefined) ?? '.cmap-baseline.json';
+    const coveragePath = (values.coverage as string | undefined) ?? 'cmap-coverage.md';
+    const r = migrate(graph, overrides, { overridesDir, baselinePath, coveragePath });
+    return { code: 0, lines: [
+      'migrate complete:',
+      `  scaffolded ${r.scaffolded.length} override file(s) in ${overridesDir}`,
+      `  baseline → ${r.baselinePath}`,
+      `  coverage → ${r.coveragePath} (+ .json): ${r.coverage.withMd}/${r.coverage.totalComponents} have MD; ${r.coverage.documented}/${r.coverage.needingDoc} dynamic-dep components documented`,
+      ...r.scaffoldWarnings,
+    ] };
+  }
+
+  if (cmd === 'lint') {
+    const files = ((values.changed as string | undefined) ?? '').split(',').map((s) => s.trim()).filter(Boolean);
+    const { graph, overrides, warnings } = buildEnriched(root, out, docs, overridesDir);
+    const baselinePath = (values.baseline as string | undefined) ?? '.cmap-baseline.json';
+    const baseline = readBaseline(baselinePath);
+    if (values.accept) {
+      const all = computeIssues(graph, overrides);
+      const current = new Map([...all].filter(([fp]) => files.length === 0 || files.some((f) => pathSuffixMatch(fp, f))));
+      writeBaseline(baselinePath, acceptInto(baseline, current));
+      return { code: 0, lines: [`accepted ${current.size} component(s) into ${baselinePath}`] };
+    }
+    const result = lintChanged(graph, overrides, files, baseline, warnings);
+    return { code: result.ok ? 0 : 1, lines: renderLint(result) };
   }
 
   return { code: 1, lines: [USAGE] };
