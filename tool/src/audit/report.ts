@@ -24,18 +24,21 @@ export interface AuditReport {
 export interface AuditOpts {
   mtimes: Map<string, number>;
   root: string;
+  docs?: string;                       // docs dir — docPath is stored relative to it (md/index.ts)
   overrideFiles: Map<string, string>;
   warnings: string[];
 }
 
 export function auditReport(graph: Graph, overrides: Map<string, CmapOverride>, opts: AuditOpts): AuditReport {
-  const { mtimes, root, overrideFiles, warnings } = opts;
+  const { mtimes, root, docs, overrideFiles, warnings } = opts;
   const stale: StaleEntry[] = [];
   for (const node of graph.components) {
     const compM = mtimes.get(posix.join(root, node.filePath));
     if (compM === undefined) continue;
-    if (node.docPath) {
-      const docM = mtimes.get(node.docPath);
+    if (node.docPath && docs !== undefined) {
+      // docPath is relative to the docs dir → resolve the same way the CLI keyed the mtime.
+      const docKey = posix.join(docs, node.docPath);
+      const docM = mtimes.get(docKey);
       if (docM !== undefined && compM > docM) {
         stale.push({ component: node.id, kind: 'md', componentFile: node.filePath, docFile: node.docPath, componentMtime: compM, docMtime: docM });
       }

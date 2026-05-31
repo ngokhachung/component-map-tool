@@ -218,11 +218,11 @@ export function runCli(argv: string[]): CliResult {
     const realPaths = new Set<string>();
     for (const c of graph.components) {
       realPaths.add(posix.join(root, c.filePath));
-      if (c.docPath) realPaths.add(c.docPath);
+      if (c.docPath && docs) realPaths.add(posix.join(docs, c.docPath));   // docPath is docs-relative
     }
     for (const p of overrideFiles.values()) realPaths.add(p);
     const mtimes = gitMtimes([...realPaths]);
-    const report = auditReport(graph, overrides, { mtimes, root, overrideFiles, warnings });
+    const report = auditReport(graph, overrides, { mtimes, root, docs, overrideFiles, warnings });
     if (values.report) {
       const prefix = values.report as string;
       writeFileSync(`${prefix}.md`, renderAuditMd(report));

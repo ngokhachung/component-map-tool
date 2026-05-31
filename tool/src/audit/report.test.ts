@@ -13,17 +13,26 @@ function graph(components: ComponentNode[], edges: Edge[] = []): Graph {
 const ROOT = 'src';
 
 describe('auditReport', () => {
-  it('flags md-stale when component is newer than its doc, not when older', () => {
-    const fresh = node('Fresh', { docPath: 'docs/Fresh.md' });
-    const stale = node('Stale', { docPath: 'docs/Stale.md' });
+  it('flags md-stale when component is newer than its doc, not when older (docPath is docs-relative)', () => {
+    // docPath is stored relative to the docs dir; the mtime key is posix.join(docs, docPath).
+    const fresh = node('Fresh', { docPath: 'Fresh.md' });
+    const stale = node('Stale', { docPath: 'Stale.md' });
     const g = graph([fresh, stale]);
+    const DOCS = 'docs/components';
     const mtimes = new Map<string, number>([
-      [posix.join(ROOT, 'app/Fresh.ts'), 100], ['docs/Fresh.md', 200],
-      [posix.join(ROOT, 'app/Stale.ts'), 300], ['docs/Stale.md', 100],
+      [posix.join(ROOT, 'app/Fresh.ts'), 100], [posix.join(DOCS, 'Fresh.md'), 200],
+      [posix.join(ROOT, 'app/Stale.ts'), 300], [posix.join(DOCS, 'Stale.md'), 100],
     ]);
-    const r = auditReport(g, new Map(), { mtimes, root: ROOT, overrideFiles: new Map(), warnings: [] });
+    const r = auditReport(g, new Map(), { mtimes, root: ROOT, docs: DOCS, overrideFiles: new Map(), warnings: [] });
     expect(r.stale.map((s) => s.component)).toEqual(['Stale']);
     expect(r.stale[0].kind).toBe('md');
+  });
+
+  it('does NOT flag md-stale when docs is undefined (no key to resolve)', () => {
+    const g = graph([node('Stale', { docPath: 'Stale.md' })]);
+    const mtimes = new Map<string, number>([[posix.join(ROOT, 'app/Stale.ts'), 300], ['Stale.md', 100]]);
+    const r = auditReport(g, new Map(), { mtimes, root: ROOT, overrideFiles: new Map(), warnings: [] });
+    expect(r.stale).toEqual([]);
   });
 
   it('flags override-stale and lists override orphans', () => {
