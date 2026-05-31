@@ -2,21 +2,21 @@
 
 ## Current Position
 
-**Phase:** Step 9 — QA Gate PASS (APPROVE WITH CONDITIONS → conditions fixed; manual UAT deferred)
-**Status:** waiting_for_user
+**Phase:** Step 11 — Ship (M3 merging to master; manual UAT deferred)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
 
-**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (in progress, started 2026-05-31)
+**Milestone:** M3 — Phase 2a + 2.5: MD Overrides + PR Bot (**COMPLETE** 2026-05-31, manual UAT deferred)
 **Started:** 2026-05-31
-**Completed:** —
-**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement)
+**Completed:** 2026-05-31
+**Next milestone:** M4 — Phase 2b (MD Migration + Enforcement) — not started
 **Prior:** M2 — Phase 1 Static Analysis Core (COMPLETE, merged, 2026-05-31)
 
 ## Next Action
 
-STEP 10/11 ship decision (user): merge `feature/phase2-md-overrides-pr-bot-2026-05-31` → master now, OR hold for the deferred manual UAT. QA Gate PASS (conditions I1+S1 fixed). On merge → phase2-SUMMARY + ROADMAP M3→done/M4→active. 110 tests, coverage 98%. Manual UAT still pending (checklist in `.planning/phase2-UAT.md`); 8b verification PASS.
+Start **M4 — Phase 2b (MD Migration + Enforcement)** when ready (STEP 1/2). M3 merged to master (`--no-ff`). **Manual UAT still pending** — run `.planning/phase2-UAT.md` checklist against a real repo before enabling the PR-bot Action in production. phase2-SUMMARY written; ROADMAP M3→done/M4→active.
 
 ## QA Gate (M3)
 
