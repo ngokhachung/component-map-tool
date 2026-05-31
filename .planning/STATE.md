@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 7 — Execute (M4 tasks 5-6/7 complete; Waves 1-4 done)
+**Phase:** Step 7 — Execute COMPLETE (M4 7/7 tasks, all 5 waves) → final review → STEP 8
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -76,6 +76,7 @@ Approve the 5 M4 plans (`.planning/phase2b-{1..5}-PLAN.md`) + pick execution mod
 - M4/P4/T5 DONE (0d2f0ed): `cli/index.ts` — `cmap migrate` + `cmap lint` (+`--baseline`/`--accept`/`--coverage`) branches, USAGE; existing cmds unchanged. 2 CLI tests on real-sample (lint exit1→accept→0). Suite 127 green.
 - M4/P4/T6 DONE (62a48e1): `.github/workflows/component-map-pr.yml` — fail-able `cmap lint` step AFTER comment step, env-routed CHANGED_FILES (no `${{}}` in run), no `pull_request_target` + `workflow-lint.test.ts` (3 tests). Wave-4 review (5+6): Spec PASS + Quality APPROVED (no Critical/Important). Suite **130 green, tsc clean**.
 - M4 fixup (post-review, after 62a48e1): restored `pr` in USAGE string (review suggestion). tsc clean.
+- M4/P5/T7 DONE (2f6c894): `cli/lint-integration.test.ts` — end-to-end on real v15 (missing-md blocks→accept grandfathers; real `ngComponentOutlet` gap on ReportDashboardPage closed by waiver). 2 tests, no test adjustment needed. **STEP 7 EXECUTE COMPLETE: 5 plans / 7 tasks, suite 132 green, coverage 98.28% lines / 89.13% branch / 100% func / 98.28% stmt, tsc clean.**
 
 ## Open Blockers
 
