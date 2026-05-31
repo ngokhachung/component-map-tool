@@ -1,0 +1,45 @@
+# Component Map — quarterly maintenance audit (Azure DevOps).
+# Runs `cmap audit`, renders the report into the build summary, and publishes it as an artifact.
+# Runs on a schedule (and can be run manually from the Pipelines UI).
+schedules:
+  - cron: '0 9 1 1,4,7,10 *'   # 09:00 UTC on day 1 of Jan/Apr/Jul/Oct (quarterly)
+    displayName: Quarterly component-map audit
+    branches:
+      include: [main, master]
+    always: true
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  CMAP_ROOT: src
+  CMAP_DOCS: docs/components
+  CMAP_OVERRIDES: docs/component-map
+
+steps:
+  - checkout: self
+    fetchDepth: 0
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '20.x'
+    displayName: Use Node 20
+
+  - script: npm --prefix tool ci
+    displayName: Install tool deps
+
+  - script: |
+      set -euo pipefail
+      npm --prefix tool run --silent cmap -- audit --root "$CMAP_ROOT" --docs "$CMAP_DOCS" --overrides "$CMAP_OVERRIDES" --report "$(System.DefaultWorkingDirectory)/audit"
+    displayName: Run component-map audit
+
+  - script: echo "##vso[task.uploadsummary]$(System.DefaultWorkingDirectory)/audit.md"
+    displayName: Attach audit to build summary
+
+  - task: PublishPipelineArtifact@1
+    inputs:
+      targetPath: $(System.DefaultWorkingDirectory)/audit.json
+      artifact: component-map-audit
+    displayName: Publish audit artifact
