@@ -2,8 +2,8 @@
 
 ## Current Position
 
-**Phase:** Step 6 — Plan (complete) — 4 M5 plans written, awaiting approval + execution-mode choice
-**Status:** waiting_for_user
+**Phase:** Step 7 — Execute (M5 tasks 1-2/6 complete; Wave 1 done)
+**Status:** in_progress
 **Last updated:** 2026-05-31
 
 ## Current Milestone
@@ -81,6 +81,11 @@ Approve the 4 M5 plans (`.planning/phase3-{1..4}-PLAN.md`) + pick execution mode
 - M4/P4/T6 DONE (62a48e1): `.github/workflows/component-map-pr.yml` — fail-able `cmap lint` step AFTER comment step, env-routed CHANGED_FILES (no `${{}}` in run), no `pull_request_target` + `workflow-lint.test.ts` (3 tests). Wave-4 review (5+6): Spec PASS + Quality APPROVED (no Critical/Important). Suite **130 green, tsc clean**.
 - M4 fixup (post-review, after 62a48e1): restored `pr` in USAGE string (review suggestion). tsc clean.
 - M4/P5/T7 DONE (2f6c894): `cli/lint-integration.test.ts` — end-to-end on real v15 (missing-md blocks→accept grandfathers; real `ngComponentOutlet` gap on ReportDashboardPage closed by waiver). 2 tests, no test adjustment needed. **STEP 7 EXECUTE COMPLETE: 5 plans / 7 tasks, suite 132 green, coverage 98.28% lines / 89.13% branch / 100% func / 98.28% stmt, tsc clean.**
+
+## M5 Execution Log
+
+- M5/P1/T1 DONE (f4c26f5): `render/subgraph.ts` `focusedSubgraph` — target/ancestor(+direct-dynamic-predecessor)/child/route nodes + dynamic-flagged edges + tooltip title. 3 tests. Suite 135 green.
+- M5/P1/T2 DONE (66737f4): `render/mermaid.ts` `toMermaid` — `flowchart TD`, sanitized ids, `:::kind`, `-->`/`-.->`, classDef, deterministic. 1 test. Wave-1 review: Spec PASS + Quality APPROVED (suggestions → QA backlog: Set-based pushEdge dedup; share SHAPE lambda; assert dynamic:true edge). Suite **136 green, tsc clean**.
 
 ## Open Blockers
 
