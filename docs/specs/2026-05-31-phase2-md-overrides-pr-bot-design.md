@@ -73,7 +73,7 @@ interface CmapOverride {
 
 ## 6. Override merge (OVR-02) detail
 
-For a node whose `componentId` matches an override: for each `dynamicDeps` entry with a non-empty `target`, resolve it through the SAC-08 locator against the graph. On a unique match, add `Edge{ from: node.id, to: matched.id, kind: 'resolved', via: 'override', reason: entry.reason ?? 'documented dynamic dependency' }` (deduped). Ambiguous/!found target → warning, no edge. Empty `target` (un-filled skeleton) → ignored (still a gap). Override edges feed impact + ui-access-path like any resolved edge.
+For a node whose `componentId` matches an override: for each `dynamicDeps` entry with a non-empty `target` and **not `stale: true`** (stale entries are skipped — a removed construct must not keep a phantom edge), resolve `target` through the SAC-08 locator against the graph. On a unique match, add `Edge{ from: node.id, to: matched.id, kind: 'resolved', via: 'override', reason: entry.reason ?? 'documented dynamic dependency' }` (deduped). Ambiguous/!found target → warning (naming the file + componentId), no edge. Duplicate `componentId` across two `.cmap.yaml` files → warning. Empty `target` (un-filled skeleton) → ignored (still a gap). Override edges feed impact + ui-access-path like any resolved edge; both traversals are already cycle-safe (RESEARCH §6), but merge runs a **cycle check and warns** if an override edge closes a cycle.
 
 ## 7. Gaps + scaffold (OVR-03/04)
 
@@ -81,13 +81,13 @@ A "gap construct" = an `unresolved-static` edge on a component (ngComponentOutle
 - lists each gap component (id/className/file) + its detected constructs + whether an override file exists and how many `target`s are still empty.
 
 `cmap gaps --write` per gap component:
-- load existing `.cmap.yaml` (if any); build the desired entry set from current detected constructs (keyed by a stable construct signature, e.g. `reason`); **keep** entries whose `target` is filled; **add** entries for newly-detected constructs (`target: ""`); mark entries whose construct no longer exists `stale: true`; write back. Idempotent.
+- load existing `.cmap.yaml` (if any); build the desired entry set from current detected constructs, **keyed by a STABLE construct identity (kind + source location)** — NOT the free-text `reason` (re-wording `reason` between tool versions would orphan a human-filled `target` = silent data loss, per RESEARCH §7); **keep** entries whose `target` is filled; **add** entries for newly-detected constructs (`target: ""`); mark entries whose construct no longer exists `stale: true`; write back **UTF-8 / LF / no BOM**, stable key order (idempotent, byte-identical re-write).
 
 ## 8. PR bot (BOT-01/02)
 
 `cmap pr --root <dir> --changed <fileA,fileB> [--docs --overrides]`:
-- map each changed file → component node (by filePath); for each, compute impact + uiAccessPaths; render one Markdown section: affected ancestors (with `uncertain` flag), UI routes, any open gaps for that component, and its `機能概要` description.
-- output the full comment markdown to stdout (pure renderer `renderPrComment`).
+- map each changed file → component node (by filePath); **renamed → post-rename path; deleted / non-component file → skip gracefully** (no node, no crash); for each mapped component, compute impact + uiAccessPaths.
+- `renderPrComment` (pure) emits the comment markdown with a **hidden marker** (`<!-- cmap-pr-bot -->`, for sticky update), per-component sections (affected ancestors with `uncertain` flag, UI routes, open gaps, `機能概要` description), an **ancestor cap per component + "+N more" summary** (low-noise lever for shared components), and an overall **truncation footer** so the body stays under GitHub's 65,536-char limit (RESEARCH §1/§8).
 
 GitHub Action: on `pull_request`, `git diff --name-only` for `*.component.ts`, `npm --prefix tool ci`, run `cmap pr`, then create/update a sticky PR comment via `actions/github-script` (or `gh`). Reads nothing pre-built — rebuilds the graph from the PR checkout for correctness.
 

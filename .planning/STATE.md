@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 3 — Mode Gate complete (M3 brainstorm done, Mode A approved)
+**Phase:** Step 4 — Research complete (M3); ready for writing-plans
 **Status:** in_progress
 **Last updated:** 2026-05-31
 
@@ -16,7 +16,7 @@
 
 ## Next Action
 
-STEP 4 Research decision for M3 (focused: js-yaml, GitHub Actions sticky PR-comment pattern, git diff in CI) vs skip, then writing-plans (STEP 6). M3 design approved: `docs/specs/2026-05-31-phase2-md-overrides-pr-bot-design.md`. Working on master (no feature branch yet — create at execute).
+Run writing-plans (STEP 6) for M3, consuming `.planning/phase2-RESEARCH.md`. Design approved + amended (construct-identity scaffold key, skip-stale + cycle-warn merge, comment marker/cap/concurrency). Create feature branch at execute. Working on master currently.
 
 ## Execution Log
 
@@ -90,6 +90,7 @@ STEP 4 Research decision for M3 (focused: js-yaml, GitHub Actions sticky PR-comm
 - 2026-05-31: Project MD is **read-only** project doc (tool must not edit). Dynamic-dep gaps patched via a **separate tool-owned `.cmap.yaml`** (per component, key=componentId, in `docs/component-map/`). **Tool scaffolds the skeleton** (`cmap gaps --write`, pre-filled detected constructs + empty `target`), user fills only `target`; merge-safe. Static-complete components need no override.
 - 2026-05-31: Merge override `target`s → `resolved` edges `via:'override'`; `cmap gaps` lists components needing supplement. PR bot = GitHub Action that rebuilds graph in CI + posts sticky comment via `cmap pr`. js-yaml allowed (tool-owned data). Data model: `Edge.via`+`'override'`, `ComponentNode.description`, bump schemaVersion.
 - 2026-05-31: M3 REQ-IDs = OVR-01..05 + BOT-01/02 (REQUIREMENTS.md). Mode A approved for M3 (1/5 Mode B signals — light CI).
+- 2026-05-31: STEP 4 Research done (`.planning/phase2-RESEARCH.md`). Refinements folded into spec: scaffold keyed by **stable construct identity (kind+location)** not free-text reason (avoid clobbering filled targets); merge **skips stale** + **cycle-check-warns**; PR comment uses hidden marker + ancestor cap + 65KB truncation; workflow = `pull_request` + `permissions:pull-requests:write` + `concurrency` + `checkout fetch-depth:0` + `git diff --diff-filter=ACMR base...HEAD` + `actions/github-script@v7` (env body) + `actions/cache` for `.cmap/`, NO `pull_request_target`; js-yaml `load()` (safe v4) per-file try/catch + hand-validate; add `js-yaml`+`@types/js-yaml` deps.
 
 ## Approved Mode
 
