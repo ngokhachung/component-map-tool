@@ -2,7 +2,7 @@
 
 ## Current Position
 
-**Phase:** Step 11 — Ship COMPLETE (M6 merged to master `c29ed89`; demo/8 pushed). **PLANNED ROADMAP M1–M6 COMPLETE.**
+**Phase:** Step 11 — Ship COMPLETE (M6 merged `c29ed89`; demo/8 pushed). **ROADMAP M1–M6 COMPLETE.** Live CLI UAT passed 2026-06-01; visual/Azure verification pending.
 **Status:** complete
 **Last updated:** 2026-06-01
 
@@ -16,7 +16,11 @@
 
 ## Next Action
 
-**Planned roadmap M1–M6 COMPLETE** (M6 merged `c29ed89`, demo/8 pushed). Remaining work is OPERATIONAL, not a milestone: (1) run deferred manual UATs `phase2-UAT.md`(M3) + `phase2b-UAT.md`(M4) + `phase3-UAT.md`(M5) + `phase4-UAT.md`(M6) against a real Angular repo; (2) live-verify the Azure pipelines (PR comment REST + quarterly cron) + git-staleness on a real Azure DevOps repo; (3) configure OAuth-token prereqs + Build Validation policy + commit a `.cmap-baseline.json` (same `--root` as CI) before enabling the gate. New feature scope → fresh brainstorm cycle.
+**Planned roadmap M1–M6 COMPLETE** (M6 merged `c29ed89`, demo/8 pushed).
+
+**UAT session 2026-06-01 (live walkthrough on `poc/real-sample`):** CLI UAT executed live and **PASSED** — `index` (18 comp/28 edges/0 errors), `query DataTableComponent` (3 ancestors + 2 access paths), `gaps` (4 components), `lint` (exit 1 blocks new debt; `--accept`→re-lint exit 0 grandfather), `audit` (4 gaps, 0 stale/orphans, 0/18 MD), `query --html` + `render --html` generated (offline). The two HTML reports were delivered to the user to open in a browser; **formal "confirmed" still pending** for the visual interactions. Scratch `uat-*.html` removed.
+
+Remaining OPERATIONAL follow-ups (not a milestone): (1) user confirms the M5 HTML visual UAT; (2) run the UATs against a REAL Angular repo (real-sample has no project MD, so git-staleness shows 0 — proven via unit tests only); (3) live-verify the Azure pipelines (PR-comment REST + quarterly cron) on a real Azure DevOps repo; (4) configure OAuth-token prereqs + Build Validation policy + commit a `.cmap-baseline.json` (same `--root` as CI) before enabling the gate. New feature scope → fresh brainstorm cycle.
 
 ## QA Gate (M6)
 
